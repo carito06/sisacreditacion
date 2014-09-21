@@ -3,7 +3,62 @@ $(function() {
     
     //var vars = 0;
     //carga(vars);
-    
+    $( "#tabs" ).tabs();
+
+    $(".tabreferer").dialog({
+        title:"SEMANAS POR UNIDAD",
+        width :'auto',
+        autoOpen:false,
+        modal:true,
+            show:{
+                    effect: "slide",
+                    duration : 700
+                 },
+            hide:{
+                effect: "explode",
+                duration: 300
+            },
+        buttons:{
+            "GRABAR":function(){},
+            "CERRAR":function(){$(".tabreferer").dialog('close');}
+        }
+
+    });
+
+    $("#generar_u").click(function(){
+            var num= $("#nuni").val();
+
+            var html="";
+            for(i=1;i<=num;i++){
+                html = html+"<div>";
+                html = html+"<input type='text' name='nombreuni[]' placeholder='ingresar nomre de unidad"+i+"'  />";
+                html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"'  />";
+                html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"'  /><br/>";
+                html = html+"<input type='button' onclick='llenartemas("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
+                html = html+"</div>";
+                html = html+"<hr/>";
+            }
+            $("#llena_form").html(html);
+    });
+
+    $('#grabar_1').click(function() {
+        if ( $('#competencia_1').val() == " " ) {
+            alert("llenar competencia");
+        }
+        if ( $('#metodologia_1').val() == " " ) {
+            alert("llenar metodologia");
+        }
+        if ( $('#objetivo_1').val() == " " ) {
+            alert("llenar competencia");
+        }
+        if ( $('#sumilla_1').val() == " " ) {
+            alert("llenar sumilla");
+        }
+        if ( $('#bibliografia_1').val() == " " ) {
+            alert("llenar bibliografia");
+        }
+    });
+
     if($("#semestreacademico").val() === "" )
     {
         //alert("sd");
@@ -13,7 +68,8 @@ $(function() {
         var vars = $("#semestreacademico").val();
         //carga(vars);  
     }
-    
+
+    $(".datepicker").datepicker();
     
     
     $("#semestreacademico").change(function() {
@@ -30,6 +86,13 @@ $(function() {
     });
 
 });
+
+
+function llenartemas(param){
+    var temp = $("#duracion"+param).val();
+    //alert(temp);
+    $(".tabreferer").dialog("open");
+}
 
 function carga(vars){
      $("#silabus").css("display", "none");
@@ -564,3 +627,7 @@ $.post('index.php', 'controller=cursosemestre&action=getTema&Codigo=' +unidad+'&
         $(".temas").empty().append(data);
     });
 });
+
+function activa(param){
+    $("#"+param).addClass("active");
+}
