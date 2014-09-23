@@ -117,10 +117,15 @@
             <br>
             <textarea id="sumilla_1" class="form-control" name="sumilla" rows="10"></textarea>
         </div>
-        <div class="tab-pane"  id="unidad" align="justify">
+        <div class="tab-pane"  id="unidad" align="justify" >
             <label for="">especifar n° de unidades</label>
+<<<<<<< HEAD
+            <input id="nuni" number=10 type="number"/>
+            <button type="button" id="generar_u" class="btn btn-primary">generar</button>
+=======
             <input id="nuni" number="10" type="number"/>
             <button type="button" id="generar_u">generar</button>
+>>>>>>> origin/master
 
             <br/><br/><br/>
             <div id="unidd" ></div>
@@ -179,9 +184,18 @@
         </div>
 </div>
     <br/><br/>
+<<<<<<< HEAD
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
 </form>
+=======
+<<<<<<< HEAD
+      <button type="button" class="btn btn-info" id="grabar_1">Siguiente</button>
+=======
+      <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
+>>>>>>> origin/master
+  </form>
+>>>>>>> origin/master
    <?php }
         ?> 
 
