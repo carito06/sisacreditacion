@@ -45,7 +45,8 @@ $( "#tabs" ).tabs();
         for(i=1;i<=num;i++){
             html = html+"<div id='tabsx-"+i+"'>";
                 html = html+"<div>";
-                html = html+"<input type='text' name='nombreuni[]' placeholder='ingresar nomre de unidad"+i+"'  />";
+                html= html+"nombre de unidad: ";
+                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='ingresar nomre de unidad"+i+"'  />";
                 html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"'  />";
                 html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"'  /><br/>";
                 html = html+"<input type='button' onclick='semana("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
@@ -68,25 +69,30 @@ $( "#tabs" ).tabs();
 
     $('#grabar_1').click(function() {
 
-
-
       $("#frm1").submit();
     
-        /*if ( $('#competencia_1').val() == " " ) {
+        if ( $('#competencia_1').val() == " " ) {
             alert("llenar competencia");
-        }
+        }else{
         if ( $('#metodologia_1').val() == " " ) {
             alert("llenar metodologia");
-        }
-        if ( $('#objetivo_1').val() == "" ) {
+        }else{
+           if ( $('#objetivo_1').val() == "" ) {
             alert("llenar objetivo");
-        }
+        }else{
         if ( $('#sumilla_1').val() == "" ) {
             alert("llenar sumilla");
-        }
-        if ( $('#bibliografia_1').val() == "" ) {
+        }else{
+           if ( $('#bibliografia_1').val() == "" ) {
             alert("llenar bibliografia");
-        }*/
+        }
+        }
+      }
+       
+        }
+
+      }
+       
     });
 
     if($("#semestreacademico").val() === "" )

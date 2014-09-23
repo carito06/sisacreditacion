@@ -12,6 +12,7 @@
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
     <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
+    <link rel="stylesheet" href="../web/css/css.css">
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
@@ -88,16 +89,18 @@
          <div class="tab-pane active" id="editar">
                 <br>
                 <label for="fecha_inicio" style="width: 120px">Fecha Inicio:</label>
-                <input  class="datepicker" maxlength="100" name="fecha_inicio" class="text ui-widget-content ui-corner-all hasDatepicker" style=" width: 150px; text-align: left;" value="">
+                <input  class="datepicker fech" placeholder="DD/MM/AA" data-format="dd/MM/yyyy hh:mm:ss" title="ingrese fecha de inicio"
+                 name="fecha_inicio" required class="text ui-widget-content ui-corner-all hasDatepicker">
                 <label for="fecha_terminox" style="width: 120px">Fecha Termino:</label>
-                <input class="datepicker" maxlength="100" name="fecha_termino"  style=" width: 150px; text-align: left;" value="">
-                <br>
+                <input class="datepicker fech" title="ingrese fecha final" name="fecha_termino" required>
+                <br><br>
                 <label for="duracion" style="width: 120px">Duracion:</label>
-                <input type="number" id="duracion" name="duracion" class="text ui-widget-content ui-corner-all" value="17 semanas">
-            editar</div>
+                <input type="number" size="2"  min="1" max="17" id="duracion" name="duracion" class="dur text ui-widget-content ui-corner-all" 
+                placeholder="semanas" required>
+          </div>
         <div class="tab-pane" id="competencia" align="justify">
             <br>
-             <textarea id="competencia_1" class="form-control" name="competencia" rows="10"> </textarea>
+             <textarea id="competencia_1" class="form-control" name="competencia" required rows="10"> </textarea>
         </div>
 
         <div class="tab-pane" id="metodologia" align="justify">
@@ -175,11 +178,27 @@
         </div>
 </div>
     <br/><br/>
+<<<<<<< HEAD
 
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
 </form>
 <?php }
+=======
+<<<<<<< HEAD
+     <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
+      <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+</form>
+=======
+<<<<<<< HEAD
+      <button type="button" class="btn btn-info" id="grabar_1">Siguiente</button>
+=======
+      <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
+>>>>>>> origin/master
+  </form>
+>>>>>>> origin/master
+   <?php }
+>>>>>>> parent of 8acdbc5... Revert "sistema 12:46"
         ?> 
 
     <?php } ?>
