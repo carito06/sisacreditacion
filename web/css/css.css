@@ -1,0 +1,13 @@
+.dur{
+	width: 90px;
+}
+.fech{
+	width: 100px;
+	border: 1px solid skyblue;
+	border-radius: 10px 10px 10px 10px;
+	text-align: center;
+	color: green;
+}
+.p{
+	border: 1px dashed yellow;
+}
