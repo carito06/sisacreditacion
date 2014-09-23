@@ -183,6 +183,7 @@
     <br/><br/>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
 </form>
@@ -194,6 +195,10 @@
 >>>>>>> origin/master
   </form>
 >>>>>>> origin/master
+=======
+      <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
+  </form>
+>>>>>>> parent of 04553a4... sistema 12:46
 =======
       <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
   </form>
