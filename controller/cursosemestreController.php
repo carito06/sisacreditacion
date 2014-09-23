@@ -233,6 +233,8 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
     }
 
     public function save() {
+        echo "<pre>";print_r($_POST);exit();
+
         if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) {
             $obj = new silabus();
             if ($_POST['idsilabus'] == '') {

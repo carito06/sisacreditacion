@@ -48,8 +48,8 @@
       <file leaf-file-name="_Edit_Silabo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/_Edit_Silabo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.384615" vertical-offset="2025" max-vertical-offset="3111">
-              <caret line="135" column="44" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="44" />
+            <state vertical-scroll-proportion="-11.692307" vertical-offset="2297" max-vertical-offset="3349">
+              <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#label#0;n#div#6;n#div#0;n#form#0;n#!!top" expanded="true" />
@@ -187,8 +187,8 @@
       <file leaf-file-name="evt_form_cursosemestre.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/js/app/evt_form_cursosemestre.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6524702" vertical-offset="1198" max-vertical-offset="10846">
-              <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.47317073" vertical-offset="1426" max-vertical-offset="11288">
+              <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -327,7 +327,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -371,19 +371,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/model/cursos.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1938">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1406428414000" expanded="true" signature="131:1109" placeholder="SELECT curso..cursos..." />
-            <marker date="1406428414000" expanded="true" signature="1510:1554" placeholder="SELECT * FRO..cursos..." />
-            <marker date="1406428414000" expanded="true" signature="1747:1790" placeholder="SELECT MAX(C..cursos..." />
-            <marker date="1406428414000" expanded="true" signature="5414:5456" placeholder="DELETE FROM ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/Main.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="22.884615" vertical-offset="595" max-vertical-offset="24259">
@@ -447,29 +434,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/cursosemestreController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5" vertical-offset="17" max-vertical-offset="5423">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/alumno.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2890">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1406428414000" expanded="true" signature="139:630" placeholder="SELECT alumn..alumnos..." />
-            <marker date="1406428414000" expanded="true" signature="1068:1307" placeholder="SELECT disti..detalle_matricula..." />
-            <marker date="1406428414000" expanded="true" signature="1463:2245" placeholder="SELECT alumn..alumnos..." />
-            <marker date="1406428414000" expanded="true" signature="2658:2704" placeholder="SELECT * FRO..alumnos..." />
-            <marker date="1406428414000" expanded="true" signature="2904:2949" placeholder="SELECT MAX(C..alumnos..." />
-            <marker date="1406428414000" expanded="true" signature="9017:9060" placeholder="DELETE FROM ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65384614" vertical-offset="17" max-vertical-offset="18394">
@@ -491,6 +455,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model/cursos.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1938">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1406428414000" expanded="true" signature="131:1109" placeholder="SELECT curso..cursos..." />
+            <marker date="1406428414000" expanded="true" signature="1510:1554" placeholder="SELECT * FRO..cursos..." />
+            <marker date="1406428414000" expanded="true" signature="1747:1790" placeholder="SELECT MAX(C..cursos..." />
+            <marker date="1406428414000" expanded="true" signature="5414:5456" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/alumno.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2890">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1406428414000" expanded="true" signature="139:630" placeholder="SELECT alumn..alumnos..." />
+            <marker date="1406428414000" expanded="true" signature="1068:1307" placeholder="SELECT disti..detalle_matricula..." />
+            <marker date="1406428414000" expanded="true" signature="1463:2245" placeholder="SELECT alumn..alumnos..." />
+            <marker date="1406428414000" expanded="true" signature="2658:2704" placeholder="SELECT * FRO..alumnos..." />
+            <marker date="1406428414000" expanded="true" signature="2904:2949" placeholder="SELECT MAX(C..alumnos..." />
+            <marker date="1406428414000" expanded="true" signature="9017:9060" placeholder="DELETE FROM ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller/cursosemestreController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5" vertical-offset="17" max-vertical-offset="5423">
+          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/view/cursosemestre/_Index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1088">
@@ -501,8 +501,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/_Edit_Silabo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.384615" vertical-offset="2025" max-vertical-offset="3111">
-          <caret line="135" column="44" selection-start-line="135" selection-start-column="34" selection-end-line="135" selection-end-column="44" />
+        <state vertical-scroll-proportion="-11.692307" vertical-offset="2297" max-vertical-offset="3349">
+          <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#form#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#label#0;n#div#6;n#div#0;n#form#0;n#!!top" expanded="true" />
@@ -516,8 +516,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/js/app/evt_form_cursosemestre.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6524702" vertical-offset="1198" max-vertical-offset="10846">
-          <caret line="93" column="8" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.47317073" vertical-offset="1426" max-vertical-offset="11288">
+          <caret line="101" column="19" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
           <folding />
         </state>
       </provider>

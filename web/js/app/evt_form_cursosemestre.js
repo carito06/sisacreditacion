@@ -3,60 +3,90 @@ $(function() {
     
     //var vars = 0;
     //carga(vars);
-    $( "#tabs" ).tabs();
+    //$( "#tabsxx" ).tabs();
+// 
+    // $("#sem").dialog({
+        // title:"SEMANAS POR UNIDAD",
+        // width :'auto',
+        // autoOpen:false,
+        // modal:true,
+            // show:{
+                    // effect: "slide",
+                    // duration : 700
+                 // },
+            // hide:{
+                // effect: "explode",
+                // duration: 300
+            // },
+        // buttons:{
+            // "GRABAR":function(){},
+            // "CERRAR":function(){$("#sem").dialog('close');}
+        // }
+// 
+    // });
+$( "#tabs" ).tabs();
+ 
 
-    $(".tabreferer").dialog({
-        title:"SEMANAS POR UNIDAD",
-        width :'auto',
-        autoOpen:false,
-        modal:true,
-            show:{
-                    effect: "slide",
-                    duration : 700
-                 },
-            hide:{
-                effect: "explode",
-                duration: 300
-            },
-        buttons:{
-            "GRABAR":function(){},
-            "CERRAR":function(){$(".tabreferer").dialog('close');}
-        }
 
-    });
+      
+
 
     $("#generar_u").click(function(){
-            var num= $("#nuni").val();
+          var num= $("#nuni").val();
 
-            var html="";
-            for(i=1;i<=num;i++){
+        
+        var html="";
+        html=html = html+"<div id='tabu_1_1'>";
+        html = html+"<ul>";
+        for(i=1;i<=num;i++) {
+        html = html+"<li><a href='#tabsx-"+i+"'>unidad "+i+"</a></li>";
+        }
+        html = html+"</ul>";
+        for(i=1;i<=num;i++){
+            html = html+"<div id='tabsx-"+i+"'>";
                 html = html+"<div>";
                 html = html+"<input type='text' name='nombreuni[]' placeholder='ingresar nomre de unidad"+i+"'  />";
                 html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"'  />";
                 html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"'  /><br/>";
-                html = html+"<input type='button' onclick='llenartemas("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
+                html = html+"<input type='button' onclick='semana("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
                 html = html+"</div>";
+                html = html+"<div id='sem'></div>";
+
                 html = html+"<hr/>";
-            }
-            $("#llena_form").html(html);
+            html = html+"</div>";
+        }
+        html = html+"<div>";      
+        $("#unidd").html(html);
+        $( "#tabu_1_1" ).tabs();
+
+         //$("#unidd").dialog("open");
     });
 
+
+
+
+
     $('#grabar_1').click(function() {
-        if ( $('#competencia_1').val() == " " ) {
+
+
+
+      $("#frm1").submit();
+    
+        /*if ( $('#competencia_1').val() == " " ) {
             alert("llenar competencia");
         }
         if ( $('#metodologia_1').val() == " " ) {
             alert("llenar metodologia");
         }
-        if ( $('#objetivo_1').val() == " " ) {
-            alert("llenar competencia");
+        if ( $('#objetivo_1').val() == "" ) {
+            alert("llenar objetivo");
         }
-        if ( $('#sumilla_1').val() == " " ) {
+        if ( $('#sumilla_1').val() == "" ) {
             alert("llenar sumilla");
         }
-        if ( $('#bibliografia_1').val() == " " ) {
+        if ( $('#bibliografia_1').val() == "" ) {
             alert("llenar bibliografia");
-        }
+        }*/
     });
 
     if($("#semestreacademico").val() === "" )
@@ -87,11 +117,55 @@ $(function() {
 
 });
 
+function semana(param){
+    var temp = $("#duracion"+param).val();
+    var html="";
+        html=html = html+"<div id='tabse_1_"+param+"'>";
+        html = html+"<ul>";
+        for(i=1;i<=temp;i++) {
+        html = html+"<li><a href='#tabsx-"+i+"'>Semana "+i+"</a></li>";
+        }
+        html = html+"</ul>";
+        for(i=1;i<=temp;i++){
+
+            html = html+"<div id='tabsx-"+i+"'>";
+            html = html+"contenido";
+            html = html+"<input type='text' id='contenido' name='cont"+i+"-"+param+"' />"; 
+            html = html+"Conceptual";
+            html = html+"<input type='text' id='Conceptual' name='conce"+i+"-"+param+"' />";  
+            html = html+"procedimental";
+            html = html+"<input type='text' id='procedimental' name='proc"+i+"-"+param+"' />";  
+            html = html+"actitudinal";
+            html = html+"<input type='text' id='actitudinal' name='act"+i+"-"+param+"' />";  
+            html = html+"competencia";
+            html = html+"<input type='text' id='competencia' name='comp"+i+"-"+param+"' />";  
+            html = html+"</div>";
+        }
+        html = html+"<div>";      
+        $("#sem").html(html);
+        $( "#tabse_1_"+param ).tabs();
+        //$("#sem").dialog("open");
+}
 
 function llenartemas(param){
     var temp = $("#duracion"+param).val();
-    //alert(temp);
-    $(".tabreferer").dialog("open");
+    var html="";
+        html=html = html+"<div id='tabs_1_1'>";
+        html = html+"<ul>";
+        for(i=1;i<=temp;i++) {
+        html = html+"<li><a href='#tabsx-"+i+"'>TEMA "+i+"</a></li>";
+        }
+        html = html+"</ul>";
+        for(i=1;i<=temp;i++){
+            html = html+"<div id='tabsx-"+i+"'>";
+            html = html+"<textarea rows='10'></textarea>"; 
+            html = html+"</div>";
+        }
+        html = html+"<div>";      
+        $("#tabsxx").html(html);
+        $( "#tabs_1_1" ).tabs();
+
+       $("#tabsxx").dialog("open");
 }
 
 function carga(vars){
@@ -197,7 +271,7 @@ $("#regresar").live("click", function() {
 function VerSi(id) {
     var idsemestre = $("#semestreacademico").attr("value");
 //    
-alert (id+'**'+idsemestre);
+//alert (id+'**'+idsemestre);
 $("#silaedit").css("display","");
    $("#boton").css("display", "none");
 //olassss
@@ -227,7 +301,7 @@ $(".unidad").live("click", function() {
     var curso = $("#curso").attr("value");
     var opt="asd";
 
-    alert(semestre+"-"+curso+"-"+opt);
+    //alert(semestre+"-"+curso+"-"+opt);
 //        
 //        var d=semestre+' '+curso;
 //        alert (d);
