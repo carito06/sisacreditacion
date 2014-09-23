@@ -150,7 +150,7 @@
         </div>
 </div>
     <br/><br/>
-      <button type="button" class="btn btn-info" id="grabar_1">Siguiente</button>
+      <button type="button" class="btn btn-info" id="grabar_1">Grabar Silabus</button>
   </form>
    <?php }
         ?> 
