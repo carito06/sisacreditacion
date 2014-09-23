@@ -178,27 +178,13 @@
         </div>
 </div>
     <br/><br/>
-<<<<<<< HEAD
+
 
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
 </form>
 <?php }
-=======
-<<<<<<< HEAD
-     <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
-      <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
-</form>
-=======
-<<<<<<< HEAD
-      <button type="button" class="btn btn-info" id="grabar_1">Siguiente</button>
-=======
-      <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
->>>>>>> origin/master
-  </form>
->>>>>>> origin/master
-   <?php }
->>>>>>> parent of 8acdbc5... Revert "sistema 12:46"
+
         ?> 
 
     <?php } ?>
