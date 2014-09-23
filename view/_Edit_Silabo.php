@@ -3,7 +3,6 @@
 
     .nav a{
         color:#428bca; 
-
     }
 </style>
 <br>
@@ -117,7 +116,7 @@
         </div>
         <div class="tab-pane"  id="unidad" align="justify">
             <label for="">especifar n° de unidades</label>
-            <input id="nuni" number=10 type="number"/>
+            <input id="nuni" number="10" type="number"/>
             <button type="button" id="generar_u">generar</button>
 
             <br/><br/><br/>
@@ -133,24 +132,51 @@
                 <button id="biblio" type="button">agregar bibliografia</button> <br>
 
                  <div id="tabs">
+
          <?php 
-                mysql_connect("localhost", "root", "");
+             /*   mysql_connect("localhost", "root", "");
                 mysql_select_db("sisacreditacion");
                         $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
                         $temp=3;
                         echo "<ul>";
                         for ($i=0; $i <$temp ; $i++) { 
+                           echo "
+                               <li><a href='#tabs-".$i."'>bibliografia ".$i+1."</a></li>
+                            ";
                         }
                         echo "</ul>";
-                       
-                     ?>
+                        echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='descripcion_tipobibliografia'>";
+                        echo "<option value='0'>Elige</option>";
+                        while($registro=mysql_fetch_row($consulta)){
+                             echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
+                         }
+                        echo "</select>";   
+                        echo '<br/>
+                <label for="referencia" class="labels" style="width: 110px" >Referencia:</label>
+                <input id="referencia" name="referencia" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->referencia" />
+                <br/>
+                
+                <label for="identificador" class="labels" style="width: 110px" >Identificador:</label>
+                <input id="identificador" name="identificador" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->identificador" />
+                
+                <br/>
+                
+                <label for="descripcion" class="labels" style="width: 110px" >Descripcion:</label>
+                <input id="descripcion" name="descripcion" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->descripcion" />
+                        ';
+                        $temp=3;
+                    for ($i=0; $i <$temp ; $i++) { 
+                           echo "<div id='tabs-".$i."'>bibliografia ".$i+1."</div>";
+                        }
+                        */
+         ?>
                      
                  </div>
                  
         </div>
 </div>
     <br/><br/>
-      <button type="button" class="btn btn-info" id="grabar_1">Grabar Silabus</button>
+      <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>
   </form>
    <?php }
         ?> 
