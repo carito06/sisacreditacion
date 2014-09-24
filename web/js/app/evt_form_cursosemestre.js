@@ -34,31 +34,6 @@ $( "#tabs" ).tabs();
     $("#generar_u").click(function(){
           var num= $("#nuni").val();
 
-        
-        var html="";
-        html=html = html+"<div id='tabu_1_1'>";
-        html = html+"<ul>";
-        for(i=1;i<=num;i++) {
-        html = html+"<li><a href='#tabsx-"+i+"'>unidad "+i+"</a></li>";
-        }
-        html = html+"</ul>";
-        for(i=1;i<=num;i++){
-            html = html+"<div id='tabsx-"+i+"'>";
-                html = html+"<div>";
-                html= html+"nombre de unidad: ";
-                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='ingresar nomre de unidad"+i+"'  />";
-                html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"'  />";
-                html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"'  /><br/>";
-                html = html+"<input type='button' onclick='semana("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
-                html = html+"</div>";
-                html = html+"<div id='sem'></div>";
-
-                html = html+"<hr/>";
-            html = html+"</div>";
-        }
-        html = html+"<div>";      
-        $("#unidd").html(html);
-        $( "#tabu_1_1" ).tabs();
 
          //$("#unidd").dialog("open");
     });
@@ -95,21 +70,16 @@ $( "#tabs" ).tabs();
        
     });
 
-    if($("#semestreacademico").val() === "" )
-    {
-        //alert("sd");
-    }
-    else
-    {
-        var vars = $("#semestreacademico").val();
-        //carga(vars);  
-    }
 
+ 
+ 
     $(".datepicker").datepicker();
+    if($("#semestreacademico").val() === "" ){
+     carga(vars);  
+    }
     
-    
+    var vars = $("#semestreacademico").val();   
     $("#semestreacademico").change(function() {
-       
       vars = $(this).val();
       carga(vars);  
     });
@@ -122,7 +92,80 @@ $( "#tabs" ).tabs();
     });
 
 });
+function validarLetras(e)
+{
+  tecla=(document.all) ? e.keyCode : e.which;
+  if(tecla==8) return true; // backspace
+  if(tecla==32) return true; // espacio
+  if(tecla==9) return true; // tab
+  if(tecla==37) return true; // flecha izquierda
+  if(tecla==38) return true; // fleach arriba
+  if(tecla==39) return true; // flecha derecha
+  if(tecla==40) return true; // flecha abajo
+  if(e.ctrlkey && tecla==86){ return true;}// Ctrl v
+  if(e.ctrlkey && tecla==67){ return true;}// Ctrl c
+  if(e.ctrlkey && tecla==88){ return true;}// Ctrl x  
+  patron=/[a-zA-Z]/;
+  te=String.fromCharCode(tecla);
+  return patron.test(te);
+}
 
+function validarNumero(e)
+{
+  tecla=(document.all) ? e.keyCode : e.which;
+  if(tecla==8) return true; // backspace
+  if(tecla==32) return true; // espacio
+  if(tecla==9) return true; // tab
+  if(e.ctrlkey && tecla==86){ return true;}// Ctrl v
+  if(e.ctrlkey && tecla==67){ return true;}// Ctrl c
+  if(e.ctrlkey && tecla==88){ return true;}// Ctrl x  
+  patron=/[0-9]/;
+  te=String.fromCharCode(tecla);
+  return patron.test(te);
+}
+
+function datos(){
+        //un prompt
+        alertify.prompt("ingresa número de unidades:", function (e, str) { 
+        if (str!=""  && str>='0' && str<='9') {
+          if (e){
+            alertify.success("Has pulsado '" + alertify.labels.ok + "'' e introducido: " + str);
+          }else{
+            alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
+          }
+         //agregar unidades
+        var html="";
+        html=html = html+"<div id='tabu_1_1'>";
+        html = html+"<ul>";
+        for(i=1;i<=str;i++) {
+        html = html+"<li><a href='#tabsx-"+i+"'>unidad "+i+"</a></li>";
+        }
+        html = html+"</ul>";
+        for(i=1;i<=str;i++){
+            html = html+"<div id='tabsx-"+i+"'>";
+                html = html+"<div>";
+                html= html+"<label class='asd'>nombre de unidad: </label>";
+                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='ingresar nombre de unidad"+i+"' onkeydown='return validarLetras(event)' />";
+                html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"' onkeydown='return validarLetras(event)' />";
+                html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"' onkeydown='return validarNumero(event)' /><br/>";
+                html = html+"<input type='button' onclick='semana("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
+                html = html+"</div>";
+                html = html+"<div id='sem'></div>";
+
+                html = html+"<hr/>";
+            html = html+"</div>";
+        }
+        html = html+"<div>";      
+        $("#unidd").html(html);
+        $( "#tabu_1_1" ).tabs();   
+        }
+        else{
+            alertify.error("ingrese una unidad"); 
+        }
+        });
+        return false;   
+      }
+      
 function semana(param){
     var temp = $("#duracion"+param).val();
     var html="";

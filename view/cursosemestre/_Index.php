@@ -2,18 +2,18 @@
 <div class="div_container">
     <div class="row">
         <!-- IZQUIERDA-->
-        
-        <div  class="col-md-4" id="chau">
-            
-            <div class=" panel-body"  >
-                <div> Semestre: <?php echo $semestreacademico; ?></div>
-                <br>
-        <div class="container-fluid" >
-                <div id="cursodocente">
+         <div class="panel" style="margin-left:-15%; width:240px; float:left;">
+                    <div id="cursodocente" style="width:240px;">
+                    </div> 
+        </div> 
 
-                </div> 
-            </div>       
-        </div>
+        <div  class="col-md-4"></div>
+        <div  class="col-md-4" id="chau">
+            <div class="panel-body">
+                <div > Semestre: <?php echo $semestreacademico; ?></div>
+                <br>
+        
+            </div>
         </div>
         <!-- DERECHA-->
 

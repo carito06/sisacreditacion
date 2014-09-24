@@ -1,18 +1,17 @@
 <!--Partes del  silabo-->
 <style>
-
     .nav a{
         color:#428bca; 
     }
 </style>
-<br>
-
 <!--ALUMNO Comienza-->
-
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
     <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
     <link rel="stylesheet" href="../web/css/css.css">
+    <script type="text/javascript" src="lib/alertify.js"></script>
+    <link rel="stylesheet" href="../web/themes/alertify.core.css" />
+    <link rel="stylesheet" href="../web/themes/alertify.default.css" />
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
@@ -25,7 +24,6 @@
         <li><a href="#bibliografia" data-toggle="tab" class="ecp">Bibliografia</a></li>
         <li><a href="#regresar" data-toggle="tab" class="regresar" class="ecp">Regresar</a></li>
     </ul> 
-
     <?php
 
    if($rows){
@@ -48,14 +46,9 @@
         <input type="hidden" id="curso" value="<?php echo $value[5] ?>"/>
 <!--        unidad inicio-->
         <div class="tab-pane"  id="unidad" align="justify">
-
-            <div id="unidades">
-
-            </div>
-
+            <div id="unidades"></div>
         </div>
 <!--        unidad fin-->
-
         <div class="tab-pane" id="bibliografia">
             <input  type="hidden" id="curs" value="<?php echo $value[5] ;?>"/>
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
@@ -64,19 +57,14 @@
                 <?php }?>
     
         </div>
-                    <br>
-
-
+         <br>
         </div>
 <div class="tab-pane" id="regresar">
     
 </div>
 <!--        edit fin-->
-
-        </div>
-        </div>
-    <iframe class="recibS col-md-offset-1"src="" width="990" height="650"  style="display: none;" marginwidth="0" marginheight="0" frameborder="0" scrolling="no"> 
-          
+</div>
+    <iframe class="recibS col-md-offset-1"src="" width="990" height="650"  style="display: none;" marginwidth="0" marginheight="0" frameborder="0" scrolling="no">           
           </iframe>
 
 
@@ -118,10 +106,10 @@
             <textarea id="sumilla_1" class="form-control" name="sumilla" rows="10"></textarea>
         </div>
         <div class="tab-pane"  id="unidad" align="justify" >
-            <label for="">especifar n° de unidades</label>
-            <input id="nuni" number="10" type="number"/>
-            <button type="button" id="generar_u">generar</button>
-            <br/><br/><br/>
+            <br>
+            <button type="button" style="margin-left:40%;" class="btn btn-default" value="Prompt" onClick="datos()">
+            Agregar Unidades</button>
+            <br><br>
             <div id="unidd" ></div>
            
 
@@ -177,11 +165,10 @@
                  
         </div>
 </div>
-    <br/><br/>
 
 
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
-      <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+      <input type="submit" id="grabar_1" class="btn btn-info gs" value="Grabar Silabus">
 </form>
 <?php }
 
