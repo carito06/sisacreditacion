@@ -233,9 +233,12 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
     }
 
     public function save() {
-        echo "<pre>";print_r($_POST);exit();
+       
+        $obj = new silabus();
+        $p = $obj->insert($_POST);
+        
 
-        if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) {
+        /*if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) {
             $obj = new silabus();
             if ($_POST['idsilabus'] == '') {
                 $p = $obj->insert($_POST);
@@ -266,7 +269,7 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
                     $view->render();
                 }
             }
-        } 
+        } */
     }
 
     public function delete() {

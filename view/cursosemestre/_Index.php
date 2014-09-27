@@ -2,12 +2,10 @@
 <div class="div_container">
     <div class="row">
         <!-- IZQUIERDA-->
-         <div class="panel" style="margin-left:-15%; width:240px; float:left;">
-                    <div id="cursodocente" style="width:240px;">
-                    </div> 
-        </div> 
-
-        <div  class="col-md-4"></div>
+            <div  class="col-md-4 toggler" >
+                 <div id="cursodocente" style="width:240px;"></div> 
+            </div> 
+            <button id="abrir" >abrir</button>
         <div  class="col-md-4" id="chau">
             <div class="panel-body">
                 <div > Semestre: <?php echo $semestreacademico; ?></div>

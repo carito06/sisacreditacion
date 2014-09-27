@@ -11,6 +11,20 @@
  */
 
 /*global define*/
+function validarNumero(e)
+{
+  tecla=(document.all) ? e.keyCode : e.which;
+  if(tecla==8) return true; // backspace
+  if(tecla==32) return true; // espacio
+  if(tecla==9) return true; // tab
+  if(tecla==13) return true; // enter
+  if(e.ctrlkey && tecla==86){ return true;}// Ctrl v
+  if(e.ctrlkey && tecla==67){ return true;}// Ctrl c
+  if(e.ctrlkey && tecla==88){ return true;}// Ctrl x  
+  patron=/[0-9]/;
+  te=String.fromCharCode(tecla);
+  return patron.test(te);
+}
 (function (global, undefined) {
 	"use strict";
 
@@ -37,7 +51,7 @@
 				ok     : "<a href=\"#\" class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\">{{ok}}</a>",
 				cancel : "<a href=\"#\" class=\"alertify-button alertify-button-cancel\" id=\"alertify-cancel\">{{cancel}}</a>"
 			},
-			input   : "<input type=\"text\" class=\"alertify-text\" id=\"alertify-text\">",
+			input   : "<input type=\"text\" class=\"alertify-text\" onkeydown='return validarNumero(event)' id=\"alertify-text\">",
 			message : "<p class=\"alertify-message\">{{message}}</p>",
 			log     : "<article class=\"alertify-log{{class}}\">{{message}}</article>"
 		};

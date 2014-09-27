@@ -430,6 +430,7 @@ class Controller {
          $obj->filtro1 = $p['filtro1']; 
         $obj->criterio1 = $p['criterio1'];
         $data = array();
+        $data["id"] = $p['criterio'];
         $data['rows'] = $obj->getListaD();
 //        $data['name'] = $p['name'];
 //        $data['id'] = $p['id'];

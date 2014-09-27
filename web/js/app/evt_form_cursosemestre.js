@@ -69,21 +69,17 @@ $( "#tabs" ).tabs();
       }
        
     });
-
-
  
- 
+
     $(".datepicker").datepicker();
-    if($("#semestreacademico").val() === "" ){
-     carga(vars);  
-    }
+    //var vars = $("#semestreacademico").val();   
     
-    var vars = $("#semestreacademico").val();   
     $("#semestreacademico").change(function() {
-      vars = $(this).val();
-      carga(vars);  
+      var idsa = $(this).val();
+      carga(idsa);
+      //alert(idsa);  
     });
-    
+
     
 // fin cursos q enseña el docente
     $('#myTab a').click(function(e) {
@@ -110,18 +106,83 @@ function validarLetras(e)
   return patron.test(te);
 }
 
-function validarNumero(e)
-{
-  tecla=(document.all) ? e.keyCode : e.which;
-  if(tecla==8) return true; // backspace
-  if(tecla==32) return true; // espacio
-  if(tecla==9) return true; // tab
-  if(e.ctrlkey && tecla==86){ return true;}// Ctrl v
-  if(e.ctrlkey && tecla==67){ return true;}// Ctrl c
-  if(e.ctrlkey && tecla==88){ return true;}// Ctrl x  
-  patron=/[0-9]/;
-  te=String.fromCharCode(tecla);
-  return patron.test(te);
+ $( "#abrir" ).click(function() {
+      runEffect(100,280,185,1);
+      
+    });
+    $( ".cerrar" ).click(function() {
+      runEffect(0,200,60,0);
+    });
+
+function runEffect($a,$b,$c,$d) {
+       var selectedEffect = "slide";
+       var options = {};
+      if ( selectedEffect === "scale" ) {
+        options = { percent: $a };
+      } else if ( selectedEffect === "size" ) {
+        options = { to: { width: $b, height: $c } };
+      }
+
+      if ($d==1){
+        $( ".effect" ).show( selectedEffect, options, 500);
+      }else{
+        $( ".effect" ).hide( selectedEffect, options, 1000 );
+      }
+}
+
+   
+
+function bib(){
+  alertify.prompt("ingresa número de bibliografias:", function (e, str) {
+           if (str!=""  && str>0 && str<=9) {
+          if (e){
+            alertify.success("Has pulsado '" + alertify.labels.ok + "'' e introducido: " + str);
+          }else{
+            alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
+          }
+
+      var html="";
+      html=html+"<table class='table table-bordered' >";
+      html=html+"<tbody>";
+      html=html+"<thead>";
+      html=html+"<tr>";
+      html=html+"<td>n</td>";
+      html=html+"<td>tipo de bibliografia</td>";
+      html=html+"<td>Descripcion</td>";
+      html=html+"</tr>";
+      html=html+"</thead>";
+      for (i =1; i <= str; i++) {
+      html=html+"<tr>";
+      html=html+"<td>"+i+"</td>";
+      html=html+"<td><select name='tipbibl[]' style='width:100px;' class='form-control' id='descripcion_tipobibliografia'>";
+      html= html+ "<option value='0'>Elige</option>";
+      html= html+ "<option value='1'>electronicos</option>";
+      html= html+ "<option value='2'>texto</option>";
+      html=html+ "</select>";  
+      html=html+"</td>";
+      html=html+"<td><input id='descripcion' name='descripcion[]' class='text ui-widget-content ui-corner-all' style='width: 100px; text-align: left;' /></td>";
+      html=html+"<tr>";
+      }
+      html=html+"</tbody>";
+      html=html+"</table>"; 
+      $("#bibl").html(html);     
+        
+ /*   <label for="referencia" class="labels" style="width: 110px" >Referencia:</label>
+    
+    <br/>
+    <label for="identificador" class="labels" style="width: 110px" >Identificador:</label>
+    
+    <br/>
+    <label for="descripcion" class="labels" style="width: 110px" >Descripcion:</label>
+    
+*/
+
+}
+else{
+  alertify.error("ingrese una unidad"); 
+ }
+ });
+        return false;   
 }
 
 function datos(){
@@ -144,13 +205,17 @@ function datos(){
         for(i=1;i<=str;i++){
             html = html+"<div id='tabsx-"+i+"'>";
                 html = html+"<div>";
-                html= html+"<label class='asd'>nombre de unidad: </label>";
-                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='ingresar nombre de unidad"+i+"' onkeydown='return validarLetras(event)' />";
-                html = html+"<input type='text' name='descripcion[]' placeholder='ingresar descripcion de unidad"+i+"' onkeydown='return validarLetras(event)' />";
-                html = html+"<input type='text' id='duracion"+i+"' name='duracion[]' placeholder='ingresar duracion de unidad"+i+"' onkeydown='return validarNumero(event)' /><br/>";
-                html = html+"<input type='button' onclick='semana("+i+")'  value='agregar temas a la unidad "+i+"'  /><br/>";
+                html= html+"<label style='color:#7D038B; font-size: 15px'>Nombre de unidad: </label>" ;
+                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='Ingresar nombre de unidad "+i+"' required /><br/><br/>";
+                html= html+"<label style='color:#7D038B; font-size: 15px'>Descripción de unidad: </label> <br/>" ;
+                html = html+"<textarea class='descripcion_u' name='descripcion[]' placeholder='Ingresar Descripción de unidad "+i+"'  ></textarea> <br/><br/>";
+                html= html+"<label style='color:#7D038B; font-size: 15px'>competencia: </label> <br/>" ;
+                html = html+"<textarea class='compentencia_u' name='competencia[]' placeholder='Ingresar competencia "+i+"'  ></textarea> <br/><br/>";
+                html= html+"<label style='color:#7D038B; font-size: 15px'>Duración de unidad: </label> " ;
+                html = html+"<input type='number' size='2' min='1' max='17' class='form-control duracion_u' id='duracion"+i+"' name='duracion[]' placeholder='Ingresar duración de unidad "+i+"'  required/><br/><br/>";
+                html = html+"<center><input type='button'class='agregar_t' style='font-size:13px;'   onclick='semana("+i+")'  value='Agregar temas a la Unidad "+i+"'  /></center><br/>";
                 html = html+"</div>";
-                html = html+"<div id='sem'></div>";
+                html = html+"<div id='sem"+i+"'></div>";
 
                 html = html+"<hr/>";
             html = html+"</div>";
@@ -167,31 +232,42 @@ function datos(){
       }
       
 function semana(param){
-    var temp = $("#duracion"+param).val();
+    //var temp="temp"+param;
+    //alert(temp);
+    temp = $("#duracion"+param).val();
     var html="";
-        html=html = html+"<div id='tabse_1_"+param+"'>";
+        html= html+"<div id='tabse_1_"+param+"'>";
         html = html+"<ul>";
+
+        /*
+       for(i=1;i<=temp;i++) {
+        if (param==(i+1)) {
+          asd=i+parseInt(temp);
+        }else{
+          asd=1;
+        }*/
+    
         for(i=1;i<=temp;i++) {
         html = html+"<li><a href='#tabsx-"+i+"'>Semana "+i+"</a></li>";
         }
-        html = html+"</ul>";
-        for(i=1;i<=temp;i++){
+       
 
-            html = html+"<div id='tabsx-"+i+"'>";
+        html = html+"</ul>";
+        for(j=1;j<=temp;j++){
+
+            html = html+"<div id='tabsx-"+j+"'>";
             html = html+"contenido";
-            html = html+"<input type='text' id='contenido' name='cont"+i+"-"+param+"' />"; 
+            html = html+"<input type='text' id='contenido' name='cont"+j+"-"+param+"' />"; 
             html = html+"Conceptual";
-            html = html+"<input type='text' id='Conceptual' name='conce"+i+"-"+param+"' />";  
+            html = html+"<input type='text' id='Conceptual' name='conce"+j+"-"+param+"' />";  
             html = html+"procedimental";
-            html = html+"<input type='text' id='procedimental' name='proc"+i+"-"+param+"' />";  
+            html = html+"<input type='text' id='procedimental' name='proc"+j+"-"+param+"' />";  
             html = html+"actitudinal";
-            html = html+"<input type='text' id='actitudinal' name='act"+i+"-"+param+"' />";  
-            html = html+"competencia";
-            html = html+"<input type='text' id='competencia' name='comp"+i+"-"+param+"' />";  
+            html = html+"<input type='text' id='actitudinal' name='act"+j+"-"+param+"' />";  
             html = html+"</div>";
         }
         html = html+"<div>";      
-        $("#sem").html(html);
+        $("#sem"+param).html(html);
         $( "#tabse_1_"+param ).tabs();
         //$("#sem").dialog("open");
 }
@@ -218,8 +294,9 @@ function llenartemas(param){
 }
 
 function carga(vars){
+     //$("#idsemeestreacademicoescondido").attr('value',vars);
+     //alert(vars);
      $("#silabus").css("display", "none");
-               
         //var ids = $(this).val();
         //console.log(ids);
         $("#tablaevaluaciones").css("display", "none");
@@ -317,8 +394,8 @@ $("#regresar").live("click", function() {
 //boton del mostrar el siabus  y editar
 
 
-function VerSi(id) {
-    var idsemestre = $("#semestreacademico").attr("value");
+function VerSi(id,codigosemestre) {
+    var codemestre = codigosemestre;
 //    
 //alert (id+'**'+idsemestre);
 $("#silaedit").css("display","");
@@ -328,8 +405,7 @@ $("#borrarb").css("display", "none");
 $(".olassss").css("display", "none");
 $("#tablaevaluaciones").css("display", "none");
 
-    $.post('index.php', 'controller=cursosemestre&action=getEdiSillabus&Codigo=' + id + '&idSemestre=' + idsemestre, function(data) {
-//       
+    $.post('index.php', 'controller=cursosemestre&action=getEdiSillabus&Codigo=' + id + '&codemestre=' + codemestre, function(data) {
 //       
 //        $("#evaluaciones").css("display", "inline");
   

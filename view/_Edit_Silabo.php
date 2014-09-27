@@ -15,8 +15,7 @@
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
-        <li class="active"><a href="#editar" data-toggle="tab" class="editar" class="ecp">FECHA</a></li>
-        <li><a href="#competencia" data-toggle="tab" class="ecp" >Competencia</a></li>
+        <li class="active"><a href="#competencia" data-toggle="tab" class="ecp" >Competencia</a></li>
         <li><a  href="#metodologia" data-toggle="tab" class="ecp">Metodologia</a></li>
         <li><a href="#objetivo" data-toggle="tab" class="ecp">Objetivo</a></li>
         <li><a href="#sumilla" data-toggle="tab" class="ecp">Sumilla</a></li>
@@ -33,7 +32,6 @@
         ?>
 
         <div class="tab-content col-md-11">
-            <div class="tab-pane active" id="editar"></div>
             <div class="tab-pane" id="competencia" align="justify">
             <?php echo $value[0] ?>
             <button class="btn btn-default">Editar</button>
@@ -70,23 +68,14 @@
 
         <?php }
         }else{ ?>
-<form id="frm1" action="index.php" method="POST">
+<form id="frm1" action="index.php?controller=cursosemestre" method="POST">
 <input type="hidden" name="controller" value="cursosemestre" />
     <input type="hidden" name="action" value="save" />
+    <input type="hidden" name="codemestre" value="<?php echo $_POST["codemestre"]; ?>" >
+    <input type="hidden" name="codcurso" value="<?php echo $_POST["Codigo"]; ?>" >
+    <input type="hidden" name="coddocente" value="<?php echo $_SESSION['idusuario']; ?>" >
 <div class="tab-content col-md-11">
-         <div class="tab-pane active" id="editar">
-                <br>
-                <label for="fecha_inicio" style="width: 120px">Fecha Inicio:</label>
-                <input  class="datepicker fech" placeholder="DD/MM/AA" data-format="dd/MM/yyyy hh:mm:ss" title="ingrese fecha de inicio"
-                 name="fecha_inicio" required class="text ui-widget-content ui-corner-all hasDatepicker">
-                <label for="fecha_terminox" style="width: 120px">Fecha Termino:</label>
-                <input class="datepicker fech" title="ingrese fecha final" name="fecha_termino" required>
-                <br><br>
-                <label for="duracion" style="width: 120px">Duracion:</label>
-                <input type="number" size="2"  min="1" max="17" id="duracion" name="duracion" class="dur text ui-widget-content ui-corner-all" 
-                placeholder="semanas" required>
-          </div>
-        <div class="tab-pane" id="competencia" align="justify">
+        <div class="tab-pane active" id="competencia" align="justify">
             <br>
              <textarea id="competencia_1" class="form-control" name="competencia" required rows="10"> </textarea>
         </div>
@@ -117,58 +106,28 @@
         </div>
         <div class="tab-pane" id="bibliografia">
             <br>
-                
-                <label for="tipo_bibliografia" class="labels" style="width: 100px" >Tipo Bibliografia:</label>
-                <button id="biblio" type="button">agregar bibliografia</button> <br>
-
-                 <div id="tabs">
-
-         <?php 
-             /*   mysql_connect("localhost", "root", "");
+        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">agregar bibliografia</button> <br>
+ 
+        <div id="bibl"></div> 
+          <?php 
+                mysql_connect("localhost", "root", "");
                 mysql_select_db("sisacreditacion");
-                        $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
-                        $temp=3;
-                        echo "<ul>";
-                        for ($i=0; $i <$temp ; $i++) { 
-                           echo "
-                               <li><a href='#tabs-".$i."'>bibliografia ".$i+1."</a></li>
-                            ";
-                        }
-                        echo "</ul>";
-                        echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='descripcion_tipobibliografia'>";
-                        echo "<option value='0'>Elige</option>";
-                        while($registro=mysql_fetch_row($consulta)){
-                             echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
-                         }
-                        echo "</select>";   
-                        echo '<br/>
-                <label for="referencia" class="labels" style="width: 110px" >Referencia:</label>
-                <input id="referencia" name="referencia" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->referencia" />
-                <br/>
-                
-                <label for="identificador" class="labels" style="width: 110px" >Identificador:</label>
-                <input id="identificador" name="identificador" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->identificador" />
-                
-                <br/>
-                
-                <label for="descripcion" class="labels" style="width: 110px" >Descripcion:</label>
-                <input id="descripcion" name="descripcion" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" placeholder="ingrese->descripcion" />
-                        ';
-                        $temp=3;
-                    for ($i=0; $i <$temp ; $i++) { 
-                           echo "<div id='tabs-".$i."'>bibliografia ".$i+1."</div>";
-                        }
-                        */
-         ?>
-                     
-                 </div>
-                 
+               $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
+               echo '<label for="tipo_bibliografia" class="labels" style="width: 100px" >Tipo Bibliografia:</label';
+               echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='descripcion_tipobibliografia'>";
+               echo "<option value='0'>Elige</option>";
+                   while($registro=mysql_fetch_row($consulta)){
+                       echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
+                    }
+                echo "</select>";   
+                echo '<br/>';
+         ?>      
         </div>
 </div>
 
 
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
-      <input type="submit" id="grabar_1" class="btn btn-info gs" value="Grabar Silabus">
+      <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
 </form>
 <?php }
 

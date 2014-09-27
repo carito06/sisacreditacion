@@ -24,5 +24,4 @@ class="form-control" style="width: 100%;" >
 </select>
 
 <?php } ?>
-
-
+<input type="hidden" id="idsemeestreacademicoescondido" name="idsemeestreacademicoescondido" />
