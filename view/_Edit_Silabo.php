@@ -8,11 +8,10 @@
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
     <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
-    
+    <link rel="stylesheet" href="../web/css/css.css">
     <script type="text/javascript" src="lib/alertify.js"></script>
     <link rel="stylesheet" href="../web/themes/alertify.core.css" />
     <link rel="stylesheet" href="../web/themes/alertify.default.css" />
-    <link rel="stylesheet" href="../web/css/css.css">
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
@@ -107,7 +106,7 @@
         </div>
         <div class="tab-pane" id="bibliografia">
             <br>
-        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">Agregar Bibliografia</button> <br>
+        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">agregar bibliografia</button> <br>
  
         <div id="bibl"></div> 
           <?php 
