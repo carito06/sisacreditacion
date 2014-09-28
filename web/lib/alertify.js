@@ -49,11 +49,11 @@ function validarNumero(e)
 				holder : "<nav class=\"alertify-buttons\">{{buttons}}</nav>",
 				submit : "<button type=\"submit\" class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\" />{{ok}}</button>",
 				ok     : "<a href=\"#\" class=\"alertify-button alertify-button-ok\" id=\"alertify-ok\">{{ok}}</a>",
-				cancel : "<a href=\"#\" class=\"alertify-button alertify-button-cancel\" id=\"alertify-cancel\">{{cancel}}</a>"
+				cancel : "<a href=\"#\" class=\"alertify-button alertify-button-cancel canck\" id=\"alertify-cancel\">{{cancel}}</a>"
 			},
-			input   : "<input type=\"text\" class=\"alertify-text\" onkeydown='return validarNumero(event)' id=\"alertify-text\">",
+			input   : "<input type=\"number\" size=\"2\" min=\"1\" max=\"17\" required class=\"alertify-text texk\" onkeydown='return validarNumero(event)' id=\"alertify-text\">",
 			message : "<p class=\"alertify-message\">{{message}}</p>",
-			log     : "<article class=\"alertify-log{{class}}\">{{message}}</article>"
+			log     : "<article class=\"alertify-log{{class}}  \">{{message}}</article>"
 		};
 
 		/**
