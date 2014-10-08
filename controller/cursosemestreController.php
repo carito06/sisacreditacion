@@ -82,8 +82,12 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
        
          public function getEdiSillabus()
        {
+        
+        //print_r($_POST);exit();
         $codcurso=$_POST["Codigo"];
-        $codsemestre=$_POST["idSemestre"];
+        $codsemestre=$_POST["codemestre"];
+
+
         
         $envio=$this->detalle_silabus(array('filtro' => 'CodigoCurso','filtro1' =>'CodigoSemestre','criterio' => $codcurso,'criterio1' => $codsemestre));      
 //        echo $codcurso;

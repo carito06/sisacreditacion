@@ -1,6 +1,15 @@
 //cursos q enseña el docente
 $(function() {
-    
+    // Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+      $("#agregar").click(function(){
+        $("#tabla tbody tr:eq(0)").clone('fila-base').removeClass('fila-base').appendTo("#tabla tbody");
+      });
+
+    // Evento que selecciona la fila y la elimina 
+      $(".eliminar").click(function(){
+        var parent = $(this).parents().get(0);
+        $(parent).remove();
+      });
     //var vars = 0;
     //carga(vars);
     //$( "#tabsxx" ).tabs();
@@ -69,7 +78,8 @@ $( "#tabs" ).tabs();
       }
        
     });
- 
+
+
 
     $(".datepicker").datepicker();
     //var vars = $("#semestreacademico").val();   
@@ -82,12 +92,10 @@ $( "#tabs" ).tabs();
 
     
 // fin cursos q enseña el docente
-    $('#myTab a').click(function(e) {
-        e.preventDefault();
-        $(this).tab('show');
-    });
+
 
 });
+
 function validarLetras(e)
 {
   tecla=(document.all) ? e.keyCode : e.which;
@@ -105,6 +113,20 @@ function validarLetras(e)
   te=String.fromCharCode(tecla);
   return patron.test(te);
 }
+function validarNumero(e)
+{
+  tecla=(document.all) ? e.keyCode : e.which;
+  if(tecla==8) return true; // backspace
+  if(tecla==32) return true; // espacio
+  if(tecla==9) return true; // tab
+  if(e.ctrlkey && tecla==86){ return true;}// Ctrl v
+  if(e.ctrlkey && tecla==67){ return true;}// Ctrl c
+  if(e.ctrlkey && tecla==88){ return true;}// Ctrl x  
+  patron=/[0-9]/;
+  te=String.fromCharCode(tecla);
+  return patron.test(te);
+}
+
 
  $( "#abrir" ).click(function() {
       runEffect(100,280,185,1);
@@ -130,8 +152,6 @@ function runEffect($a,$b,$c,$d) {
       }
 }
 
-   
-
 function bib(){
   alertify.prompt("ingresa número de bibliografias:", function (e, str) {
            if (str!=""  && str>0 && str<=9) {
@@ -142,25 +162,26 @@ function bib(){
           }
 
       var html="";
-      html=html+"<table class='table table-bordered' >";
+      html=html+"</br>";
+      html=html+"<table class='table table-hover table-bordered'>";
       html=html+"<tbody>";
       html=html+"<thead>";
-      html=html+"<tr>";
-      html=html+"<td>n</td>";
-      html=html+"<td>tipo de bibliografia</td>";
-      html=html+"<td>Descripcion</td>";
+      html=html+"<tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>";
+      html=html+"<td>N°</td>";
+      html=html+"<td>tipo de bibliografía</td>";
+      html=html+"<td>Descripción</td>";
       html=html+"</tr>";
       html=html+"</thead>";
       for (i =1; i <= str; i++) {
       html=html+"<tr>";
-      html=html+"<td>"+i+"</td>";
-      html=html+"<td><select name='tipbibl[]' style='width:100px;' class='form-control' id='descripcion_tipobibliografia'>";
+      html=html+"<td valign='middle'>"+i+"</td>";
+      html=html+"<td><select name='tipbibl[]' style='width:100%;' class='form-control' id='descripcion_tipobibliografia'>";
       html= html+ "<option value='0'>Elige</option>";
       html= html+ "<option value='1'>electronicos</option>";
       html= html+ "<option value='2'>texto</option>";
       html=html+ "</select>";  
       html=html+"</td>";
-      html=html+"<td><input id='descripcion' name='descripcion[]' class='text ui-widget-content ui-corner-all' style='width: 100px; text-align: left;' /></td>";
+      html=html+"<td><textarea id='descripcion' name='descripcion[]' class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; text-align: left;' placeholder='Ingresar Descripción'/></textarea></td>";
       html=html+"<tr>";
       }
       html=html+"</tbody>";
@@ -185,51 +206,8 @@ else{
         return false;   
 }
 
-function datos(){
-        //un prompt
-        alertify.prompt("ingresa número de unidades:", function (e, str) { 
-        if (str!=""  && str>='0' && str<='9') {
-          if (e){
-            alertify.success("Has pulsado '" + alertify.labels.ok + "'' e introducido: " + str);
-          }else{
-            alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
-          }
-         //agregar unidades
-        var html="";
-        html=html = html+"<div id='tabu_1_1'>";
-        html = html+"<ul>";
-        for(i=1;i<=str;i++) {
-        html = html+"<li><a href='#tabsx-"+i+"'>unidad "+i+"</a></li>";
-        }
-        html = html+"</ul>";
-        for(i=1;i<=str;i++){
-            html = html+"<div id='tabsx-"+i+"'>";
-                html = html+"<div>";
-                html= html+"<label style='color:#7D038B; font-size: 15px'>Nombre de unidad: </label>" ;
-                html = html+"<input type='text' class='form-control' name='nombreuni[]' placeholder='Ingresar nombre de unidad "+i+"' required /><br/><br/>";
-                html= html+"<label style='color:#7D038B; font-size: 15px'>Descripción de unidad: </label> <br/>" ;
-                html = html+"<textarea class='descripcion_u' name='descripcion[]' placeholder='Ingresar Descripción de unidad "+i+"'  ></textarea> <br/><br/>";
-                html= html+"<label style='color:#7D038B; font-size: 15px'>competencia: </label> <br/>" ;
-                html = html+"<textarea class='compentencia_u' name='competencia[]' placeholder='Ingresar competencia "+i+"'  ></textarea> <br/><br/>";
-                html= html+"<label style='color:#7D038B; font-size: 15px'>Duración de unidad: </label> " ;
-                html = html+"<input type='number' size='2' min='1' max='17' class='form-control duracion_u' id='duracion"+i+"' name='duracion[]' placeholder='Ingresar duración de unidad "+i+"'  required/><br/><br/>";
-                html = html+"<center><input type='button'class='agregar_t' style='font-size:13px;'   onclick='semana("+i+")'  value='Agregar temas a la Unidad "+i+"'  /></center><br/>";
-                html = html+"</div>";
-                html = html+"<div id='sem"+i+"'></div>";
 
-                html = html+"<hr/>";
-            html = html+"</div>";
-        }
-        html = html+"<div>";      
-        $("#unidd").html(html);
-        $( "#tabu_1_1" ).tabs();   
-        }
-        else{
-            alertify.error("ingrese una unidad"); 
-        }
-        });
-        return false;   
-      }
+
       
 function semana(param){
     //var temp="temp"+param;
@@ -256,16 +234,24 @@ function semana(param){
         for(j=1;j<=temp;j++){
 
             html = html+"<div id='tabsx-"+j+"'>";
-            html = html+"contenido";
-            html = html+"<input type='text' id='contenido' name='cont"+j+"-"+param+"' />"; 
-            html = html+"Conceptual";
-            html = html+"<input type='text' id='Conceptual' name='conce"+j+"-"+param+"' />";  
-            html = html+"procedimental";
-            html = html+"<input type='text' id='procedimental' name='proc"+j+"-"+param+"' />";  
-            html = html+"actitudinal";
-            html = html+"<input type='text' id='actitudinal' name='act"+j+"-"+param+"' />";  
+            html = html+"<table class='table table-bordered'>";
+            html = html+"<tbody>";
+            html = html+"<tr>";
+            html = html+"<td><label>Contenido: </label>";
+            html = html+"<textarea id='contenido' class='form-control' rows='5' cols='30' name='cont"+j+"-"+param+"' /></textarea></td>"; 
+            html = html+"<td><label>Conceptual: </label>";
+            html = html+"<textarea id='Conceptual' class='form-control' rows='5' cols='30'' name='conce"+j+"-"+param+"' /></textarea></td>";  
+            html = html+"</tr>";
+            html = html+"<tr>";
+            html = html+"<td><label>Procedimental: </label>";
+            html = html+"<textarea id='procedimental' class='form-control' rows='5' cols='30' name='proc"+j+"-"+param+"' /></textarea></td>";  
+            html = html+"<td><label>Actitudinal: </label>";
+            html = html+"<textarea id='actitudinal'  class='form-control' rows='5' cols='30' name='act"+j+"-"+param+"' /></textarea></td>";
+            html = html+"</tbody>";
+            html = html+"</table>";  
             html = html+"</div>";
         }
+
         html = html+"<div>";      
         $("#sem"+param).html(html);
         $( "#tabse_1_"+param ).tabs();

@@ -66,17 +66,22 @@ fieldset[disabled] .agregar_t.active {
 }
 
 /* A*/
-
+#alk{
+  background-color: #8B1596;
+}
 /* B*/
 
 /* C*/
-
+.canck{
+  background-color: #8B1596;
+}
 /* D*/
 
 .duracion_u{
-	width: 100px;
+  width: 100px;
 }
-
+  
+  
 /* E*/
 
 /* F*/
@@ -109,6 +114,12 @@ fieldset[disabled] .agregar_t.active {
 
 /* T*/
 
+.textk{
+  width:20%;
+}
+
+
+
 /* U*/
 
 /* V*/
@@ -120,10 +131,3 @@ fieldset[disabled] .agregar_t.active {
 /* Y*/
 
 /* Z*/
-
-
-
-
-
-
-

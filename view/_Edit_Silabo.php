@@ -3,42 +3,59 @@
     .nav a{
         color:#428bca; 
     }
+    .fila-base{ display: none; } /* fila base oculta */
+    .eliminar{ cursor: pointer; color: #000; }
 </style>
 <!--ALUMNO Comienza-->
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
+    
     <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
-    <link rel="stylesheet" href="../web/css/css.css">
+
     <script type="text/javascript" src="lib/alertify.js"></script>
     <link rel="stylesheet" href="../web/themes/alertify.core.css" />
     <link rel="stylesheet" href="../web/themes/alertify.default.css" />
+    <link rel="stylesheet" href="../web/css/css.css">
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
-        <li class="active"><a href="#competencia" data-toggle="tab" class="ecp" >Competencia</a></li>
-        <li><a  href="#metodologia" data-toggle="tab" class="ecp">Metodologia</a></li>
-        <li><a href="#objetivo" data-toggle="tab" class="ecp">Objetivo</a></li>
-        <li><a href="#sumilla" data-toggle="tab" class="ecp">Sumilla</a></li>
+        <li class="active"><a href="#obGen" data-toggle="tab" class="ecp" >Objetivos Generales</a></li>
         <li><a href="#unidad" data-toggle="tab" class="unidad" class="ecp">Unidad</a></li>
         <li><a href="#bibliografia" data-toggle="tab" class="ecp">Bibliografia</a></li>
-        <li><a href="#regresar" data-toggle="tab" class="regresar" class="ecp">Regresar</a></li>
     </ul> 
+    </div>
     <?php
-
    if($rows){
-
-    foreach ($rows as $key => $value) { 
-
-        ?>
+    foreach ($rows as $key => $value) { ?>
 
         <div class="tab-content col-md-11">
-            <div class="tab-pane" id="competencia" align="justify">
-            <?php echo $value[0] ?>
-            <button class="btn btn-default">Editar</button>
+            <div class="tab-pane active" id="obGen" align="justify">
+            <br>
+             <table class="table table-hover table-bordered">
+                <tbody>
+                   <tr>
+                       <td><label>competencia</label>
+                       <?php echo $value[0] ?>
+                        <button class="btn btn-default">Editar</button>
+                       </td>
+                       <td>
+                         <label>metodologia</label>
+                         <?php echo $value[1] ?>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                         <label>objetivo</label>
+                         <?php echo $value[2] ?>
+                       </td>
+                       <td>
+                        <label>sumilla</label>
+                        <?php echo $value[3] ?>
+                       </td>
+                   </tr>
+                </tbody>
+            </table>
             </div>
-            <div class="tab-pane" id="metodologia" align="justify"><?php echo $value[1] ?></div>
-            <div class="tab-pane" id="objetivo" align="justify"><?php echo $value[2] ?></div>
-            <div class="tab-pane" id="sumilla" align="justify"><?php echo $value[3] ?></div>
 
         <input type="hidden" id="semestre" value="<?php echo $value[4] ?>"/>
         <input type="hidden" id="curso" value="<?php echo $value[5] ?>"/>
@@ -57,17 +74,15 @@
         </div>
          <br>
         </div>
-<div class="tab-pane" id="regresar">
-    
-</div>
 <!--        edit fin-->
-</div>
-    <iframe class="recibS col-md-offset-1"src="" width="990" height="650"  style="display: none;" marginwidth="0" marginheight="0" frameborder="0" scrolling="no">           
-          </iframe>
 
 
         <?php }
-        }else{ ?>
+        }else{
+
+            
+
+         ?>
 <form id="frm1" action="index.php?controller=cursosemestre" method="POST">
 <input type="hidden" name="controller" value="cursosemestre" />
     <input type="hidden" name="action" value="save" />
@@ -75,30 +90,83 @@
     <input type="hidden" name="codcurso" value="<?php echo $_POST["Codigo"]; ?>" >
     <input type="hidden" name="coddocente" value="<?php echo $_SESSION['idusuario']; ?>" >
 <div class="tab-content col-md-11">
-        <div class="tab-pane active" id="competencia" align="justify">
+        <div class="tab-pane active" id="obGen" align="justify">
             <br>
-             <textarea id="competencia_1" class="form-control" name="competencia" required rows="10"> </textarea>
-        </div>
 
-        <div class="tab-pane" id="metodologia" align="justify">
-            <br>
-            <textarea id="metodologia_1" class="form-control" name="metodologia" rows="10"> </textarea>
-        </div>
+            <table class="table">
+                <tbody>
+                   <tr>
+                       <td><label>competencia</label>
+                       <textarea id="competencia_1" class="form-control" name="competencia" required rows="3"> </textarea>
+                       </td>
+                       <td>
+                         <label>metodologia</label>
+                         <textarea id="metodologia_1" class="form-control" name="metodologia" rows="3"> </textarea>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td>
+                         <label>objetivo</label>
+                         <textarea id="objetivo_1" class="form-control" name="objetivo" rows="3"></textarea>
+                       </td>
+                       <td>
+                        <label>sumilla</label>
+                        <textarea id="sumilla_1" class="form-control" name="sumilla" rows="3"></textarea>
+                       </td>
+                   </tr>
+                </tbody>
+            </table>
+    </div>  
+             
 
-        <div class="tab-pane" id="objetivo" align="justify">
-            <br>
-            <textarea id="objetivo_1" class="form-control" name="objetivo" rows="10"></textarea>
-        </div>
-
-        <div class="tab-pane" id="sumilla" align="justify">
-            <br>
-            <textarea id="sumilla_1" class="form-control" name="sumilla" rows="10"></textarea>
-        </div>
+             
         <div class="tab-pane"  id="unidad" align="justify" >
             <br>
-            <button type="button" style="margin-left:40%;" class="btn btn-default" value="Prompt" onClick="datos()">
+            <button type="button" id="agregar" style="margin-left:40%;" class="btn btn-default">
             Agregar Unidades</button>
-            <br><br>
+            <br>
+            <table id="tabla" class='table table-hover table-bordered'>
+                <!-- Cabecera de la tabla -->
+                <thead>
+                  <tr>
+                          <th>Denominación</th>
+                          <th>Descripción</th>
+                          <th>Competencia</th>
+                          <th>Duración</th>
+                          <th>Temas</th>
+                          <th>&nbsp;</th>
+                  </tr>
+                </thead>
+               
+                <!-- Cuerpo de la tabla con los campos -->
+                <tbody>
+               
+                  <!-- fila base para clonar y agregar al final -->
+                  <tr class="fila-base">
+                    <td><input type="text" class="form-control" name="nombreuni[]" /></td>
+                    <td><input type="text" class="form-control" name="descripcion[]"  /></td>
+                    <td><input type="text" class="form-control" name="competencia[]" /></td>
+                    <td><input type="number" class="form-control" name="duracion[]"/></td>
+                    <td><button type="button" class="btn btn-default">+</button></td> 
+                    <td class="eliminar"><button type="button" class="btn btn-default">X</button></td>
+                  </tr>
+                  <!-- fin de código: fila base -->
+               
+                  <!-- Fila de ejemplo -->
+                  <tr>
+                    <td><input type="text" class="form-control" name="nombreuni[]" /></td>
+                    <td><input type="text" class="form-control" name="descripcion[]"  /></td>
+                    <td><input type="text" class="form-control" name="competencia[]" /></td>
+                    <td><input type="number" class="form-control" name="duracion[]"/></td>
+                    <td><button type="button" class="btn btn-default">+</button></td> 
+                    <td class="eliminar"><button type="button" class="btn btn-default">X</button></td>
+                  </tr>
+
+                  <!--fin de código: fila de ejemplo -->
+               
+                </tbody>
+            </table>
+            <br>
             <div id="unidd" ></div>
            
 
@@ -106,7 +174,7 @@
         </div>
         <div class="tab-pane" id="bibliografia">
             <br>
-        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">agregar bibliografia</button> <br>
+        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">Agregar Bibliografia</button> <br>
  
         <div id="bibl"></div> 
           <?php 
@@ -128,6 +196,7 @@
 
      <!-- <button type="button" id="grabar_1" class="btn btn-info">Grabar Silabus</button>-->
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+
 </form>
 <?php }
 
