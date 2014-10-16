@@ -558,7 +558,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
     function getTema() {
         $query = " SELECT distinct 
-                 semana, contenido, conceptual, procedimental, actitudinal, competencia,tema.idtema,idunidad,clase.fecha,clase.idtema,clase.idclase
+                 semana, contenido, conceptual, procedimental, actitudinal, tema.idtema,idunidad,clase.fecha,clase.idtema,clase.idclase
                             FROM tema
 				left join clase on 
 				tema.idtema=clase.idtema

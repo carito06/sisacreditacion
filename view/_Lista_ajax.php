@@ -1,29 +1,40 @@
-<button class="cerrar"><span>X</span></button>
-<div class="container-fluid  effect" style="min-height: 390px" id="byesyllabus">
+<div class="effect" id="byesyllabus">
 <?php foreach ($rows as $key => $value) { ?>
 
-<div id="listacurso">
-        <div class="list-group">
+<div id="listacurso" style="margin-left: 10px; height:100px; width:170px;" >
+        <div class="list-group" style="margin-left: 17px; width:130px; border-radius: 10px; 
+                box-shadow:0px 0px 10px 0px skyblue ;" title="<?php echo utf8_encode(strtoupper($value[4])); ?>">
             
-            <br>
             <?php if(isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')){?>
             
-            <a href="#" style="font-size:10px; background-color:#eaf8fc; cursor:default;" class="list-group-item "><b>CURSO:</b>&nbsp<?php echo utf8_encode(strtoupper($value[1])); ?></a>
-            <a href="#" style="font-size:10px; cursor:default;" class="list-group-item">
-             <b>Docente:</b>&nbsp<?php echo (utf8_encode(strtoupper($value[2]))); ?><BR>
-            
+            <a href="#" style="font-size:10px; background-color:#eaf8fc;" class="list-group-item ">
+                <?php echo utf8_encode(strtoupper($value[1])); ?>
+            </a>
+
+            <a href="#" style="font-size:10px;" class="list-group-item">
+             <b>Docente:</b><?php echo (utf8_encode(strtoupper($value[2]))); ?><BR>
             </a>
              
             <?PHP }?>
-            
             <?php if(isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')){?>
-            <a href="#" style="font-size:10px; background-color:#eaf8fc;" class="list-group-item "><b>CURSO:</b>&nbsp<?php echo utf8_encode(strtoupper($value[1])); ?></a>
-            <a href="#" style="font-size:10px; cursor:default;" class="list-group-item"><b>CREDITOS:</b>&nbsp<?php $credito =(int)$value[3]; echo $credito; ?><BR>
-            <b>Plan Curricular:</b>&nbsp<?php echo utf8_encode(strtoupper($value[4])); ?>
-            </a>
-             <?php }?>
+         
+            <a href="#" style="font-size:8.4px; background-color:#eaf8fc; " class="list-group-item ">
             
-            <span class="list-inline">
+            <?php echo utf8_encode(strtoupper($value[1])); ?>
+           <span class="badge" title="creditos" style="background: skyblue; margin-top:-30px; margin-right: -19px;">
+             <?php $credito =(int)$value[3]; echo $credito; ?> 
+           </span>  
+            </a>
+          
+            
+            
+
+             <?php }?>
+        </div> 
+       
+         
+         <div style="margin-top:-16px;">
+            <span class="list-inline" >
                 <?php if(isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')){?>
                     
                 <input  type="hidden" class="semestre" value="<?php echo $value[4]?>"/> 
@@ -36,16 +47,18 @@
               <?php }?>
             <?php if(isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')){?>
 
-                <a onclick="Ver('<?php echo $value[0];?>')" style="font-size:10px; align:center; padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">lista</a>
-                <a onclick="VerRegistro('<?php echo $value[0];?>')" style="font-size:10px; align:center; padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">registro</a>
-                <a onclick="VerSi('<?php echo $value[0];?>','<?php echo $id; ?>')" style="font-size:10px; align:center; padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">sylabus</a>
-                <a onclick="VerAsistencia('<?php echo $value[0];?>')" style="font-size:10px; align:center; padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">asistencia</a>
+                <a onclick="Ver('<?php echo $value[0];?>')" style="font-size:10px; align:center; padding:2px 2px ;" 
+                id="" name="" class="btn btn-primary btn-xs">lista</a>
+                <a onclick="VerRegistro('<?php echo $value[0];?>')" style="font-size:10px; align:center; padding:2px 2px ;" 
+                id="" name="" class="btn btn-primary btn-xs">registro</a>
+                <a onclick="VerSi('<?php echo $value[0];?>','<?php echo $id; ?>')" style="font-size:10px; align:center; 
+                padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">sylabus</a>
+                <a onclick="VerAsistencia('<?php echo $value[0];?>')" style="font-size:10px; align:center;
+                 padding:2px 2px ;" id="" name="" class="btn btn-primary btn-xs">asistencia</a>
 
              <?php }?>
             </span>
-        </div>
-
-
+        </div>  
     </div>  
 <?php } ?>
 </div>

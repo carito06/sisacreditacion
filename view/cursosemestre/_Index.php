@@ -2,25 +2,19 @@
 <div class="div_container">
     <div class="row">
         <!-- IZQUIERDA-->
-            <div  class="col-md-4 toggler" >
-                 <div id="cursodocente" style="width:240px;"></div> 
-            </div> 
-            <button id="abrir" >abrir</button>
-        <div  class="col-md-4" id="chau">
-            <div class="panel-body">
-                <div > Semestre: <?php echo $semestreacademico; ?></div>
-                <br>
-        
-            </div>
-        </div>
+        <div  class="col-md-3 toggler" >
+             <div id="cursodocente" ></div> 
+        </div> 
+
         <!-- DERECHA-->
 
-        <div class="col-md-8" style="padding-right: 0px; padding-left: 0px;" id="agrandar" >
-            <div id="lista" class="col-md-12" style="padding-right: 0px; padding-left: 0px;" >
+        <div class="col-md-9" style="margin-left: -50px;" id="agrandar" >
+            <?php echo $semestreacademico; ?>
+            <div id="lista" class="col-md-12">
 
             </div>
             <!--           evaluaciones-->
-            <div id="evaluaciones" class="col-md-12" style="padding-right: 0px; padding-left: 0px;" >
+            <div id="evaluaciones" class="col-md-12" >
 
             </div>
                   
@@ -28,14 +22,12 @@
 
 
             </div>
-                              
+     
             <div id="unidadesA">
-                
-                
             </div>
 
             <!--           evaluaciones-->
-            <div id="sila" class="col-md-12" style="padding-right: 0px; padding-left: 0px;" >
+            <div id="sila" class="col-md-12">
 
             </div>
             <!--        MOSTRAR SILABUS Y EDITAR-->

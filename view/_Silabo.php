@@ -91,8 +91,6 @@
             </b>&nbsp;&nbsp;<?php echo $value[6]?> <button class="btn btn-primary btn-xs" style="margin-bottom:5px; " type="button" id="regresar" value="Regresar">Regresar</button>
             </div>
 
- 
- 
     <table id="tablaevaluaciones" class="table table-bordered">
         <thead style="font-size:16px;background-color:#eaf8fc;">
         <td><strong>Descripcion</strong></td>
