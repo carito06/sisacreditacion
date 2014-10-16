@@ -1,6 +1,42 @@
 //cursos q enseña el docente
 $(function() {
+<<<<<<< HEAD
     
+=======
+    // Clona la fila oculta que tiene los campos base, y la agrega al final de la tabla
+      $("#agregar").click(function(){
+        $("#tabla tbody tr:eq(0)").clone('fila-base').removeClass('fila-base').appendTo("#tabla tbody");
+      });
+
+    // Evento que selecciona la fila y la elimina 
+      $(".eliminar").click(function(){
+        var parent = $(this).parents().get(0);
+        $(parent).remove();
+      });
+    //var vars = 0;
+    //carga(vars);
+    //$( "#tabsxx" ).tabs();
+// 
+    // $("#sem").dialog({
+        // title:"SEMANAS POR UNIDAD",
+        // width :'auto',
+        // autoOpen:false,
+        // modal:true,
+            // show:{
+                    // effect: "slide",
+                    // duration : 700
+                 // },
+            // hide:{
+                // effect: "explode",
+                // duration: 300
+            // },
+        // buttons:{
+            // "GRABAR":function(){},
+            // "CERRAR":function(){$("#sem").dialog('close');}
+        // }
+// 
+    // });
+>>>>>>> origin/master
 $( "#tabs" ).tabs();
 
 
@@ -78,6 +114,7 @@ $( "#tabs" ).tabs();
     carga($("#semestreacademico").val());
     //alert("me recargue");
 // fin cursos q enseña el docente
+<<<<<<< HEAD
 });
 /*
   function evalu(){
@@ -101,6 +138,12 @@ function agregarUni(){
    $(h4).appendTo("#a");
    ii++;
 }
+=======
+
+
+});
+
+>>>>>>> origin/master
 function validarLetras(e)
 {
   tecla=(document.all) ? e.keyCode : e.which;
@@ -156,6 +199,7 @@ function runEffect($a,$b,$c,$d) {
         $( ".effect" ).hide( selectedEffect, options, 1000 );
       }
 }
+<<<<<<< HEAD
 var i=2;
 function bib(){
       $("#bibl tbody tr:eq(0)").clone("#bibl").removeClass("dtp").appendTo("#bibl tbody").css("display","");
@@ -166,10 +210,69 @@ $(".eliminar").click(function(){
     var parent = $(this).parent();
     //alert(parent);
     $(parent).remove();
+=======
+
+function bib(){
+  alertify.prompt("ingresa número de bibliografias:", function (e, str) {
+           if (str!=""  && str>0 && str<=9) {
+          if (e){
+            alertify.success("Has pulsado '" + alertify.labels.ok + "'' e introducido: " + str);
+          }else{
+            alertify.error("Has pulsado '" + alertify.labels.cancel + "'");
+          }
+
+      var html="";
+      html=html+"</br>";
+      html=html+"<table class='table table-hover table-bordered'>";
+      html=html+"<tbody>";
+      html=html+"<thead>";
+      html=html+"<tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>";
+      html=html+"<td>N°</td>";
+      html=html+"<td>tipo de bibliografía</td>";
+      html=html+"<td>Descripción</td>";
+      html=html+"</tr>";
+      html=html+"</thead>";
+      for (i =1; i <= str; i++) {
+      html=html+"<tr>";
+      html=html+"<td valign='middle'>"+i+"</td>";
+      html=html+"<td><select name='tipbibl[]' style='width:100%;' class='form-control' id='descripcion_tipobibliografia'>";
+      html= html+ "<option value='0'>Elige</option>";
+      html= html+ "<option value='1'>electronicos</option>";
+      html= html+ "<option value='2'>texto</option>";
+      html=html+ "</select>";  
+      html=html+"</td>";
+      html=html+"<td><textarea id='descripcion' name='descripcion[]' class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; text-align: left;' placeholder='Ingresar Descripción'/></textarea></td>";
+      html=html+"<tr>";
+      }
+      html=html+"</tbody>";
+      html=html+"</table>"; 
+      $("#bibl").html(html);     
+        
+ /*   <label for="referencia" class="labels" style="width: 110px" >Referencia:</label>
+    
+    <br/>
+    <label for="identificador" class="labels" style="width: 110px" >Identificador:</label>
+    
+    <br/>
+    <label for="descripcion" class="labels" style="width: 110px" >Descripcion:</label>
+>>>>>>> origin/master
     
 });
 
 
+<<<<<<< HEAD
+=======
+
+
+      
+function semana(param){
+    //var temp="temp"+param;
+    //alert(temp);
+    temp = $("#duracion"+param).val();
+    var html="";
+        html= html+"<div id='tabse_1_"+param+"'>";
+        html = html+"<ul>";
+>>>>>>> origin/master
 
 var temp= [];
 var temp2= [];
@@ -179,6 +282,7 @@ function semana(i){
   //alert("entre");
    var html="";
     
+<<<<<<< HEAD
     temp[i] = $("#duracion"+i).val();
     temp2[i] = $("#nombreunidad"+i).val();
     t= t + parseInt(temp[i]);
@@ -232,6 +336,39 @@ function semana(i){
     html +="</tbody>";
     html +="</table>";
     $("#h"+i).html(html);
+=======
+        for(i=1;i<=temp;i++) {
+        html = html+"<li><a href='#tabsx-"+i+"'>Semana "+i+"</a></li>";
+        }
+       
+
+        html = html+"</ul>";
+        for(j=1;j<=temp;j++){
+
+            html = html+"<div id='tabsx-"+j+"'>";
+            html = html+"<table class='table table-bordered'>";
+            html = html+"<tbody>";
+            html = html+"<tr>";
+            html = html+"<td><label>Contenido: </label>";
+            html = html+"<textarea id='contenido' class='form-control' rows='5' cols='30' name='cont"+j+"-"+param+"' /></textarea></td>"; 
+            html = html+"<td><label>Conceptual: </label>";
+            html = html+"<textarea id='Conceptual' class='form-control' rows='5' cols='30'' name='conce"+j+"-"+param+"' /></textarea></td>";  
+            html = html+"</tr>";
+            html = html+"<tr>";
+            html = html+"<td><label>Procedimental: </label>";
+            html = html+"<textarea id='procedimental' class='form-control' rows='5' cols='30' name='proc"+j+"-"+param+"' /></textarea></td>";  
+            html = html+"<td><label>Actitudinal: </label>";
+            html = html+"<textarea id='actitudinal'  class='form-control' rows='5' cols='30' name='act"+j+"-"+param+"' /></textarea></td>";
+            html = html+"</tbody>";
+            html = html+"</table>";  
+            html = html+"</div>";
+        }
+
+        html = html+"<div>";      
+        $("#sem"+param).html(html);
+        $( "#tabse_1_"+param ).tabs();
+        //$("#sem").dialog("open");
+>>>>>>> origin/master
 }
 
 function llenartemas(param){
