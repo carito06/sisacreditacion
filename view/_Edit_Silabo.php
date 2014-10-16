@@ -4,24 +4,13 @@
         color:#428bca; 
     }
     .fila-base{ display: none; } /* fila base oculta */
-<<<<<<< HEAD
     .eliminar{ cursor: pointer; color: green; }
-=======
-    .eliminar{ cursor: pointer; color: #000; }
->>>>>>> origin/master
 </style>
 <!--ALUMNO Comienza-->
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
     
     <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
-<<<<<<< HEAD
-=======
-
-    <script type="text/javascript" src="lib/alertify.js"></script>
-    <link rel="stylesheet" href="../web/themes/alertify.core.css" />
-    <link rel="stylesheet" href="../web/themes/alertify.default.css" />
->>>>>>> origin/master
     <link rel="stylesheet" href="../web/css/css.css">
     <!--INICIO foreach-->
     <div id="ampliar">
@@ -43,10 +32,6 @@
                    <tr>
                        <td><label>competencia</label>
                        <?php echo $value[0] ?>
-<<<<<<< HEAD
-=======
-                        <button class="btn btn-default">Editar</button>
->>>>>>> origin/master
                        </td>
                        <td>
                          <label>metodologia</label>
@@ -166,7 +151,6 @@
             </table>
     </div>  
              
-<<<<<<< HEAD
         <div class="tab-pane"  id="unidad" align="justify" >
             <br>
             <button type="button" style="margin-left:40%;" onclick="agregarUni()" class="btn btn-default">
@@ -206,70 +190,13 @@
             <br>
             <div id="a"></div>
 
-=======
-
-             
-        <div class="tab-pane"  id="unidad" align="justify" >
-            <br>
-            <button type="button" id="agregar" style="margin-left:40%;" class="btn btn-default">
-            Agregar Unidades</button>
-            <br>
-            <table id="tabla" class='table table-hover table-bordered'>
-                <!-- Cabecera de la tabla -->
-                <thead>
-                  <tr>
-                          <th>Denominación</th>
-                          <th>Descripción</th>
-                          <th>Competencia</th>
-                          <th>Duración</th>
-                          <th>Temas</th>
-                          <th>&nbsp;</th>
-                  </tr>
-                </thead>
-               
-                <!-- Cuerpo de la tabla con los campos -->
-                <tbody>
-               
-                  <!-- fila base para clonar y agregar al final -->
-                  <tr class="fila-base">
-                    <td><input type="text" class="form-control" name="nombreuni[]" /></td>
-                    <td><input type="text" class="form-control" name="descripcion[]"  /></td>
-                    <td><input type="text" class="form-control" name="competencia[]" /></td>
-                    <td><input type="number" class="form-control" name="duracion[]"/></td>
-                    <td><button type="button" class="btn btn-default">+</button></td> 
-                    <td class="eliminar"><button type="button" class="btn btn-default">X</button></td>
-                  </tr>
-                  <!-- fin de código: fila base -->
-               
-                  <!-- Fila de ejemplo -->
-                  <tr>
-                    <td><input type="text" class="form-control" name="nombreuni[]" /></td>
-                    <td><input type="text" class="form-control" name="descripcion[]"  /></td>
-                    <td><input type="text" class="form-control" name="competencia[]" /></td>
-                    <td><input type="number" class="form-control" name="duracion[]"/></td>
-                    <td><button type="button" class="btn btn-default">+</button></td> 
-                    <td class="eliminar"><button type="button" class="btn btn-default">X</button></td>
-                  </tr>
-
-                  <!--fin de código: fila de ejemplo -->
-               
-                </tbody>
-            </table>
-            <br>
-            <div id="unidd" ></div>
->>>>>>> origin/master
            
 
 
         </div>
         <div class="tab-pane" id="bibliografia">
-<<<<<<< HEAD
 
         <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button> <br>
-=======
-            <br>
-        <button id="biblio" type="button" class="btn btn-default" value="Prompt" onClick="bib()" type="button">Agregar Bibliografia</button> <br>
->>>>>>> origin/master
  
         <div >
           <table id="bibl" class='table table-hover table-bordered'>
