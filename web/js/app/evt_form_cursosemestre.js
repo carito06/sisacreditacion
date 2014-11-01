@@ -1,37 +1,27 @@
 //cursos q enseña el docente
+
+$(window).bind("beforeunload",function(event){
+   //return("hola"); 
+   if (validaciones){
+      return a;
+   } 
+});
+
+function validaciones() {
+ a= $("#frm1").submit();
+ return a;
+
+}
+
 $(function() {
     
 $( "#tabs" ).tabs();
 
-
     $("#generar_u").click(function(){
           var num= $("#nuni").val();
-
-
          //$("#unidd").dialog("open");
     });
 
-//modal de evaluacion
-    $( "#dialog" ).dialog({
-        autoOpen: false,
-        show: {
-          effect: "blind",
-          duration: 200
-        },
-        hide: {
-          effect: "explode",
-          duration: 300
-        },
-        buttons: {
-          "Grabar": function() {
-            $( this ).dialog( "close" );
-          },
-          Cancel: function() {
-            $( this ).dialog( "close" );
-          }
-        }
-         
-      });
 
 
 
@@ -80,18 +70,17 @@ $( "#tabs" ).tabs();
 // fin cursos q enseña el docente
 });
 /*
-  function evalu(){
+  function cambiarfoto(){
     $( "#dialog" ).dialog( "open" );
-
   }*/
 var ii=2;
 
 function agregarUni(){
-    h1 = "<input type='number' class='form-control' id='duracion"+ii+"' name='duracion[]'/>";
+    h1 = "<input type='number' class='form-control validar' id='duracion"+ii+"' name='duracion[]'/>";
     h2 = "<button type='button' class='btn btn-default' onClick='semana("+ii+")'>+</button>";
-    h3 = "<input type='text' id='porcentaje' class='form-control' name='porcentaje[]' placeholder='%'/>";
+    h3 = "<input type='text' id='porcentaje' class='form-control validar' name='porcentaje[]' placeholder='%'/>";
     h4 = "<div id='h"+ii+"'></div>"; 
-    h5 = "<input type='text' id='nombreunidad"+ii+"' class='form-control' name='nombreuni[]' />";
+    h5 = "<input type='text' id='nombreunidad"+ii+"' class='form-control validar' name='nombreuni[]' />";
 
    $("#tabla tbody tr:eq(0)").clone(".el").css("display","").removeClass("el").appendTo("#tabla tbody");
    $(h5).appendTo("#tabla tbody tr:nth-child("+ii+") td:nth-child(1)");
@@ -156,20 +145,12 @@ function runEffect($a,$b,$c,$d) {
         $( ".effect" ).hide( selectedEffect, options, 1000 );
       }
 }
-var i=2;
+var kk=2;
 function bib(){
       $("#bibl tbody tr:eq(0)").clone("#bibl").removeClass("dtp").appendTo("#bibl tbody").css("display","");
 //      $(".dts").clone().appendTo("#bibl tbody tr:nth-child("+i+") td:nth-child(2)").css("display","").removeClass("dts");
-      i++;
+      kk++;
 }
-$(".eliminar").click(function(){
-    var parent = $(this).parent();
-    //alert(parent);
-    $(parent).remove();
-    
-});
-
-
 
 var temp= [];
 var temp2= [];
@@ -205,10 +186,10 @@ function semana(i){
         for(k=j+1;k<=t ;k++){
             html +="<tr>";
             html += "<td> semana "+k+"</td>";
-            html +="<td><input type='text' id='contenido' class='form-control' rows='2' cols='30' name='cont"+k+"-"+i+"' /></td>"; 
-            html +="<td><input type='text' id='Conceptual' class='form-control' rows='5' cols='30'' name='conce"+k+"-"+i+"'/></td>";  
-            html +="<td><input type='text' id='procedimental' class='form-control' rows='5' cols='30' name='proc"+k+"-"+i+"' /></td>";  
-            html +="<td><input type='text' id='actitudinal'  class='form-control' rows='5' cols='30' name='act"+k+"-"+i+"' /></td>";
+            html +="<td><input type='text' id='contenido' class='form-control validar' rows='2' cols='30' name='cont"+k+"-"+i+"' /></td>"; 
+            html +="<td><input type='text' id='Conceptual' class='form-control validar' rows='5' cols='30'' name='conce"+k+"-"+i+"'/></td>";  
+            html +="<td><input type='text' id='procedimental' class='form-control validar' rows='5' cols='30' name='proc"+k+"-"+i+"' /></td>";  
+            html +="<td><input type='text' id='actitudinal'  class='form-control validar' rows='5' cols='30' name='act"+k+"-"+i+"' /></td>";
            // html += "<td><button type='button' class='btn btn-default' onClick='clase("+i+")'>+</button></td> ";
             html  +="</tr>";
            j++;
@@ -224,9 +205,9 @@ function semana(i){
             html += "</thead>";
             html += "<tbody>";
             html += "<td></td>";
-            html += "<td><input type='text' id='Descripcion' class='form-control'   /></td>";
-            html += "<td><input type='date' id='fecha' class='form-control' /></td>";
-            html += "<td><input type='text' id='ponderado' class='form-control' placeholder='%'' /></td>";
+            html += "<td><input type='text' id='Descripcion' class='form-control validar'   /></td>";
+            html += "<td><input type='date' id='fecha' class='form-control validar' /></td>";
+            html += "<td><input type='text' id='ponderado' class='form-control validar' placeholder='%'' /></td>";
             html += "</tbody>";
             html += "</table> </tr>";
     html +="</tbody>";
@@ -257,12 +238,15 @@ function llenartemas(param){
 
 function carga(vars){
      //$("#idsemeestreacademicoescondido").attr('value',vars);
-     
+     $(".silaboo").css("display","");
      $("#silabus").css("display", "none");
+     $(".olassss").css("display", "none");
+     $("#edibi").css("display", "none");
+     $("#tpi").css("display", "none");
         //var ids = $(this).val();
         //console.log(ids);
         $("#tablaevaluaciones").css("display", "none");
-        $("#silaedit").css("display", "");
+        $("#silaedit").css("display", "nonw");
         $("#borrarb").css("display", "none");
         $.post('index.php', 'controller=cursosemestre&action=getCursosD&CodigoSemestre=' + vars, function(data) {
             //console.log(data);
@@ -270,7 +254,9 @@ function carga(vars){
             $("#lista").css("display", "none");
 //            $("#boton").css("display", "none");
             $("#tablaevaluaciones").css("display", "none");
-             $("#silaedit").css("display", "");
+            $("#edibi").css("display", "none");
+            $("#tpi").css("display", "none");
+             $("#silaedit").css("display", "none");
             $("#cursodocente").empty().append(data);
             $("#accordion").css("display", "none");
         });
@@ -281,6 +267,7 @@ function Ver(id) {
     var idsemestre = $("#semestreacademico").attr("value");
     var opt="A";
     console.log(id);
+    $(".silaboo").css("display","none");
     $(".olassss").css("display", "none");
     $("#tablaevaluaciones").css("display", "none");
     $("#borrarb").css("display", "none");
@@ -300,26 +287,22 @@ function Ver(id) {
 //  fin lista de alumnos de cursos q enseña el docente--->>boton registro  notas de cada envento
 function VerRegistro(id) {
     var idsemestre = $("#semestreacademico").attr("value");
-//$("#tablaevaluaciones").css("display", "");
-//$("#borrarb").css("display", "");
-$("#evaluaciones").css("display", "");
-$("#silaedit").css("display", "none");
-
+  $(".silaboo").css("display","none");
+$("#tablaevaluaciones").css("display", "");
+$("#borrarb").css("display", "");
     $.post('index.php', 'controller=cursosemestre&action=getSillabysD&Codigo=' + id + '&idSemestre=' + idsemestre, function(data) {
         $("#accordion").css("display", "none");
         $("#lista").css("display", "none");
-        //$("#evaluaciones").css("display", "");
+        $("#evaluaciones").css("display", "inline");
         $("#silaedit").css("display", "none");
-        $("#boton").css("display", "none");
+         $("#boton").css("display", "none");
         $("#evaluaciones").empty().append(data);
         $("#regresar").css("display", "none");
+      
     });
-
       $.post('index.php', 'controller=cursosemestre&action=getListaA2&Codigo=' + id + '&idSemestre=' + idsemestre, function(data) {
             $(".olassss").empty().append(data);
-            $("#silaedit").css("display", "none");
      });
-     $("#silaedit").css("display", "none");
      $(".olassss").css("display", "");
      
 //      $.post('index.php', 'controller=cursosemestre&action=getNcurso&Codigo=' + id , function(data) {
@@ -340,11 +323,11 @@ $("#regresar").live("click", function() {
      
         
          $("#ola").css({
-            'width':'273px'
+            'width':'500px'
         });
         
         $("#ola").css({
-            'height':'600px'
+            'height':'60px'
         });
         
          $("#grande").css({
@@ -365,29 +348,30 @@ $("#regresar").live("click", function() {
 
 function VerSi(id,codigosemestre) {
     var codemestre = codigosemestre;
-//    
-//alert (id+'**'+idsemestre);
-
+//alert (id+'**'+codemestre);
+$(".silaboo").css("display","none");
 $("#boton").css("display", "none");
 //olassss
 $("#borrarb").css("display", "none");
 $(".olassss").css("display", "none");
 $("#tablaevaluaciones").css("display", "none");
 //$("#silaedit").css("display","inline");
-
 $.post('index.php', 'controller=cursosemestre&action=getEdiSillabus&Codigo=' + id + '&codemestre=' + codemestre, function(data) {
-//       
-//        $("#evaluaciones").css("display", "inline");
+//$("#evaluaciones").css("display", "inline");
 //alert(data);
-  $("#tablaevaluaciones").css("display", "none");
+ $("#tablaevaluaciones").css("display", "none");
  $("#accordion").css("display", "none");
  $("#boton").css("display", "none");
  $("#lista").css("display", "none");    
+ $("#silaedit").css("display", "inline"); 
  $("#silaedit").empty().append(data);
  $(".regresar").css("display", "none");
  });
-$("#silaedit").css("display","");
- 
+
+$.post('index.php', 'controller=cursosemestre&action=getEdiSillabusBiblio', function(data) {
+ $("#edibi").empty().append(data);
+ });
+
 }
 
 $(".unidad").live("click", function() {
@@ -486,33 +470,31 @@ function filtro (id){
         $("#regresar").css("display", "");
             $("#boton").css("display", "none");
         $("#agrandar").attr({
-            'class': 'col-md-11 col-md-offset-1'
+            'class': 'col-md-9 col-md-offset-1'
         });
         
         $("#ola").css({
-            'width':'1000px'
+            'width':'100%'
         });
         $("#aumentar").css({
-            'class':'col-md-12'  
+            'class':'col-md-12' ,"width" :"100%"
         });
         
          $("#ola").css({
-            'height':'300px'
+            'height':'100%','width':'100%'
         });
          $("#grande").css({
-            'height':'300px'
+            'height':'100%'
         });
          $("#grande").css({
-            'width':'850px'
+            'width':'100%'
         });
         $(editarnota).css("display","none");
         $("#lista").css("display", "none");
         $(".insertar").css("display", "");
     if(id !== idcampo || id === idcampo ){
 //        $(evento).css("display","");
-
-             $(evento).html("<input  type='text'  size='7px' class='nota' name='notas[]' pattern='{0-9}+'/><br>\n\
-                                ");
+             $(evento).html("<input  type='text' maxlength='2'  class='form-control nota' name='notas[]' pattern='{0-9}+'/>");
               $(enviar2).css("display","");
 }
 else{
@@ -525,6 +507,11 @@ $(evento).css("display","none");
 
 
 
+
+
+
+
+  
   $("#enviarn").live("click",function(){
     
     var alumno =$('input[name="idalumno[]"]').serialize();
@@ -547,7 +534,7 @@ $(evento).css("display","none");
     });
     
          alert("Se inserto la Evaluacion");
-    $.post('_tablaN.php','controller=cursosemestre&action=getCalificaiones&idsemestre='+codsemestre+'&idcurso='+codcurso,function(data) {
+          $.post('_tablaN.php','controller=cursosemestre&action=getCalificaiones&idsemestre='+codsemestre+'&idcurso='+codcurso,function(data) {
 
         $(".oli").empty().append(data);
     });
@@ -799,3 +786,4 @@ $.post('index.php', 'controller=cursosemestre&action=getTema&Codigo=' +unidad+'&
 function activa(param){
     $("#"+param).addClass("active");
 }
+

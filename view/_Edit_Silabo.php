@@ -1,17 +1,18 @@
+<br>
 <!--Partes del  silabo-->
-<style>
-    .nav a{
-        color:#428bca; 
-    }
-    .fila-base{ display: none; } /* fila base oculta */
-    .eliminar{ cursor: pointer; color: green; }
-</style>
-<!--ALUMNO Comienza-->
+<link rel="stylesheet" href="../web/css/css_edit_silabo.css" />
+<script src="../web/js/app/evt_form_edit_silabo.js"></script>  
+<link rel="stylesheet" href="../web/css/css.css">   
+  <?php 
+        foreach ($rows22 as $key => $value) { ?>
+        <?php    echo $value[0]; echo $value[1]; echo $value[2]; echo $value[3]; echo $value[4];?> <br>
+        <?php }?>
 
+<!--ALUMNO Comienza-->
+           <!--
+            <img src='../web/images/check_verde.png' width='15px' title='sílabo completo' style='float: left;  margin-left: -20px; margin-top: -25px;'/>
+            <img src='../web/images/error.png' width='15px' title='sílabo completo' style='float: left;  margin-left: -20px; margin-top: -25px;'/> -->
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
-    
-    <script type="text/javascript" src="js/app/evt_form_cursosemestre.js" ></script>
-    <link rel="stylesheet" href="../web/css/css.css">
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
@@ -20,10 +21,15 @@
         <li><a href="#bibliografia" data-toggle="tab" class="ecp">Bibliografia</a></li>
     </ul> 
     </div>
-    <?php
+    <?php 
    if($rows){
     foreach ($rows as $key => $value) { ?>
 
+<!--
+    <script>
+    alert("as");
+      $(".vcc").append("<img src='../web/images/copiar_silabus.png' width='15px' title='copiar sílabo' style='float: right; margin-right: -19px; margin-top: -8px;'/>");
+    </script> -->
         <div class="tab-content col-md-11">
             <div class="tab-pane active" id="obGen" align="justify">
             <br>
@@ -31,21 +37,21 @@
                 <tbody>
                    <tr>
                        <td><label>competencia</label>
-                       <?php echo $value[0] ?>
+                       <p id="comp"><?php echo $value[0] ?></p> 
                        </td>
                        <td>
                          <label>metodologia</label>
-                         <?php echo $value[1] ?>
+                         <p id="met"> <?php echo $value[1] ?></p>
                        </td>
                    </tr>
                    <tr>
                        <td>
                          <label>objetivo</label>
-                         <?php echo $value[2] ?>
+                        <p id="ob"> <?php echo $value[2] ?></p>
                        </td>
                        <td>
                         <label>sumilla</label>
-                        <?php echo $value[3] ?>
+                        <p id="su"> <?php echo $value[3] ?></p>
                        </td>
                    </tr>
                 </tbody>
@@ -62,48 +68,9 @@
         <div class="tab-pane" id="bibliografia">
             <input  type="hidden" id="curs" value="<?php echo $value[5] ;?>"/>
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
+              
+            <div id="edibi"></div>
 
-            <table id="bibl" class='table table-hover table-bordered'>
-            <thead>
-            <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
-            <th>tipo de bibliografía</th>
-            <th>Descripción</th>
-            <th></th>
-            </tr>
-            </thead>
-
-            <tbody>
-              <tr class="dtp">
-                <td> 
-                <?php 
-                mysql_connect("localhost", "root", "");
-                mysql_select_db("sisacreditacion");
-                $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
-                echo "<select  name='tipbibl[]' style='width:65%;' class='form-control dts'>";
-                echo "<option value='0'>Elige</option>";
-                  while($registro=mysql_fetch_row($consulta)){
-                    echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
-                  }
-                echo "</select>";   
-                echo '<br/>'; 
-               ?> 
-                </td>
-                <td><input type='text' id='descripcion' name='descripcion[]' 
-                  class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; 
-                  text-align: left;' placeholder='Ingresar Descripción'/>
-                </td>
-                <td class="eliminar">
-                  <button type="button" class="btn btn-default " >
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-           </table>            
-            <?php foreach ($rows4 as $key => $value) {?>
-                    <?php echo $value[0];?>
-                <?php }?>
-    
         </div>
          <br>
         </div>
@@ -130,21 +97,21 @@
                 <tbody>
                    <tr>
                        <td><label>competencia</label>
-                       <textarea id="competencia_1" class="form-control" name="competencia" required rows="3"> </textarea>
+                       <textarea id="competencia_1" class="form-control validar" name="competencia" required rows="3"> </textarea>
                        </td>
                        <td>
                          <label>metodologia</label>
-                         <textarea id="metodologia_1" class="form-control" name="metodologia" rows="3"> </textarea>
+                         <textarea id="metodologia_1" class="form-control validar" name="metodologia" rows="3"> </textarea>
                        </td>
                    </tr>
                    <tr>
                        <td>
                          <label>objetivo</label>
-                         <textarea id="objetivo_1" class="form-control" name="objetivo" rows="3"></textarea>
+                         <textarea id="objetivo_1" class="form-control validar" name="objetivo" rows="3"></textarea>
                        </td>
                        <td>
                         <label>sumilla</label>
-                        <textarea id="sumilla_1" class="form-control" name="sumilla" rows="3"></textarea>
+                        <textarea id="sumilla_1" class="form-control validar" name="sumilla" rows="3"></textarea>
                        </td>
                    </tr>
                 </tbody>
@@ -173,8 +140,8 @@
                 <tbody>
                 <tr class="el" style="display:none;">
                   <td></td>
-                  <td><input type='text' class='form-control' name='descripcion[]'  /></td>
-                  <td><input type='text' class='form-control' name='competencia[]' /></td>
+                  <td><input type='text' class='form-control validar' name='descripcion[]'  /></td>
+                  <td><input type='text' class='form-control validar' name='competencia[]' /></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -211,22 +178,11 @@
 
             <tbody>
               <tr style="display:none" class="dtp">
-                <td> 
-                <?php 
-                mysql_connect("localhost", "root", "");
-                mysql_select_db("sisacreditacion");
-                $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
-                echo "<select  name='tipbibl[]' style='width:65%; display:;' class='form-control dts'>";
-                echo "<option value='0'>Elige</option>";
-                  while($registro=mysql_fetch_row($consulta)){
-                    echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
-                  }
-                echo "</select>";   
-                echo '<br/>'; 
-               ?> 
+                <td id="tpi"> 
+                
                 </td>
                 <td><input type='text' id='descripcion' name='descripcion[]' 
-                  class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; 
+                  class='text ui-widget-content ui-corner-all validar' rows='3' cols='40' style='width: 100%; 
                   text-align: left;' placeholder='Ingresar Descripción'/>
                 </td>
                 <td class="eliminar">
@@ -242,10 +198,12 @@
         </div> 
     
         </div>
+
 </div>
 
 
       <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+
 
 </form>
 
@@ -255,3 +213,6 @@
 
     <?php } ?>
 
+ <div id="dialogoo" > 
+      <textarea name="" id="edit" cols="30" rows="10" ></textarea>
+ </div>

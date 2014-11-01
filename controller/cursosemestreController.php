@@ -10,10 +10,8 @@ class cursosemestreController extends Controller {
     public function index() {
 
         $data = array();
-$data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', 'name' =>'semestreacademico','filtro'=>$_SESSION['idusuario']));
-         
-        
-// die($_SESSION['idusuario']);
+        $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', 'name' =>'semestreacademico','filtro'=>$_SESSION['idusuario']));
+        // die($_SESSION['idusuario']);
         $view = new View();
         $view->setData($data);
         $view->setTemplate('../view/cursosemestre/_Index.php');
@@ -95,6 +93,16 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
        
         echo $envio;
         
+       }
+      public function getEdiSillabusBiblio(){
+        //print_r($_POST);exit();
+        //$codSilabo=$_POST["silabo"];
+        $codSilabo=1;
+        $envio=$this->bibliografia_silabus(array('criterio22' => $codSilabo));   
+//        echo $codcurso;
+//        echo $codsemestre;
+               
+        echo $envio;
        }
        
        public function getUnidad ()
@@ -312,7 +320,10 @@ $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', '
         $ofic = $this->Select_ajax(array('id' => 'idcriterio', 'name' => 'idcriterio', 'table' => 'vista_cargaacademica', 'filtro' => 'carga_academica', 'criterio' => $_POST['idcargaacademica']));
         echo $ofic;
     }
-
+  function getTipoBiblio() {
+        $ofic2 = $this->Select_tipo_biblio(array('id' => 'idcriterio', 'name' => 'idcriterio', 'table' => 'tipo_bibliografia'));
+        echo $ofic2;
+    }
 
        
        //Syllabussss FINNNNNNNNNN

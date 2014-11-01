@@ -1,3 +1,6 @@
+<style>
+    .sls{font-size: 11.7px;}
+</style>
 <?php $semestres=$_GET["semestre"];?>
 <?php if(isset($semestres)){?>       
 <select name="<?php echo $name; ?>" id="<?php echo $id; ?>" <?php echo $disabled; ?>  
@@ -13,8 +16,8 @@ class="form-control" style="width: 100%;" >
 </select>
 
 <?php }else{?>
-<select name="<?php echo $name; ?>" id="<?php echo $id; ?>" <?php echo $disabled; ?>  class="form-control" 
-style="width: 16%;" >
+<select name="<?php echo $name; ?>" id="<?php echo $id; ?>" <?php echo $disabled; ?>  class="form-control sls" 
+style="width: 19%;" >
     <?php foreach ($rows as $key => $value) { ?>
         <?php if ($code != $value[0] ) { ?>
 

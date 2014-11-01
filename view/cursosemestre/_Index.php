@@ -3,13 +3,16 @@
     <div class="row">
         <!-- IZQUIERDA-->
         <div  class="col-md-3 toggler" >
-             <div id="cursodocente" ></div> 
+             <div id="cursodocente" >
+                 
+             </div> 
         </div> 
 
         <!-- DERECHA-->
 
         <div class="col-md-9" style="margin-left: -50px;" id="agrandar" >
-            <?php echo $semestreacademico; ?>
+            <? echo $semestreacademico ?>
+            <br>
             <div id="lista" class="col-md-12">
 
             </div>
@@ -22,7 +25,7 @@
 
 
             </div>
-     
+      
             <div id="unidadesA">
             </div>
 
@@ -32,8 +35,9 @@
             </div>
             <!--        MOSTRAR SILABUS Y EDITAR-->
             <DIV id="silaedit">
-
+                    
             </DIV>
+
             <div class="tablaAsis">
                 
             </div>
@@ -42,6 +46,8 @@
                 
             </div>
 
+            
+<img src="../web/images/silabo2.jpeg" class="silaboo"width="500px" height="250px"  style="margin-bottom: -250px;" >
         </div>
     </div>
 </div>

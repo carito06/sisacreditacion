@@ -34,7 +34,6 @@
                     field.value = field.defaultValue;
             }
 
-
         </script>
 
     </head>
@@ -45,7 +44,7 @@
             <div class="row">
                 <div class="col-md-3" style="background-color: #5086C4; height: 50px;">
                     <div class="col-md-3" style="padding-left:0; padding-right: 0;">
-                        <img src="css/images_eapisi/eapisi.png" width="50px" height="50px">
+                        <img src="css/images_eapisi/eapisi.png" width="60px" height="50px">
                     </div>
                     <div class="col-md-9" style="text-align: center;font-size: 28px;" >
                         <p style="text-align: center; color: #fff">
@@ -73,10 +72,10 @@
             <div class="row">
                 <div class="col-md-12" style="background-color: #81AFD0; height: auto; padding-right: 0; border: 1px solid #B8B8B8;">
                     <div class="col-md-1">
-                        <div style="margin-top: 3px;">
-                            <img width="60" height="54" style="border-radius:5px;" src="css/images_eapisi/user.jpg"  alt="BOOZ">
+                        <div style="margin-top: 3px;" title="foto">
+                            <img onclick="cambiarfoto()" width="50" height="40" style="cursor:pointer; border-radius:5px;"
+                             src="css/images_eapisi/user.jpg" >
                         </div>
-
                     </div>
                     <div class="col-md-5" style=" height: 40px; margin-top: 10px;">
                         <div>
@@ -114,11 +113,8 @@
             <!-- .......... MENU .......... -->
 
             <div class="row">
-                <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
-
                     <div class="navbar" id="menu2" role="navigation" style="margin-bottom: 0; min-height: 0;">
                         <div  class="container-fluid" id="menu2-contenedor">
-
                             <div  class="navbar-header">
                                 <button style="background-color:#D1C3D5;" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                                     <span class="sr-only">Toggle navigation</span>
@@ -129,14 +125,13 @@
                                 <a class="navbar-brand" href="#"></a>
                             </div>
 
-                            <div class="collapse navbar-collapse" style="padding-left: 0;
+                            <div class="collapse navbar-collapse " style="padding-left: 0;
                                  padding-right: 0;" id="bs-example-navbar-collapse-1">
                                 <div id="menu"></div>
 
 
                             </div>
                         </div> 
-                    </div>
                 </div>
             </div> 
 
@@ -150,7 +145,7 @@
 
             <div class="row panel-body" style="padding-left:0; padding-right: 0; background-color: white; min-height: 400px;">
 
-                <div style="height: 1px; background: #8CA6BA; border:1px solid #63737E; border-bottom: 0; border-top: 0;"></div>
+                
 
                 <?php echo $content; ?>
 

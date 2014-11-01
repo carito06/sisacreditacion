@@ -1,8 +1,8 @@
 <?php $boton=$rows2;?>  
 <?php if ($boton=='boton'){?>
-    <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion" style="width: 750px" >
         <?php
-$conta = 1;
+$conta = 11;
             foreach ($rows as $key => $value) {
     ?>  
         <div class="panel panel-default col-md-9" id="reduc">
@@ -13,14 +13,16 @@ $conta = 1;
                 <input type="hidden" class="curso" value="<?php echo $value[3]?>"/>
                 <h4 class="panel-title" id="hola">
 <!--                   Boton Asistencia a clases -->
-                   <input type="button" data-toggle="collapse" data-parent="#accordion" href="#<?php echo $conta; ?>" class="codunidad<?php echo $value[1];?>" value="<?php echo $value[0] ?>" onclick="temasdUnidad('<?php echo $value[1]; ?>')"/>
+                   <input type="button" data-toggle="collapse" data-parent="#accordion" 
+                   href="#<?php echo $conta; ?>" class="codunidad<?php echo $value[1];?>" 
+                   value="<?php echo $value[0] ?>" onclick="temasdUnidad('<?php echo $value[1]; ?>')"/>
 
                 </h4>
                
             </div>
 <!--            abre y  cierra el acordeon on  tema panel-collapse collapse (cerrado) al abrirse se combierte en tema panel-collapse collapse in(abierto) -->
 <div id="<?php echo $conta; ?>"  class="tema panel-collapse collapse" name="<?php echo $value[1]; ?>">
-                <div class="container-fluid" style="overflow-y: auto; height: 390px">
+                <div class="container-fluid" style="height: 100%">
                     <div class="panel-body temas">    
 
                     </div>
@@ -38,9 +40,9 @@ $conta = 1;
 <?php }else{?>
         
         
-         <div class="panel-group" id="accordion">
+         <div class="panel-group" id="accordion" style="width: 820px; margin-left:-60px;" >
         <?php
-$conta = 1;
+$conta = 11;
 
             foreach ($rows as $key => $value) {
               
@@ -50,7 +52,7 @@ $conta = 1;
             <div class="panel-heading">
 
                 <input type="hidden" class="idunidad" value="<?php echo $value[1]; ?>">
-                <h4 class="panel-title" id="hola">
+                <h4 class="panel-title" id="hola" style="text-align: center">
                     
                     <a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $conta; ?>" class="codunidad">
 <!--                        idunidad <?php // echo $value[1];?>-->
@@ -60,8 +62,8 @@ $conta = 1;
                 </h4>
 
             </div>
-            <div id="<?php echo $conta; ?>"  class="tema panel-collapse collapse " name="<?php echo $value[1]; ?>">
-                <div class="container-fluid" style="overflow-y: auto; height: 390px">
+            <div id="<?php echo $conta; ?>" s class="tema panel-collapse collapse " name="<?php echo $value[1]; ?>">
+                <div class="container-fluid" style="height: 100%">
                     <div class="panel-body temas">    
 
                     </div>

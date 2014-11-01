@@ -249,6 +249,21 @@ class Controller {
         $view->setTemplate('../view/_Select_ajax.php');
         return $view->renderPartial();
     }
+    public function Select_tipo_biblio($p) {
+        $obj = new Main();
+        $obj->table = $p['table'];
+        $obj->filtro = 0;
+        $obj->criterio = 0;
+        $data = array();
+        $data['rows'] = $obj->getList_ajax();
+        $data['name'] = $p['name'];
+        $data['id'] = $p['id'];
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_Edit_Silabo_biblio.php');
+        return $view->renderPartial();
+    }
     
     
 
@@ -478,6 +493,25 @@ class Controller {
         $view->setTemplate('../view/_Edit_Silabo.php');
         return $view->renderPartial();
     }
+
+     public function bibliografia_silabus($p) {
+       
+        $obj = new Main();
+//        $obj->table = $p['table'];
+        //$obj->filtro = $p['filtro'];
+        $obj->criterio22 = $p['criterio22'];
+        //$obj->filtro1 = $p['filtro1'];
+        //$obj->criterio1 = $p['criterio1'];
+        $datab = array();
+        $datab['rows22'] = $obj->getBibliografia();
+        //print_r(($datab['rows22']));
+        $datab['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($datab);
+        $view->setTemplate('../view/_Edit_Silabo_biblio.php');
+        return $view->renderPartial();
+    }
+
     
      public function unidad_recibir($p) {
         $obj = new Main();

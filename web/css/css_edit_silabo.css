@@ -1,0 +1,21 @@
+
+    .fila-base{ display: none; } /* fila base oculta */
+    .eliminar{ cursor: pointer; color: green; }
+
+
+#tabla input[type='text']{
+  margin: 0px;
+  border: none;
+
+}
+#tabla td{
+  padding: 0px;
+
+
+}
+#tabla tbody tr{
+  height: 30px;
+}
+#tabla input[type='number']{
+  width: 100%;
+}
