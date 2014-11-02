@@ -11,7 +11,7 @@
         <!-- DERECHA-->
 
         <div class="col-md-9" style="margin-left: -50px;" id="agrandar" >
-            <? echo $semestreacademico ?>
+            <?php echo $semestreacademico; ?>
             <br>
             <div id="lista" class="col-md-12">
 

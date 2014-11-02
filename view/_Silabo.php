@@ -92,10 +92,10 @@
         <?php foreach ($rows as $key => $value) { ?> 
 
         <tr class="evaluacion<?php echo $conta;?> oa" id="<?php echo $value[3]+110?>"> 
-           <td><? echo $value[3]?></td>    
+           <td><?php echo $value[3]?></td>    
            <td align="left">
              <input type="hidden"  class="codevaluacion" value="<?php echo $value[3]?>"/>
-             <strong><? echo utf8_encode($value[8])?></strong> <br>
+             <strong><?php echo utf8_encode($value[8])?></strong> <br>
             <p align="center"> (<?php echo utf8_encode($value[0]);?>) </p>
            </td>
            <td> <?php echo (date("d-m-Y",strtotime($value[1])))?> </td>
