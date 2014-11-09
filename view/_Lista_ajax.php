@@ -77,13 +77,13 @@ $(document).ready(function(){
   $('.sp1').click(function(){
     $('.pn1').slideToggle('slow');
   });
-  tdiv= $('.lc').length;
+  tndiv= $('.lc').length;
   
   $('.lc').click(function(){
     $('.sp1').css("display","");
-     tid= $(this).attr('id');
-     for (i = 1; i <= tdiv; i++) {
-         if (i==parseInt(tid)) {
+     tidp= $(this).attr('id');
+     for (i = 1; i <= tndiv; i++) {
+         if (i==parseInt(tidp)) {
             $('#'+i).appendTo('.pn2');
          }else{
             $('#'+i).appendTo('.pn1');

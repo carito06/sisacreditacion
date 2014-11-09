@@ -1,5 +1,6 @@
 <br>
 <!--Partes del  silabo-->
+
 <link rel="stylesheet" href="../web/css/css_edit_silabo.css" />
 <script src="../web/js/app/evt_form_edit_silabo.js"></script>  
 <link rel="stylesheet" href="../web/css/css.css">   
@@ -36,30 +37,33 @@
              <table class="table table-hover table-bordered">
                 <tbody>
                    <tr>
-                       <td><label>competencia</label>
-                       <p id="comp"><?php echo $value[0] ?></p> 
+                       <td data-toggle="modal" data-target="#myModal"><label>competencia</label>
+                       <p id="comp" class="compet"><?php echo ($value[0]) ?></p> 
                        </td>
-                       <td>
+                       <td data-toggle="modal" data-target="#myModal">
                          <label>metodologia</label>
-                         <p id="met"> <?php echo $value[1] ?></p>
+                         <p id="met"> <?php echo ($value[1]) ?></p>
                        </td>
                    </tr>
                    <tr>
-                       <td>
+                       <td data-toggle="modal" data-target="#myModal">
                          <label>objetivo</label>
-                        <p id="ob"> <?php echo $value[2] ?></p>
+                        <p id="ob"> <?php echo ($value[2]) ?></p>
                        </td>
-                       <td>
+                       <td data-toggle="modal" data-target="#myModal">
                         <label>sumilla</label>
-                        <p id="su"> <?php echo $value[3] ?></p>
+                        <p id="su"> <?php echo ($value[3]) ?></p>
                        </td>
                    </tr>
                 </tbody>
             </table>
-            </div>
+
+            
+</div>
 
         <input type="hidden" id="semestre" value="<?php echo $value[4] ?>"/>
         <input type="hidden" id="curso" value="<?php echo $value[5] ?>"/>
+        <input type="hidden" id="silabo" value="<?php echo $value[6] ?>"/>
 <!--        unidad inicio-->
         <div class="tab-pane"  id="unidad" align="justify">
             <div id="unidades"></div>
@@ -92,7 +96,6 @@
 <div class="tab-content col-md-11">
         <div class="tab-pane active" id="obGen" align="justify">
             <br>
-
             <table class="table">
                 <tbody>
                    <tr>
@@ -118,10 +121,11 @@
             </table>
     </div>  
              
-        <div class="tab-pane"  id="unidad" align="justify" >
+    <div class="tab-pane"  id="unidad" align="justify" >
             <br>
             <button type="button" style="margin-left:40%;" onclick="agregarUni()" class="btn btn-default">
             Agregar</button>
+             <button  type="button"class="btn btn-default eliminar">x</button>
             <br>
             <table id="tabla" class='table table-hover table-bordered'>
                 <!-- Cabecera de la tabla -->
@@ -138,19 +142,7 @@
                
                 <!-- Cuerpo de la tabla con los campos -->
                 <tbody>
-                <tr class="el" style="display:none;">
-                  <td></td>
-                  <td><input type='text' class='form-control validar' name='descripcion[]'  /></td>
-                  <td><input type='text' class='form-control validar' name='competencia[]' /></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td class='eliminar'>
-                       <button type='button' class='btn btn-default' >
-                          <span class="glyphicon glyphicon-remove"></span>
-                       </button>
-                   </td>
-                 </tr>
+             
                 </tbody>
                  
             </table>
@@ -213,6 +205,24 @@
 
     <?php } ?>
 
- <div id="dialogoo" > 
-      <textarea name="" id="edit" cols="30" rows="10" ></textarea>
- </div>
+<!-- Modal para editar-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="kmodal-content">
+        <div class="kmodal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+            <span id="soyunid" style="display:none"></span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel"></h4>
+         </div>
+         <div class="modal-body">
+            <textarea name="edits" id="edits"  style="width: 100%; height: 250px" ></textarea>
+         </div>
+         <div class="kmodal-footer">
+           <button type="button" id="guardarS" onclick="guardarre()" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+   </div>
+</div>

@@ -4,6 +4,7 @@ require_once '../lib/Controller.php';
 require_once '../lib/View.php';
 require_once '../model/alumno.php';
 require_once '../model/silabus.php';
+require_once '../model/tema.php';
 
 class cursosemestreController extends Controller {
 
@@ -130,11 +131,13 @@ class cursosemestreController extends Controller {
         $opt="A";
         
         $envio=$this->unidad_recibir(array('filtro' => 'CodigoCurso','filtro1' =>'CodigoSemestre','criterio' => $codcurso,'criterio1' => $codsemestre,'option' => $opt));      
-       
         echo $envio;
-        
        }
-       
+        public function editarSilabo () {
+        //print_r($_POST); exit();
+        $obj = new silabus();
+        $p = $obj-> actualizar_silabo($_POST);      
+       }
        
        public function getTema()
        {
@@ -145,6 +148,15 @@ class cursosemestreController extends Controller {
        
         echo $envio;
         
+       }
+      public function getEvaluacion(){
+        $unidad=$_POST["Codigo"];
+        $envio=$this->evaluacion_recibir(array('criterio' => $unidad));
+        echo $envio;
+       }
+      public function editarTema() {
+        $obj = new tema();
+        $p = $obj-> actualizar_tema($_POST);      
        }
        
        public function getEditN() 

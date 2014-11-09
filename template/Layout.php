@@ -18,7 +18,9 @@
         <script type="text/javascript" src="js/required.js"></script>
         <script type="text/javascript" src="js/validateradiobutton.js"></script>
         <script type="text/javascript" src="js/utiles.js"></script>
+        <link rel="stylesheet" href="css/css.css">   
         <script language="javascript" type="text/javascript">
+
             $(document).ready(function() {
                 $.get('index.php', 'controller=Index&action=Menu', function(menu) {
                     $("#menu").empty();
@@ -238,7 +240,7 @@
                    
 
         </div>
-        <div 
+        <div>
 
         </div>
 

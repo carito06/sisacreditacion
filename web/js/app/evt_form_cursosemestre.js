@@ -73,23 +73,7 @@ $( "#tabs" ).tabs();
   function cambiarfoto(){
     $( "#dialog" ).dialog( "open" );
   }*/
-var ii=2;
 
-function agregarUni(){
-    h1 = "<input type='number' class='form-control validar' id='duracion"+ii+"' name='duracion[]'/>";
-    h2 = "<button type='button' class='btn btn-default' onClick='semana("+ii+")'>+</button>";
-    h3 = "<input type='text' id='porcentaje' class='form-control validar' name='porcentaje[]' placeholder='%'/>";
-    h4 = "<div id='h"+ii+"'></div>"; 
-    h5 = "<input type='text' id='nombreunidad"+ii+"' class='form-control validar' name='nombreuni[]' />";
-
-   $("#tabla tbody tr:eq(0)").clone(".el").css("display","").removeClass("el").appendTo("#tabla tbody");
-   $(h5).appendTo("#tabla tbody tr:nth-child("+ii+") td:nth-child(1)");
-   $(h1).appendTo("#tabla tbody tr:nth-child("+ii+") td:nth-child(4)");
-   $(h3).appendTo("#tabla tbody tr:nth-child("+ii+") td:nth-child(5)");
-   $(h2).appendTo("#tabla tbody tr:nth-child("+ii+") td:nth-child(6)");
-   $(h4).appendTo("#a");
-   ii++;
-}
 function validarLetras(e)
 {
   tecla=(document.all) ? e.keyCode : e.which;
@@ -261,6 +245,8 @@ function carga(vars){
             $("#accordion").css("display", "none");
         });
 }
+
+
 
 // lista de alumnos de cursos q enseña el docente  ->>>boton lista
 function Ver(id) {
@@ -773,15 +759,6 @@ $(".regresar").live("click",function(){
     
 });
 
-$(".codunidad").live("click",function(){
-    var unidad=$(".idunidad").attr("value");
-    
-    var opt='C';
-$.post('index.php', 'controller=cursosemestre&action=getTema&Codigo=' +unidad+'&option='+opt, function(data) {
-//$("#boton").css("display", "none");
-        $(".temas").empty().append(data);
-    });
-});
 
 function activa(param){
     $("#"+param).addClass("active");

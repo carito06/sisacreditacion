@@ -483,7 +483,10 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                                U.nombreunidad,
                                U.idunidad,
                                CA.CodigoSemestre,
-                               CA.CodigoCurso
+                               CA.CodigoCurso,
+                               U.descripcionunidad,
+                               U.competencia,
+                               U.porcentaje
                                 from unidad as U
                                 inner join silabus as S on S.idsilabus = U.idsilabus
                                 inner join carga_academica as CA on CA.idcargaacademica = S.idcargaacademica
@@ -581,6 +584,13 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         $sth->execute();
 //        var_dump($sth);
 //        exit();
+        return $sth->fetchAll();
+    }
+    function getEvaluacion() {
+        $query = "SELECT idtipo_evaluacion, descripcionevaluacion, fecha, ponderado FROM `evaluacion`
+                  WHERE idunidad= {$this->criterio} ";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
         return $sth->fetchAll();
     }
 

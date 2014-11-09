@@ -181,6 +181,18 @@ class silabus extends Main{
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]); 
     }
+    function actualizar_silabo($_P) {
+        echo "<pre>"; print_r ($_P);
+        $idsilabo=$_P["codsilabo"];
+        $campo= $_P["campot"];
+        $nom= $_P["nombre"];
+
+        $stmt = $this->db->prepare("UPDATE silabus SET ".$nom." = :p2
+                                    WHERE idsilabus = :p1");
+        $stmt->bindValue(':p1', $idsilabo, PDO::PARAM_INT);
+        $stmt->bindValue(':p2', $campo, PDO::PARAM_STR);
+        $p1 = $stmt->execute();
+    }
 }
 ?>
 

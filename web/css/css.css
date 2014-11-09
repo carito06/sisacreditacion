@@ -3,18 +3,18 @@
  }
 
 .dur{
-	width: 90px;
+  width: 90px;
 }
 .fech{
-	width: 100px;
-	border: 1px solid skyblue;
-	border-radius: 10px 10px 10px 10px;
-	text-align: center;
-	color: green;
+  width: 100px;
+  border: 1px solid skyblue;
+  border-radius: 10px 10px 10px 10px;
+  text-align: center;
+  color: green;
 }
 
 .descripcion_u{
-	width: 540px;
+  width: 540px;
 }
 
 .agregar_t { 
@@ -76,6 +76,11 @@ fieldset[disabled] .agregar_t.active {
 .canck{
   background-color: #8B1596;
 }
+.container-fluid{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 /* D*/
 
 .duracion_u{
@@ -96,17 +101,61 @@ fieldset[disabled] .agregar_t.active {
 /* J*/
 
 /* K*/
+.kmodal-header {
+padding: 15px;
+border-bottom: 2px solid #428BCA;
+min-height: 16.42857143px;
+background: #EAF8FC;
+height: 50px;
+}
+
+.kmodal-content{
+  background: #fff;
+  border: 3px;
+  box-shadow: 5px 5px 20px skyblue;
+  -webkit-box-shadow: 3px 5px 20px skyblue;
+  border-radius: 5px;
+
+}
+.modal-body textarea{
+  border:none;
+}
+
+.kmodal-footer{
+margin-top: 15px; 
+padding: 10px 10px 10px;
+text-align: right;
+border-top: 2px solid #428BCA;
+background: #EAF8FC;
+}
+
+.ktd1{
+  margin: 0px;
+  padding: 0px;
+}
 
 /* L*/
 
 /* M*/
+.mheading{
+border-color: #F23333;
+padding: 10px 15px;
+border-bottom: 1px solid transparent;
+border-top-right-radius: 3px;
+border-top-left-radius: 3px;
+}
 
+.mloencontre{
+  background-color: #EAF8FC;
+}
 /* N*/
 
 /* O*/
 
 /* P*/
-
+.panel-body{
+  padding: 0px;
+}
 /* Q*/
 
 /* R*/

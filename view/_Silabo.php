@@ -87,7 +87,7 @@
               <th ><strong>Accion</strong></th>
             </tr>
         </thead>
-        <? $conta=1?>
+        <?php $conta=1?>
         <tbody class="pn4" ></tbody>
         <?php foreach ($rows as $key => $value) { ?> 
 

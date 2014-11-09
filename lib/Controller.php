@@ -650,6 +650,17 @@ class Controller {
         
         return $view->renderPartial();
     }
+    public function evaluacion_recibir($p) {
+        $obj = new Main();
+        $obj->criterio = $p['criterio'];
+        $data = array();
+        $data['rows'] = $obj->getEvaluacion();
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_evaluacion.php');
+        return $view->renderPartial();
+    }
     
     
      public function tema_recibirF($p) {
