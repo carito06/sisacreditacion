@@ -23,7 +23,7 @@
             <td class="F<?php echo $fi?>C1">
                 <input class="Tem" type="hidden" value="<?php echo $value[5];?>"> 
                 <input class="Cam" type="hidden" value="contenido"> 
-                <textarea id="F<?php echo $fi?>C1" name="txta" cols="50" rows="5" style="background-color: #f9f9f9; ;border:none; resize: none;">
+                <textarea id="F<?php echo $fi?>C1" name="txta" cols="40%" rows="5" style="background-color: #f9f9f9; ;border:none; resize: none;">
                     <?php echo $value[1];?>
                 </textarea> 
             </td>
@@ -31,7 +31,7 @@
             <td class="F<?php echo $fi?>C2">
                 <input class="Tem" type="hidden" value="<?php echo $value[5];?>"> 
                 <input class="Cam" type="hidden" value="conceptual"> 
-                <textarea name="" id="F<?php echo $fi?>C2" cols="50" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
+                <textarea name="" id="F<?php echo $fi?>C2" cols="40%" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
                 <?php echo $value[2];?>
                 </textarea> 
             </td>
@@ -39,7 +39,7 @@
             <td class="F<?php echo $fi?>C3">
                 <input class="Tem" type="hidden" value="<?php echo $value[5];?>"> 
                 <input class="Cam" type="hidden" value="procedimental"> 
-                <textarea name="" id="F<?php echo $fi?>C3" cols="50" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
+                <textarea name="" id="F<?php echo $fi?>C3" cols="40%" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
                 <?php echo $value[3];?>
                 </textarea> 
             </td>
@@ -47,7 +47,7 @@
             <td class="F<?php echo $fi?>C4">
                 <input class="Tem" type="hidden" value="<?php echo $value[5];?>"> 
                 <input class="Cam" type="hidden" value="actitudinal"> 
-                <textarea name="" id="F<?php echo $fi?>C4" cols="50" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
+                <textarea name="" id="F<?php echo $fi?>C4" cols="40%" rows="5" style="background-color: #f9f9f9; border:none; resize: none;">
                 <?php echo $value[4];?>
                 </textarea> 
             </td>

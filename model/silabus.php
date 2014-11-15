@@ -25,7 +25,15 @@ class silabus extends Main{
         $data['rowspag'] = $this->getRowPag($data['total'], $p );        
         return $data;
     } 
-    
+    function select($_P){
+        echo "<pre>"; print_r ($_P);
+        $idsilabo=$_P["codsilabo"];
+        $stmt = $this->db->prepare("SELECT idsilabus,sumilla,competencia, metodologia,competencia FROM silabus 
+            where idsilabus = :p1");
+        $stmt->bindValue(':p1', $idsilabo, PDO::PARAM_INT);
+        $p1 = $stmt->execute();
+    }
+
     function edit($id ) 
     {
         $stmt = $this->db->prepare("SELECT * FROM silabus WHERE idsilabus = :id");
@@ -43,7 +51,7 @@ class silabus extends Main{
  function insert($_P) {
         
       echo "<pre>"; print_r ($_P);
-              $coddocente  = $_P["coddocente"];
+        $coddocente  = $_P["coddocente"];
         $codcurso    = $_P["codcurso"];
         $codsemestre = $_P["codemestre"];
 
@@ -92,14 +100,15 @@ class silabus extends Main{
             $ct3=$sentencia3->fetch();      
             $xd2=1+ (int)$ct3['un'];
           
-            $sql = $this->Query("sp_uni_iu(0,:p1,:p2,:p3,:p4,:p5,:p6)");
+            $sql = $this->Query("sp_uni_iu(0,:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
             $stmt3 = $this->db->prepare($sql);
             $stmt3->bindValue(':p1', $xd2 , PDO::PARAM_INT);
             $stmt3->bindValue(':p2', $ultimosilabus , PDO::PARAM_INT);
             $stmt3->bindValue(':p3', $_P['nombreuni'][$i] , PDO::PARAM_STR); 
             $stmt3->bindValue(':p4', $_P['descripcion'][$i] , PDO::PARAM_STR);
-            $stmt3->bindValue(':p5', $_P['duracion'][$i] , PDO::PARAM_STR);
-            $stmt3->bindValue(':p6', $_P['competencia'][$i] , PDO::PARAM_STR);
+            $stmt3->bindValue(':p5', $_P['competencia'][$i] , PDO::PARAM_STR);
+            $stmt3->bindValue(':p6', $_P['duracion'][$i] , PDO::PARAM_STR);
+            $stmt3->bindValue(':p7', $_P['porcentaje'][$i] , PDO::PARAM_STR);
             $p2 = $stmt3->execute();
             
             //capturamos la ultima unidad

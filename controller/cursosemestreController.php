@@ -5,6 +5,11 @@ require_once '../lib/View.php';
 require_once '../model/alumno.php';
 require_once '../model/silabus.php';
 require_once '../model/tema.php';
+require_once '../model/calificacion.php';
+require_once '../model/bibliografia.php';
+require_once '../model/unidad.php';
+require_once '../model/evaluacion.php';
+
 
 class cursosemestreController extends Controller {
 
@@ -20,7 +25,13 @@ class cursosemestreController extends Controller {
         $view->render();
     }
 
-    
+    public function  generarsilabo(){
+       $codsemestre=$_GET["CodSemestre"];
+        $codcurso= $_GET["CodCurso"];
+       $codsilabo=$_GET["CodSilabo"];
+       $envio = $this->genSilabo(array('filtro' => $codsemestre,'filtro1' =>$codcurso,'filtro2'=> $codsilabo));
+       echo $envio;
+    }
     
     public function getCursosD()
        {
@@ -65,6 +76,16 @@ class cursosemestreController extends Controller {
       echo $envio;
         
        }
+       public function  getCalificaciones()
+        {
+           $semestre=$_POST["idsemestre"];
+           $curso=$_POST["idcurso"];
+           $alumno=$_POST["idalumno"];
+           $envio=$this->Lista_notas(array('criterio' => $curso,'criterio1' =>$semestre, 'criterio2' =>$alumno));      
+       
+        echo $envio;
+           
+        }
        public function getSillabysD()
        {
         $codcurso=$_POST["Codigo"];
@@ -138,7 +159,14 @@ class cursosemestreController extends Controller {
         $obj = new silabus();
         $p = $obj-> actualizar_silabo($_POST);      
        }
-       
+       public function  enviarNota(){
+         $obj = new calificacion();
+         $p = $obj-> insert($_POST);  
+       }
+       public function  editarNota(){
+         $obj = new calificacion();
+         $p = $obj-> update($_POST);  
+       }
        public function getTema()
        {
         $unidad=$_POST["Codigo"];
@@ -158,6 +186,30 @@ class cursosemestreController extends Controller {
         $obj = new tema();
         $p = $obj-> actualizar_tema($_POST);      
        }
+
+//aqui toy
+       public function editarBiblio() {
+        $obj = new bibliografia();
+        $p = $obj-> actualizar_bibliografia($_POST);      
+       }
+
+//aqui toy
+       public function editarBiblio_tipo() {
+        $obj = new bibliografia();
+        $p = $obj-> actualizar_bibliografia_tipo($_POST);      
+       }
+
+//aqui toy editar editarUni_nombre
+       public function editarUni_nombre() {
+        $obj = new unidad();
+        $p = $obj-> actualizar_unidad_nombre($_POST);      
+       }
+//aqui toy editarEva_tipo
+        public function editarEva_tipo() {
+        $obj = new evaluacion();
+        $p = $obj-> actualizar_evaluacion_tipo($_POST);      
+       }
+       
        
        public function getEditN() 
        {
@@ -201,18 +253,7 @@ class cursosemestreController extends Controller {
 //        
 //       }
        
-       public function  getCalificaiones()
-        {
-           $semestre=$_POST["idsemestre"];
-           $curso=$_POST["idcurso"];
- 
-       
-        
-        $envio=$this->Lista_notas(array('criterio' => $curso,'criterio1' =>$semestre));      
-       
-        echo $envio;
-           
-        }
+
         ///faltaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         public function getAsistencia() 
        {

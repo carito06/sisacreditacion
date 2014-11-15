@@ -1,13 +1,17 @@
+<script type="text/javascript" src="lib/alertify.js"></script>
+<link rel="stylesheet" href="themes/alertify.core.css" />
+<link rel="stylesheet" href="themes/alertify.default.css" />
 <style>
 	 #ola .tnota{
 		padding: 0px;
-		width: 32px; 
+		width: 38px; 
 		
 	}
 	#ola .tnota input{
-		font-size: 12px;
+		font-size: 10px;
 		padding: 1px 8px;
 		height: 30px;
+		border: none;
 	}
 </style>
 <div class="row">
@@ -43,36 +47,34 @@
 					<tbody style="width:100%;">
 						<?php foreach ($rows as $key => $value) { ?>
 						<tr> 
-							<td><?php echo strtoupper(utf8_encode($value[2]));?></td>   
+							<td>
+								<?php echo strtoupper(utf8_encode($value[2]));?>
+								<input type="hidden" name="idalumno[]" value="<?php echo $value[0] ?>" >
+							</td>   
 							<td style="font-size:11px;" align="left">
 								<?php echo strtoupper(utf8_encode($value[1]));?>
 							</td>
-							<?php 
+
+							<?php $alum= $value[0];
 								if (isset($rows2)){
-									foreach ($rows2 as $key => $value) { ?>
+									foreach ($rows2 as $key => $value) {  $ie= $value[3];?>
 										<td class="campo<?php echo $value[3];?> tnota" name="<?php echo $value[3];?>">
-											<?php 
-												foreach ($rows3 as $key => $value2) { 
-													if($alumI==$value[0]){
-														echo $value2[1];
-													}
-												}
-											?>
-											<input type="hidden" class="codevento" name="idevaluacion"value="<?php echo $value[3];?>" style=""/>
-											<input type="hidden" class="codcurso" value="<?php echo $value[4];?>"/>
-											<input type="hidden" class="codsemestre" value="<?php echo $value[5];?>"/>
-				
-											<div class="editarnota<?php echo $value[3];$notita="notita".$value[3];?>"></div>           
+											<?php if (isset($rows3)){
+											 foreach ($rows3 as $key => $value) { ?>
+											 	<?php if (($value[0]==$alum) && ($value[2]==$ie)){ ?>
+											 	<input type='text' maxlength='2'  pattern='{0-9}+'  class='form-control nota' type="number" id="<?php echo $alum;?>,<?php echo $ie;?>" value="<?php echo $value[1];?>" onblur='hi(this)'/>	
+											<?php } } } ?>
 										</td>
 							<?php   }
-								}else {
-								
 								}
 							?>
-							<td>Promedio</td>
+							<td>
+								falta
+							</td>
 						</tr>
 					<?php } ?>
 					</tbody>
+					<!---
 					<tfoot style="display: inline-block;width:100%">
 						<tr>
 							<td style="border:0;">
@@ -80,9 +82,39 @@
 							</td>
 						</tr>
 					</tfoot>
-   
+   					-->
 				</table>
 			</form>
 		</div>
     </div>             
 </div>
+<script>
+	function hi(control){
+		//alert(control.value);
+		cl2= $(control).attr('id');
+		myArray = cl2.split(',');
+		idAlumno=myArray[0];
+		idTipEvaluacion=myArray[1];
+		campoInput= $(control).val();
+
+		$.post('index.php', 'controller=cursosemestre&action=editarNota&CodAlumno=' +idAlumno+'&CodTipEvaluacion='+idTipEvaluacion+'&campo='+campoInput, function(data) {
+        });
+
+       curso= $('#tablaevaluaciones .pn4 .codcurso').val();
+    VerRegistro(curso);
+    alertify.log("se inserto nota");
+		/*
+        $.post('index.php','controller=cursosemestre&action=getCalificaciones&idsemestre='+codsemestre+'&idcurso='+codcurso+'&idalumno='+idAlumno, function(data) {
+        $(".vernot").empty().append(data);
+        $(".vernot input[type=number]").css("display","");
+	    });*/
+	}
+/*
+	$('#ola .tnota').click(function(){
+		cl= $(this).attr('id');
+		$('input[type=text]').attr('id',''+cl);
+		$('<div class="vernot"></div>').appendTo(''+this);
+
+	});
+*/
+</script>

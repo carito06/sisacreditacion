@@ -17,20 +17,16 @@
     <!--INICIO foreach-->
     <div id="ampliar">
     <ul class="nav nav-tabs" id="myTab" >
-        <li class="active"><a href="#obGen" data-toggle="tab" class="ecp" >Objetivos Generales</a></li>
-        <li><a href="#unidad" data-toggle="tab" class="unidad" class="ecp">Unidad</a></li>
-        <li><a href="#bibliografia" data-toggle="tab" class="ecp">Bibliografia</a></li>
+        <li class="active"><a href="#obGen" data-toggle="tab" >Objetivos Generales</a></li>
+        <li><a href="#unidad" data-toggle="tab" class="unidad">Unidad</a></li>
+        <li><a href="#bibliografia" data-toggle="tab">Bibliografia</a></li>
+        <li><a href="#generarsilabo" data-toggle="tab">Generar Sílabo</a></li>
     </ul> 
     </div>
     <?php 
    if($rows){
     foreach ($rows as $key => $value) { ?>
 
-<!--
-    <script>
-    alert("as");
-      $(".vcc").append("<img src='../web/images/copiar_silabus.png' width='15px' title='copiar sílabo' style='float: right; margin-right: -19px; margin-top: -8px;'/>");
-    </script> -->
         <div class="tab-content col-md-11">
             <div class="tab-pane active" id="obGen" align="justify">
             <br>
@@ -63,7 +59,7 @@
 
         <input type="hidden" id="semestre" value="<?php echo $value[4] ?>"/>
         <input type="hidden" id="curso" value="<?php echo $value[5] ?>"/>
-        <input type="hidden" id="silabo" value="<?php echo $value[6] ?>"/>
+        <input type="hidden" id="silabo" value="<?php echo $value[6]; $idsilak=$value[6]; ?>"/>
 <!--        unidad inicio-->
         <div class="tab-pane"  id="unidad" align="justify">
             <div id="unidades"></div>
@@ -73,10 +69,84 @@
             <input  type="hidden" id="curs" value="<?php echo $value[5] ;?>"/>
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
               
-            <div id="edibi"></div>
+            <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button>
+                  <br>
+                   <table id="bibl" class='table table-hover table-bordered'>
+                            <thead>
+                              <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
+                              <th>tipo de bibliografía</th>
+                              <th>Descripción</th>
+                              <th></th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($rows2 as $key => $value) { 
+                                       if ($value[1]==$idsilak) {
+                                     
+                                  ?>
+                                <input type="hidden" id="idbibliok"class="idbibliog" value="<?php echo $value[0]?>" />
+                                  <tr class="dtp">
+                                    <td>
+                                        <?php 
+                                          mysql_connect("localhost", "root", "");
+                                          mysql_select_db("sisacreditacion");
+                                         $consulta=mysql_query("SELECT descripcion_tipobibliografia,idtipo_bibliografia  from tipo_bibliografia ");
+                                         echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='idtipo_bibliografia'>";
+                                             while($registro=mysql_fetch_row($consulta)){
+                                                 if ($value[3] != $registro[1] ) {
+                                                    echo "<option value='".$registro[1]."'> ".$registro[0]."</option>";
+                                                 } else { 
+                                                  echo "<option selected='selected' value='".$registro[1]."'> ".$registro[0]."</option>";
+                                                 }
+                                              }
+                                          echo "</select>";   
+                                          echo '<br/>';
+                                      ?>      
+                                    </td>
+
+                                    <td><input type='text' id='descripcion' name='descripcion[]' value="<?php echo utf8_encode($value[2]); ?>"
+                                      class='text ui-widget-content ui-corner-all' style='width: 100%; text-align: left;'/>
+                                    </td>
+                                    <td class="eliminar">
+                                      <button type="button" class="btn btn-default " >
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                      </button>
+                                    </td>
+                                  </tr>
+                        <?php }   }?>
+                            </tbody>
+                    </table>
+
+                    <script type="text/javascript">
+                    $(document).ready(function(){
+                        $('.dtp input').blur(function(){
+                            edit= $(this).val();
+                            campo= $(this).attr('id');
+                            idb= $('idbibliog').val();
+                            //alert(campo);
+                           $.post('index.php', 'controller=cursosemestre&action=editarBiblio&Campo=' +campo+
+                                                '&Bibliografia='+idb+'&Editar='+edit, function(data) {
+                          });
+                      });
+
+                        $('.dtp select').change(function(){
+                            edit= $(this).val();
+                            campo= $(this).attr('id');
+                            idb= $('#idbibliok').val();
+                            //alert("olassssii  "+ campo + "  " +idb+ "  " + edit);
+                           $.post('index.php', 'controller=cursosemestre&action=editarBiblio_tipo&Campo=' +campo+
+                                                '&Bibliografia='+idb+'&Editar='+edit, function(data) {
+                          });
+                      });
+                    });
+                </script>
 
         </div>
-         <br>
+        <div class="tab-pane" id="generarsilabo">
+          <br>
+          <a class="btn btn-default gensil" title="descargar" target="_blank" href='http://127.0.0.1/sisacreditacion/web/index.php?controller=cursosemestre&action=generarsilabo&CodSemestre=<?php echo $value[4] ;?>&CodCurso=<?php echo $value[5] ;?>&CodSilabo=<?php echo $value[6] ;?>'></a>
+        </div>
         </div>
 <!--        edit fin-->
 
@@ -96,6 +166,13 @@
 <div class="tab-content col-md-11">
         <div class="tab-pane active" id="obGen" align="justify">
             <br>
+            <script src="../web/js/jquery.min.js"></script>
+            <script src="../web/js/jquery.autosize.js"></script>
+            <script>
+               $(function(){
+                 $('textarea').autosize();    
+               });         
+            </script>
             <table class="table">
                 <tbody>
                    <tr>
@@ -119,6 +196,8 @@
                    </tr>
                 </tbody>
             </table>
+
+
     </div>  
              
     <div class="tab-pane"  id="unidad" align="justify" >
@@ -127,6 +206,22 @@
             Agregar</button>
              <button  type="button"class="btn btn-default eliminar">x</button>
             <br>
+            <style>
+              #tabla textarea{
+                margin: 0px;
+                border: none;
+                font-size: 8px;
+                resize: none;
+                width: 100%;
+                height: 15px;
+              }
+              #tabla input[type='number']{
+                width: 60px;
+                margin: 0px;
+                border: none;
+                font-size: 9px;
+                }
+            </style>
             <table id="tabla" class='table table-hover table-bordered'>
                 <!-- Cabecera de la tabla -->
                 <thead>
@@ -142,11 +237,19 @@
                
                 <!-- Cuerpo de la tabla con los campos -->
                 <tbody>
-             
+                   <tr>
+                    <td><textarea id='nombreunidad1' class='form-control' name='nombreuni[]'></textarea></td>
+                    <td><textarea class='form-control' name='competencia[]'></textarea></td>
+                    <td><textarea class='form-control' name='descripcion[]'></textarea></td>
+                    <td><input type='number' class='form-control' id='duracion1' name='duracion[]'/></td>
+                    <td><input type='number' id='porcentaje' class='form-control' name='porcentaje[]' value='100'/></td>
+                    <td><button type='button' class='btn btn-default' onClick='semana(1)'>+</button></td>
+                  </tr>
                 </tbody>
                  
             </table>
             <br>
+            <div id='h1'></div>
             <div id="a"></div>
 
            
@@ -190,11 +293,14 @@
         </div> 
     
         </div>
+        <div class="tab-pane" id="generarsilabo">
+          <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+        </div>
 
 </div>
 
 
-      <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
+      
 
 
 </form>
@@ -218,7 +324,7 @@
           <h4 class="modal-title" id="myModalLabel"></h4>
          </div>
          <div class="modal-body">
-            <textarea name="edits" id="edits"  style="width: 100%; height: 250px" ></textarea>
+            <textarea name="edits" id="edits"  style="width: 100%; height: 200px" ></textarea>
          </div>
          <div class="kmodal-footer">
            <button type="button" id="guardarS" onclick="guardarre()" data-dismiss="modal" class="btn btn-primary">Guardar</button>

@@ -19,6 +19,7 @@
         <script type="text/javascript" src="js/validateradiobutton.js"></script>
         <script type="text/javascript" src="js/utiles.js"></script>
         <link rel="stylesheet" href="css/css.css">   
+
         <script language="javascript" type="text/javascript">
 
             $(document).ready(function() {
@@ -28,16 +29,13 @@
                     $("#menu").generaMenu(opciones_menu);
                 }, 'json');
             });
-            function clearText(field)
-            {
+            function clearText(field) {
                 if (field.defaultValue == field.value)
                     field.value = '';
                 else if (field.value == '')
                     field.value = field.defaultValue;
             }
-
         </script>
-
     </head>
 
     <body style='background-image: url("css/images_eapisi/fondo.gif");'>

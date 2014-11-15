@@ -70,5 +70,19 @@ class unidad extends Main{
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
     }
+
+    //aki toy
+    function actualizar_unidad_nombre($_P) {
+        echo "<pre>"; print_r ($_P);
+        $uni=$_P["Unidad"];
+        $cam= $_P["Campo"];
+        $edit= $_P["Editar"];
+
+        $stmt = $this->db->prepare("UPDATE unidad SET ".$cam." = :p2
+                                    WHERE idunidad = :p1");
+        $stmt->bindValue(':p1', $uni, PDO::PARAM_INT);
+        $stmt->bindValue(':p2', $edit, PDO::PARAM_STR);
+        $p1 = $stmt->execute();
+    }
 }
 ?>

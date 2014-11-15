@@ -59,6 +59,32 @@ class Main {
         $sth->execute();
         return $sth->fetchAll();
     }
+    function silDG(){
+        $query = "SELECT cu.DescripcionCurso, cu.Creditos, cu.TipoCurso, cu.Ciclo, cu.CodCursoSira,
+            ac.DescripcionArea, cu.HorasTeoria, cu.HorasPractica, si.idsilabus,
+             si.sumilla, si.metodologia, si.competencia, sac.Abreviatura, sac.FechaInicio, sac.FechaTermino, 
+             ca.CodigoCurso, CONCAT(pro.NombreProfesor,' ', pro.ApellidoPaterno,' ',pro.ApellidoMaterno),si.objetivo,
+             cu.OrdenSegunPlan
+            from cursos as cu inner join areacurricular as ac on
+            cu.CodigoAreaCurricular = ac.CodigoAreaCurricular inner join carga_academica as ca on
+            cu.CodigoCurso = ca.CodigoCurso inner join  silabus as si on
+            ca.idcargaacademica = si.idcargaacademica inner join semestreacademico as sac on
+            ca.CodigoSemestre = sac.CodigoSemestre inner join profesores as pro on
+            ca.CodigoProfesor = pro.CodigoProfesor
+            where idsilabus = {$this->filtro2} ";
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':filtro2', $this->filtro2, PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+    function silUni(){
+        $query = "SELECT idunidad,nombreunidad, descripcionunidad, duracion, competencia,porcentaje from unidad  
+            where idsilabus = {$this->filtro2} ";
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':filtro2', $this->filtro2, PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
 
     function getList() {
         $query = "SELECT * FROM {$this->table} ";
@@ -107,7 +133,7 @@ class Main {
 
    function getRetornoN(){
         
-         $query = "select 
+         $query = "SELECT 
                         distinct
                         C.CodigoAlumno,
                         C.nota,
@@ -124,13 +150,11 @@ class Main {
                         inner join carga_academica as CA on
                         S.idcargaacademica=CA.idcargaacademica
 
-                        WHERE
-
-                        CA.CodigoCurso='{$this->criterio}' and Ca.CodigoSemestre='{$this->criterio1}'";
+                        WHERE  CodigoCurso='{$this->criterio}' and CodigoSemestre='{$this->criterio1}'";
 
         $sth = $this->db->prepare($query);
-        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
-       $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
+       $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_INT);
         $sth->execute();
 //    var_dump($sth);
 //    exit();
@@ -305,7 +329,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function getListaA() {
-        $query = "select 
+        $query = "SELECT 
                         A.CodigoAlumno,
                         concat(A.NombreAlumno,' ',A.ApellidoPaterno,' ',A.ApellidoMaterno) as alumno,
                         A.CodAlumnoSira
@@ -423,6 +447,15 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+    function estadoSil() {
+        $query = "SELECT CodigoCurso from carga_academica inner join silabus on 
+        carga_academica.idcargaacademica = silabus.idcargaacademica
+            where CodigoSemestre= {$this->criterio} and CodigoProfesor= {$this->criterio1}
+        ";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
 
     function getSilabu() {
         $query = "select
@@ -447,10 +480,10 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
     function getBibliografia() {
         $query = "SELECT bi.idbibliografia, bi.referencia, bi.descripcion, tb.idtipo_bibliografia,
-                        tb.descripcion_tipobibliografia
+                        tb.descripcion_tipobibliografia, bi.identificador
                  FROM bibliografia as bi inner join tipo_bibliografia as tb on
                     tb.idtipo_bibliografia = bi.idtipo_bibliografia
-                  WHERE referencia ='$this->criterio22' and identificador = 1 ";
+                     WHERE referencia ='$this->filtro2' and identificador = 1 ";
         $sth = $this->db->prepare($query);
         $sth->execute();
         return $sth->fetchAll();
@@ -587,7 +620,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
     function getEvaluacion() {
-        $query = "SELECT idtipo_evaluacion, descripcionevaluacion, fecha, ponderado FROM `evaluacion`
+        $query = "SELECT idtipo_evaluacion, descripcionevaluacion, fecha, ponderado,idevaluacion FROM `evaluacion`
                   WHERE idunidad= {$this->criterio} ";
         $sth = $this->db->prepare($query);
         $sth->execute();

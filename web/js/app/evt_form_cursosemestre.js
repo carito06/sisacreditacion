@@ -1,3 +1,18 @@
+/*
+$('#generarsilabo .generarsilabos').live("click",function(){
+    cl2= $(this).attr('id');
+    myArray = cl2.split(',');
+    CodSemestre=myArray[0];
+    CodCurso=myArray[1];
+    CodSilabo=myArray[2];
+    $.post('index.php', 'controller=cursosemestre&action=generarsilabo&CodSemestre=' +CodSemestre+'&CodCurso='+CodCurso+'&CodSilabo='+CodSilabo, function(data) {
+      $(".gs").empty().append(data);
+        });
+
+});
+*/
+
+
 //cursos q enseña el docente
 
 $(window).bind("beforeunload",function(event){
@@ -23,7 +38,9 @@ $( "#tabs" ).tabs();
     });
 
 
-
+$('.nota').live('keyup' ,function(){
+  rangoNumeros($(this).val(),$(this));
+});
 
     $('#grabar_1').click(function() {
 
@@ -136,68 +153,6 @@ function bib(){
       kk++;
 }
 
-var temp= [];
-var temp2= [];
- j=0;
- t=  0;      
-function semana(i){
-  //alert("entre");
-   var html="";
-    
-    temp[i] = $("#duracion"+i).val();
-    temp2[i] = $("#nombreunidad"+i).val();
-    t= t + parseInt(temp[i]);
-    //alert(t);
-            html +="<table class='table table-hover table-bordered'>";
-            html +="<thead>";
-            html +="<tr>";            
-            html +="<th colspan='6'>";
-            html +="<h3>unidad: "+(parseInt(i)-1)+" "+temp2[i]+"<h3>";
-            html +="</th>";
-            html +="</tr>";
-            html +="<tr>";
-            html +="<th>";
-            html +="<td>Contenido</td>";
-            html +="<td>Conceptual</td>";
-            html +="<td>Procedimental</td>";
-            html +="<td>Actitudinal</td>";
-           // html +="<td>Clase</td>";
-            html +="</th>";
-            html +="</tr>";
-            html +="</thead>";    
-      
-      html +="<tbody>";
-        for(k=j+1;k<=t ;k++){
-            html +="<tr>";
-            html += "<td> semana "+k+"</td>";
-            html +="<td><input type='text' id='contenido' class='form-control validar' rows='2' cols='30' name='cont"+k+"-"+i+"' /></td>"; 
-            html +="<td><input type='text' id='Conceptual' class='form-control validar' rows='5' cols='30'' name='conce"+k+"-"+i+"'/></td>";  
-            html +="<td><input type='text' id='procedimental' class='form-control validar' rows='5' cols='30' name='proc"+k+"-"+i+"' /></td>";  
-            html +="<td><input type='text' id='actitudinal'  class='form-control validar' rows='5' cols='30' name='act"+k+"-"+i+"' /></td>";
-           // html += "<td><button type='button' class='btn btn-default' onClick='clase("+i+")'>+</button></td> ";
-            html  +="</tr>";
-           j++;
-    }
-    html += "<tr><table id='ta' class='table table-hover table-bordered'>";
-    html += "<thead>";
-            html += "<tr>";
-            html += "<th>tipo</th>";
-            html += "<th>Descripción</th>";
-            html += "<th>Fecha</th>";
-            html += "<th>Ponderado</th>";
-            html += "</tr>";
-            html += "</thead>";
-            html += "<tbody>";
-            html += "<td></td>";
-            html += "<td><input type='text' id='Descripcion' class='form-control validar'   /></td>";
-            html += "<td><input type='date' id='fecha' class='form-control validar' /></td>";
-            html += "<td><input type='text' id='ponderado' class='form-control validar' placeholder='%'' /></td>";
-            html += "</tbody>";
-            html += "</table> </tr>";
-    html +="</tbody>";
-    html +="</table>";
-    $("#h"+i).html(html);
-}
 
 function llenartemas(param){
     var temp = $("#duracion"+param).val();
@@ -252,7 +207,6 @@ function carga(vars){
 function Ver(id) {
     var idsemestre = $("#semestreacademico").attr("value");
     var opt="A";
-    console.log(id);
     $(".silaboo").css("display","none");
     $(".olassss").css("display", "none");
     $("#tablaevaluaciones").css("display", "none");
@@ -354,8 +308,7 @@ $.post('index.php', 'controller=cursosemestre&action=getEdiSillabus&Codigo=' + i
  $(".regresar").css("display", "none");
  });
 
-$.post('index.php', 'controller=cursosemestre&action=getEdiSillabusBiblio', function(data) {
- $("#edibi").empty().append(data);
+$.post('index.php', 'controller=cursosemestre&action=getEdiSillabus', function(data) {
  });
 
 }
@@ -424,7 +377,6 @@ $("#vertema").live("click",function(){
     var codunidad=$("#codunidad").attr("value");
     var opt='A';
     
-$(".regresar").css("display","");
 
 $.post('index.php', 'controller=cursosemestre&action=getTema&Codigo=' + codunidad+'&option='+opt , function(data) {
 
@@ -434,129 +386,26 @@ $.post('index.php', 'controller=cursosemestre&action=getTema&Codigo=' + codunida
 
 
 
-$(".editar").live("click",function(){
-            $("#boton").css("display", "");
 
-});
+function filtro (id,jar){
 
-
-
-function filtro (id){
-   
-     var alumno=$(".codalumno").attr("value");
-     var enviar2=".enviar"+id;
-     var td=".campotext"+id;
-    var idcampo=$(td).attr("name");
-    var evento='.campo'+id;
-    var editarnota =".editarnota"+id;
-
-     $("#accordion").css("display", "");
-        $("#chau").css("display", "none");
-        $("#borrarb").css("display", "");
-        $("#regresar").css("display", "");
-            $("#boton").css("display", "none");
-        $("#agrandar").attr({
-            'class': 'col-md-9 col-md-offset-1'
-        });
-        
-        $("#ola").css({
-            'width':'100%'
-        });
-        $("#aumentar").css({
-            'class':'col-md-12' ,"width" :"100%"
-        });
-        
-         $("#ola").css({
-            'height':'100%','width':'100%'
-        });
-         $("#grande").css({
-            'height':'100%'
-        });
-         $("#grande").css({
-            'width':'100%'
-        });
-        $(editarnota).css("display","none");
-        $("#lista").css("display", "none");
-        $(".insertar").css("display", "");
-    if(id !== idcampo || id === idcampo ){
-//        $(evento).css("display","");
-             $(evento).html("<input  type='text' maxlength='2'  class='form-control nota' name='notas[]' pattern='{0-9}+'/>");
-              $(enviar2).css("display","");
-}
-else{
-$(evento).css("display","none");
- 
-}
+    idTipEvaluacion= id;
+    idAlumno =$("input[name='idalumno[]']").serialize();
+    tamA =$("input[name='idalumno[]']").length;
+    //alert(tamA);
+    campoInput =0;
     
-}
-
-
-
-
-
-
-
-
-  
-  $("#enviarn").live("click",function(){
+    alert(idAlumno);
     
-    var alumno =$('input[name="idalumno[]"]').serialize();
-    var nota=$('input[name="notas[]"]').serialize();
-    var evaluacion=$(".codevento").attr("value");
-//    var codalumno=$(".codalumno").val();
-        var campo=".campotext"+evaluacion;
-    var editarnota=".editarnota"+evaluacion;
-    var notita=".notita"+evaluacion;
-    
-    var codcurso=$(".codcurso").attr("value");
-        var codsemestre=$(".codsemestre").attr("value");
+    $(jar).attr("disabled","");
 
-//    alert (alumno+nota);
-//    alert($("#formnotas").serialize());
-    $.post('index.php','controller=cursosemestre&action=getEditN&idalumno='+alumno+'&idevaluacion='+evaluacion+'&notas='+nota,function(data) {
-
-//        alert("okis");
-        $("#pachas").empty().append(data);
+    $.post('index.php', 'controller=cursosemestre&action=enviarNota&tamano='+tamA+'&'+idAlumno+'&CodTipEvaluacion='+idTipEvaluacion+'&campo='+campoInput, function(data) {
     });
-    
-         alert("Se inserto la Evaluacion");
-          $.post('_tablaN.php','controller=cursosemestre&action=getCalificaiones&idsemestre='+codsemestre+'&idcurso='+codcurso,function(data) {
 
-        $(".oli").empty().append(data);
-    });
-         $(campo).css("background","#008000");
-          $(editarnota).css("display","");
-     $(".nota").css("display","none");
-    
-    $(editarnota).html("<a><img  src='../web/images/edit.png' class='edit"+evaluacion+"'></a>");
-  });
-
-$(".ecp").live("click",function(){
-    
-//ys11    var curso=$("#curs").attr("value");
-    var semestre=$("#semes").attr("value");
-    $post('index.php','controller=cursosemestre&action=getBibliografia&curso='+curso+'&semestre='+semestre,function(data){
-        
-        $("#biblio").empty().append(data);
-    });
-});
-
-
-
-
-//function inicio(){
-//    var x =$("#unid");
-//    x.click(mostrar);
-//    $("#editsy").css("dispaly","none");
-//    
-//}
-//
-//function mostrar (){
-//    
-//    var x =$(".table");
-//    x.live("toggler");
-//}
-
+       curso= $('#tablaevaluaciones .pn4 .codcurso').val();
+    VerRegistro(curso);
+    $('.nota').numerico();
+}
 
 
 function VerAsistencia(id) {
@@ -565,27 +414,17 @@ function VerAsistencia(id) {
 
     alert(id)
 
-//        $("#ola").css("display","none");
-//        $("#agrandar").css("display","none");
 $("#silaedit").css("display","none");
-
     $("#lista").css("display","none");
         $("#evaluaciones").css("display","none");
         $(".olassss").css("display","none");
     $.post('index.php', 'controller=cursosemestre&action=getUnidad&CodigoCurso=' + id + '&idSemestre=' + idsemestre+'&sin='+opt, function(data) {
-
         $("#unidadesA").empty().append(data);
-       
-        
     });
-  
-
-
 }
 
 function TemasClase(idtema,idclase){
     
-
 var semestre = $(".semestre").attr("value");
 var curso = $(".curso").attr("value");
       var unidad =$("#idunidad").val();
@@ -764,3 +603,11 @@ function activa(param){
     $("#"+param).addClass("active");
 }
 
+function rangoNumeros(nro,input){
+        if(nro>=0 & nro<=20){
+         // alertify.log("esta en el rango")
+        }else{
+          input.val("");
+          alertify.log("por favor ingrese un numero mayor igual a '0' o menor igual a '20'");
+        }
+}

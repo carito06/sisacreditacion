@@ -106,7 +106,7 @@
             //          echo $fechaA;
             ?>
              <?php if ($fechaE > $fechaA){?>
-              <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value[3]?>')" value="Insertar">Insertar</button>
+              <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value[3]?>',this)" value="Insertar">Insertar</button>
               <?php }else {?>
               <button class="btn btn-primary btn-xs" type="button"  value="Inactivo" style="background-color: red;">Inactivo</button>
                   <?php }?>

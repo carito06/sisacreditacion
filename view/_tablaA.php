@@ -3,7 +3,7 @@
 <div class=" col-md-11 " >
     <div class="container-fluid" style="max-height: 520px; ">
         <h4 style="font-family: comic; font-size:18px " >Alumnos Matriculados al curso</h4>
-      <table class="table table-hover table-bordered" style="width: 80%; margin: auto; ">
+      <table class="table table-hover table-bordered" style="width: 70%; margin: auto; ">
          <thead>
           <tr   style="background-color:#eaf8fc;" > 
             <th>N°</th>

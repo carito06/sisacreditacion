@@ -23,18 +23,18 @@
                     </a>
                 </h4>
         <table class="table enUni" id="en<?php echo $conta; ?>">
+            <input type="hidden" id="idunik" value="<?php echo $value[1]?>" />            
             <thead>
               <tr>
                 <th style="padding: 0px">
                   <h4> UNIDAD <?php echo utf8_encode($value[1]); ?> : 
-                    <input type="text" value="<?php echo utf8_encode($value[0]); ?>" style="background-color: #EAF8FC; border:none; width: 80%"/>   
+                    <input class="k1 kuninomb" id="nombreunidad" type="text" value="<?php echo utf8_encode($value[0]); ?>" style="background-color: #EAF8FC; border:none; width: 100%"/>   
                   </h4>
                 </th>
                 <th> 
                   <h5> 
                     Porcentaje:
-                    <input type="number" value="<?php echo utf8_encode($value[6]); ?>" style="background-color: #EAF8FC; border:none; width: 9%">%
-                    
+                    <?php echo utf8_encode($value[6]); ?>%
                   </h5>
                 </th>
               </tr>
@@ -42,14 +42,14 @@
             <tbody style="background: #f9f9f9">
               <tr>
                 <td>
-                <strong>Descripcion:</strong> 
-                <textarea cols="120" rows="4" style="white-space:normal; background-color: #f9f9f9; ;border:none; resize: none;">
+                <strong>Descripcion:</strong> <br>
+                <textarea id="descripcionunidad" class="k1" cols="80%" rows="4" style="white-space:normal; background-color: #f9f9f9; ;border:none; resize: none;">
                   <?php echo utf8_encode($value[4]); ?>
                 </textarea> 
                 </td>
                 <td>
-                <strong>Competencia:</strong>
-                <textarea cols="90" rows="4" style="white-space:normal; background-color: #f9f9f9; ;border:none; resize: none;">
+                <strong>Competencia:</strong><br>
+                <textarea id="competencia" class="k1" cols="80%" rows="4" style="white-space:normal; background-color: #f9f9f9; ;border:none; resize: none;">
                 <?php echo utf8_encode($value[5]); ?>
                 </textarea> 
                 </td>
@@ -110,6 +110,17 @@ $('.codunidad').live("click",function(){
         }
       }
     });
+
+
+        $('.enUni .k1').blur(function(){
+        edit= $(this).val();
+        campo= $(this).attr('id');
+        idu=$('#idunik').val();
+        //alert(edit + " "+campo + " " + idu);
+        $.post('index.php', 'controller=cursosemestre&action=editarUni_nombre&Campo=' +campo+
+                                                '&Unidad='+idu+'&Editar='+edit, function(data) {
+                          });
+        });
  /*$('mtl').blur(function(){
     Edit= $(this).val();
     abc= $('#modal-title2').attr('id');
@@ -118,6 +129,8 @@ $('.codunidad').live("click",function(){
     $.post('index.php', 'controller=cursosemestre&action=editarTema&Campo=' +Cam+'&Tema='+Tem+'&Editar='+Edit, function(data) {
     });
  });*/
+
+
 });
 
 </script>

@@ -76,10 +76,7 @@ fieldset[disabled] .agregar_t.active {
 .canck{
   background-color: #8B1596;
 }
-.container-fluid{
-  padding-left: 0px;
-  padding-right: 0px;
-}
+
 
 /* D*/
 
@@ -93,7 +90,23 @@ fieldset[disabled] .agregar_t.active {
 /* F*/
 
 /* G*/
-
+        .gensil{
+          border-radius: 50%;
+          height: 50px;
+          width: 50px; 
+          color:black;
+          background-image: url('../images/pdf-icon.png');
+          background-size: 50px 50px;
+        }
+        .gensil:hover{
+          box-shadow: purple 1px 1px 1px 1px;
+          transition: 0.2s;
+            -webkit-transform: scale(1.7);
+            -moz-transform: scale(1.7);
+            -o-transform: scale(1.7);
+            -ms-transform: scale(1.7);
+            transform: scale(1.7);
+        }
 /* H*/
 
 /* I*/
@@ -153,9 +166,7 @@ border-top-left-radius: 3px;
 /* O*/
 
 /* P*/
-.panel-body{
-  padding: 0px;
-}
+
 /* Q*/
 
 /* R*/
@@ -166,6 +177,10 @@ border-top-left-radius: 3px;
 
 .textk{
   width:20%;
+}
+#tabla{
+  width: 840px;
+  margin-left: -80px;
 }
 
 
