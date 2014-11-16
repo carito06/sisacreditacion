@@ -117,10 +117,9 @@ class silabus extends Main{
             $ultimaunidad = $ct4["cuni"];
 
 
-            $cuentadur = count($_P["duracion"]);
+            $cuentadur = count($_P["duracion"][$i]);
+            $seman =($_P["duracion"][$i]);
             for ($j=0; $j<$cuentadur ;$j++) { 
-
-                 $seman =($_P["duracion"][$j]);
                  $s=$j+1;
                  //isertamos los temas
                 for ($k=0; $k<$seman; $k++) { 

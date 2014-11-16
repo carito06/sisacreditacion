@@ -68,9 +68,8 @@
         <div class="tab-pane" id="bibliografia">
             <input  type="hidden" id="curs" value="<?php echo $value[5] ;?>"/>
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
-              
+              <br>
             <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button>
-                  <br>
                    <table id="bibl" class='table table-hover table-bordered'>
                             <thead>
                               <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
@@ -251,39 +250,41 @@
             <br>
             <div id='h1'></div>
             <div id="a"></div>
-
-           
-
-
         </div>
-        <div class="tab-pane" id="bibliografia">
 
-        <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button> <br>
- 
-        <div >
+        <!-- Ingresar bibliografia -->
+        <div class="tab-pane" id="bibliografia">
+          <br>
+          <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button>
+          <button  type="button"class="btn btn-default eliminarB">x</button>
+        <div>
+
           <table id="bibl" class='table table-hover table-bordered'>
-            
             <thead>
             <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
-            <th>tipo de bibliografía</th>
+            <th width="200px">tipo de bibliografía</th>
             <th>Descripción</th>
-            <th></th>
             </tr>
             </thead>
 
             <tbody>
-              <tr style="display:none" class="dtp">
-                <td id="tpi"> 
-                
+              <tr class="dtp">
+                <td> 
+                <?php 
+                mysql_connect("localhost", "root", "");
+                mysql_select_db("sisacreditacion");
+                $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
+                echo "<select  name='tipbibl[]' style='width:65%; display:;' class='form-control dts'>";
+                  while($registro=mysql_fetch_row($consulta)){
+                    echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
+                  }
+                echo "</select>";   
+                echo '<br/>'; 
+               ?> 
                 </td>
                 <td><input type='text' id='descripcion' name='descripcion[]' 
-                  class='text ui-widget-content ui-corner-all validar' rows='3' cols='40' style='width: 100%; 
+                  class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; 
                   text-align: left;' placeholder='Ingresar Descripción'/>
-                </td>
-                <td class="eliminar">
-                  <button type="button" class="btn btn-default " >
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
                 </td>
               </tr>
             </tbody>
@@ -294,6 +295,7 @@
     
         </div>
         <div class="tab-pane" id="generarsilabo">
+        <br>
           <input type="submit" id="grabar_1" class="btn btn-info" value="Grabar Silabus">
         </div>
 

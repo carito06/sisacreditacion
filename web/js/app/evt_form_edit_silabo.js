@@ -1,4 +1,5 @@
 
+
 //editar silabo
 	//competencia
 	 $( "#comp" ).click(function() {
@@ -111,7 +112,7 @@ function semana(i){
             html  +="</tr>";
            j++;
     }
-    html += "<tr><table id='ta' class='table table-hover table-bordered'>";
+  /*  html += "<tr><table id='ta' class='table table-hover table-bordered'>";
     html += "<thead>";
             html += "<tr>";
             html += "<th>tipo</th>";
@@ -122,13 +123,13 @@ function semana(i){
             html += "</thead>";
             html += "<tbody>";
             html += "<td></td>";
-            html += "<td><input type='text' id='Descripcion' class='form-control validar'   /></td>";
-            html += "<td><input type='date' id='fecha' class='form-control validar' /></td>";
-            html += "<td><input type='text' id='ponderado' class='form-control validar' placeholder='%'' /></td>";
+            html += "<td><input type='text' name='descripcionEva' id='Descripcion' class='form-control validar'   /></td>";
+            html += "<td><input type='date' name='fechaEva' id='fecha' class='form-control validar' /></td>";
+            html += "<td><input type='text' name='ponderadoEva' id='ponderado' class='form-control validar' placeholder='%'' /></td>";
             html += "</tbody>";
             html += "</table> </tr>";
     html +="</tbody>";
-    html +="</table>";
+    html +="</table>"; */
     $("#h"+i).html(html);
     }
 }
@@ -136,14 +137,20 @@ function semana(i){
 
 
 // Evento que selecciona la fila y la elimina 
-    $(".eliminar").click(function(){
+  $(".eliminar").click(function(){
       var trs=$("#tabla tr").length;
              if(trs>2){
                     // Eliminamos la columna
                 $("#tabla tbody>tr:nth-child("+(parseInt(trs)-1)+"").remove();
             }
     });
-
+    $(".eliminarB").click(function(){
+      var trs=$("#bibl tr").length;
+             if(trs>2){
+                    // Eliminamos la columna
+                $("#bibl tbody>tr:nth-child("+(parseInt(trs)-1)+"").remove();
+            }
+    });
 //silabo
 //$("#guardarS").click(function(){
   //var idsilabo=$("#silabo").val();

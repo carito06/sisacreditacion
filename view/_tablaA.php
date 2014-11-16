@@ -1,25 +1,28 @@
 <?php if ($opcion=="normal"){?>
 <div class="row">
 <div class=" col-md-11 " >
-    <div class="container-fluid" style="max-height: 520px; ">
+    <div class="container-fluid">
         <h4 style="font-family: comic; font-size:18px " >Alumnos Matriculados al curso</h4>
-      <table class="table table-hover table-bordered" style="width: 70%; margin: auto; ">
+      <table class="table table-striped table-hover table-bordered" style="width: 75%; margin: auto; ">
          <thead>
           <tr   style="background-color:#eaf8fc;" > 
-            <th>N°</th>
-            <th>NOMBRE</th>
-            <th>CÓDIGO</th>
+            <th style="text-align:center">N°</th>
+            <th style="text-align:center">APELLIDOS Y NOMBRES</th>
+            <th style="text-align:center">CÓDIGO</th>
           </tr>
         </thead>
         <tbody>
            <?php $i=1; foreach ($rows as $key => $value) { ?>
-            <tr>    
+            <tr>
+              
                 <td width="30px"><?php echo $i; ?></td>
                 <td align="left" width="170px">
                     <?php echo strtoupper(utf8_encode($value[1]));?>
-                </td>
+
+                                   </td>
                 <td width="20px">
                   <?php echo $value[2];?>
+
                 </td>
             </tr>  
           <?php $i++; } ?>

@@ -65,7 +65,9 @@ border-top-left-radius: 0px;
 
 
     }
-    .form-control{margin-bottom: 20px;border-color: rgb(156, 156, 156);}
+    .form-control{margin-bottom: 20px;
+                
+                 }
     .form-control::-webkit-input-placeholder {
     color:    #BEABC1;
 }

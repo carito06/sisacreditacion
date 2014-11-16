@@ -148,32 +148,11 @@ function runEffect($a,$b,$c,$d) {
 }
 var kk=2;
 function bib(){
-      $("#bibl tbody tr:eq(0)").clone("#bibl").removeClass("dtp").appendTo("#bibl tbody").css("display","");
+      $("#bibl tbody tr:eq(0)").clone("#bibl").removeClass("dtp").appendTo("#bibl tbody");
 //      $(".dts").clone().appendTo("#bibl tbody tr:nth-child("+i+") td:nth-child(2)").css("display","").removeClass("dts");
       kk++;
 }
 
-
-function llenartemas(param){
-    var temp = $("#duracion"+param).val();
-    var html="";
-        html=html = html+"<div id='tabs_1_1'>";
-        html = html+"<ul>";
-        for(i=1;i<=temp;i++) {
-        html = html+"<li><a href='#tabsx-"+i+"'>TEMA "+i+"</a></li>";
-        }
-        html = html+"</ul>";
-        for(i=1;i<=temp;i++){
-            html = html+"<div id='tabsx-"+i+"'>";
-            html = html+"<textarea rows='10'></textarea>"; 
-            html = html+"</div>";
-        }
-        html = html+"<div>";      
-        $("#tabsxx").html(html);
-        $( "#tabs_1_1" ).tabs();
-
-       $("#tabsxx").dialog("open");
-}
 
 function carga(vars){
      //$("#idsemeestreacademicoescondido").attr('value',vars);

@@ -97,6 +97,7 @@ function clearText(field)
                 <div class="col-md-12" style="padding-left: 0; padding-right: 0;">
 
                 <div class="navbar" id="menu2" role="navigation" style="margin-bottom: 0; min-height: 0;">
+
   <div  class="container-fluid" id="menu2-contenedor">
 
     <div  class="navbar-header">

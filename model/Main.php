@@ -227,7 +227,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
 
-    function getDatos_grilla_facultad() {
+     function getDatos_grilla_facultad() {
 
         $query = "select DISTINCT
 
@@ -337,7 +337,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         inner join alumnos AS A on A.CodigoAlumno = DM.CodigoAlumno
                         inner join cursos as C on C.CodigoCurso = DM.CodigoCurso
 
-                        WHERE DM.{$this->filtro}= '{$this->criterio}' AND DM.{$this->filtro1}='{$this->criterio1}'";
+                        WHERE DM.{$this->filtro}= '{$this->criterio}' AND DM.{$this->filtro1}='{$this->criterio1}' Order by alumno ASC";
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
@@ -753,8 +753,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         proyecto.periodo_ejecucion,
                         CONCAT(profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno,' ',profesores.NombreProfesor) AS Responsable,
                         escuelaprofesional.DescripcionEscuela,
-                        estado_proyecto.descripcion,
-                        MAX(DISTINCT(control_proyecto.fecha)) as Fecha_Inicio,
+                        proceso_proyecto.nombre,
+                       0,
                     
                         proyecto.presupuesto,
               
@@ -763,23 +763,21 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         linea_investigacion.nombre_linea,
                         eje_tematico.nombre_ejetematico,
                         grupo.nombre_grupo,
-                        `ubigeos$`.DISTRITO,
-                        `ubigeos$`.PROVINCIA,
-                        `ubigeos$`.DEPARTAM,
-                        estado_proyecto.idestado_proyecto
+                        0,
+                       0,
+                      0,
+                       proceso_proyecto.idproceso_proyecto
                         FROM
                         proyecto
                         INNER JOIN detalle_profesor_proy_fun ON proyecto.idproyecto = detalle_profesor_proy_fun.idproyecto
                         INNER JOIN profesores ON profesores.CodigoProfesor = detalle_profesor_proy_fun.CodigoProfesor
-                        INNER JOIN control_proyecto ON proyecto.idproyecto = control_proyecto.idproyecto
-                        INNER JOIN estado_proyecto ON control_proyecto.idestado_proyecto = estado_proyecto.idestado_proyecto
+                        INNER JOIN proceso_proyecto on(proceso_proyecto.idproceso_proyecto=proyecto.estado_proyecto)
                         INNER JOIN escuelaprofesional ON proyecto.CodigoEscuela=escuelaprofesional.CodigoEscuela
                         INNER JOIN tipo_proyecto ON proyecto.idtipo_proyecto = tipo_proyecto.idtipo_proyecto
                         INNER JOIN facultades ON escuelaprofesional.CodigoFacultad = facultades.CodigoFacultad
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
-                        INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                        INNER JOIN `ubigeos$` ON proyecto.Ubigeo = `ubigeos$`.UBIGEO
+                        INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo               
                         
                         where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=1
                         GROUP BY proyecto.idproyecto
@@ -801,8 +799,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         proyecto.periodo_ejecucion,
                         CONCAT(profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno,' ',profesores.NombreProfesor) AS Responsable,
                         escuelaprofesional.DescripcionEscuela,
-                        estado_proyecto.descripcion,
-                        MAX(DISTINCT(control_proyecto.fecha)) as Fecha_Inicio,
+                        proceso_proyecto.nombre,
+                       0,
                     
                         proyecto.presupuesto,
               
@@ -811,27 +809,26 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         linea_investigacion.nombre_linea,
                         eje_tematico.nombre_ejetematico,
                         grupo.nombre_grupo,
-                        `ubigeos$`.DISTRITO,
-                        `ubigeos$`.PROVINCIA,
-                        `ubigeos$`.DEPARTAM,
-                        estado_proyecto.idestado_proyecto
+                        0,
+                        0,
+                        0,
+                        proceso_proyecto.idproceso_proyecto
                         FROM
                         proyecto
                         INNER JOIN detalle_profesor_proy_fun ON proyecto.idproyecto = detalle_profesor_proy_fun.idproyecto
                         INNER JOIN profesores ON profesores.CodigoProfesor = detalle_profesor_proy_fun.CodigoProfesor
-                        INNER JOIN control_proyecto ON proyecto.idproyecto = control_proyecto.idproyecto
-                        INNER JOIN estado_proyecto ON control_proyecto.idestado_proyecto = estado_proyecto.idestado_proyecto
+
+                        INNER JOIN proceso_proyecto on(proceso_proyecto.idproceso_proyecto=proyecto.estado_proyecto)
+
                         INNER JOIN escuelaprofesional ON proyecto.CodigoEscuela=escuelaprofesional.CodigoEscuela
                         INNER JOIN tipo_proyecto ON proyecto.idtipo_proyecto = tipo_proyecto.idtipo_proyecto
                         INNER JOIN facultades ON escuelaprofesional.CodigoFacultad = facultades.CodigoFacultad
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                        INNER JOIN `ubigeos$` ON proyecto.Ubigeo = `ubigeos$`.UBIGEO
-                        
+                                          
                         where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=0
-                        GROUP BY proyecto.idproyecto
-                            ";
+                        GROUP BY proyecto.idproyecto";
 
         $sth = $this->db->prepare($query);
 //        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
@@ -1156,10 +1153,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         facultades.DescripcionFacultad,
                         linea_investigacion.nombre_linea,
                         eje_tematico.nombre_ejetematico,
-                        grupo.nombre_grupo,
-                        `ubigeos$`.DISTRITO,
-                        `ubigeos$`.PROVINCIA,
-                        `ubigeos$`.DEPARTAM
+                        grupo.nombre_grupo
+                     
                         FROM
                         proyecto
                         INNER JOIN detalle_profesor_proy_fun ON proyecto.idproyecto = detalle_profesor_proy_fun.idproyecto
@@ -1172,7 +1167,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                        INNER JOIN `ubigeos$` ON proyecto.Ubigeo = `ubigeos$`.UBIGEO
+                       
                         
             INNER JOIN detalleproyecto_matrixalumno ON proyecto.idproyecto=detalleproyecto_matrixalumno.idproyecto
                         INNER JOIN detalle_matricula ON detalleproyecto_matrixalumno.CodigoAlumno=detalle_matricula.CodigoAlumno
@@ -1218,10 +1213,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                                     facultades.DescripcionFacultad, 
                                     linea_investigacion.nombre_linea,
                                     eje_tematico.nombre_ejetematico, 
-                                    grupo.nombre_grupo,
-                                    `ubigeos$`.DISTRITO,
-                                    `ubigeos$`.PROVINCIA,
-                                    `ubigeos$`.DEPARTAM
+                                    grupo.nombre_grupo
+                                    
                         FROM
                         detalle_profesor_proy_fun
                         INNER JOIN proyecto ON proyecto.idproyecto = detalle_profesor_proy_fun.idproyecto
@@ -1234,7 +1227,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                        INNER JOIN `ubigeos$` ON proyecto.Ubigeo = `ubigeos$`.UBIGEO
+                        
                                              
                         
                         where detalle_profesor_proy_fun.CodigoProfesor='" . $codigo . "' AND proyecto.situacion=1

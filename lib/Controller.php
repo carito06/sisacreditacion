@@ -231,7 +231,7 @@ class Controller {
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
-        $view->setTemplate('../view/_Select.php');
+        $view->setTemplate('../view/_Selectlista.php');
         return $view->renderPartial();
     }
     
