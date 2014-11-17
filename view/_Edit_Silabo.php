@@ -237,16 +237,26 @@
                 <!-- Cuerpo de la tabla con los campos -->
                 <tbody>
                    <tr>
-                    <td><textarea id='nombreunidad1' class='form-control' name='nombreuni[]'></textarea></td>
-                    <td><textarea class='form-control' name='competencia[]'></textarea></td>
-                    <td><textarea class='form-control' name='descripcion[]'></textarea></td>
-                    <td><input type='number' class='form-control' id='duracion1' name='duracion[]'/></td>
-                    <td><input type='number' id='porcentaje' class='form-control' name='porcentaje[]' value='100'/></td>
+                    <td><textarea id='nombreunidad1' placeholder='nombre de unidad' class='form-control' name='nombreuni[]'></textarea></td>
+                    <td><textarea class='form-control' placeholder='competencia' name='competencia[]'></textarea></td>
+                    <td><textarea class='form-control' placeholder='descripcion' name='descripcion[]'></textarea></td>
+                    <td><input type='number' value="17" class='form-control' id='duracion1' name='duracion[]'/></td>
+                    <td><input type='number'  id='porcentaje' class='form-control' name='porcentaje[]' value='100'/></td>
                     <td><button type='button' class='btn btn-default' onClick='semana(1)'>+</button></td>
                   </tr>
                 </tbody>
                  
             </table>
+             <?php 
+                mysql_connect("localhost", "root", "");
+                mysql_select_db("sisacreditacion");
+              $consulta=mysql_query("SELECT * from tipo_evaluacion ");
+                echo "<select  name='tipEva[]' style='display:none; width:65%;' class='form-control tipEval'>";
+                  while($registro=mysql_fetch_row($consulta)){
+                    echo "<option value='".$registro[0]."'>".$registro[1]."</option>";
+                  }
+                echo "</select>";   
+            ?> 
             <br>
             <div id='h1'></div>
             <div id="a"></div>
@@ -271,12 +281,11 @@
               <tr class="dtp">
                 <td> 
                 <?php 
-                mysql_connect("localhost", "root", "");
-                mysql_select_db("sisacreditacion");
-                $consulta=mysql_query("SELECT descripcion_tipobibliografia from tipo_bibliografia ");
-                echo "<select  name='tipbibl[]' style='width:65%; display:;' class='form-control dts'>";
+
+                $consulta=mysql_query("SELECT descripcion_tipobibliografia,idtipo_bibliografia from tipo_bibliografia ");
+                echo "<select  name='tipbibl[]' style='width:65%;' class='form-control dts'>";
                   while($registro=mysql_fetch_row($consulta)){
-                    echo "<option value='".$registro[0]."'>".$registro[0]."</option>";
+                    echo "<option value='".$registro[1]."'>".$registro[0]."</option>";
                   }
                 echo "</select>";   
                 echo '<br/>'; 

@@ -41,12 +41,17 @@ $( "#su" ).click(function() {
 //ingresar unidades
 var ii=2;
 function agregarUni(){
-   
+   if (($('#duracion1').val()==17) || ($('#porcentaje1').val()==100)) {
+        alert("cambie de valores para insertar nueva unidad");
+   }else{
       idAlumno= $("input[name='porcentaje[]']").serializeArray();
+      duracion= $("input[name='duracion[]']").serializeArray();
       tamA =idAlumno.length;
       var T=100;
+      var D=17;
       for (var i = 0; i <parseInt(tamA); i++) {
           T= T - parseInt(idAlumno[i].value);
+          D= D - parseInt(duracion[i].value);
       }
   var html = "";
   html += "<tr>";
@@ -65,13 +70,16 @@ function agregarUni(){
    $('#tabla textarea').autosize();
 
       $('#porcentaje'+ii).val(T);
+      $('#duracion'+ii).val(D);
       ii++;
+    }
 }
 //ingresar semanas
 var temp= [];
 var temp2= [];
  j=0;
- t=  0;      
+ t=  0;   
+ e=0;   
 function semana(i){
   //alert("entre");
    var html="";
@@ -112,8 +120,10 @@ function semana(i){
             html  +="</tr>";
            j++;
     }
-  /*  html += "<tr><table id='ta' class='table table-hover table-bordered'>";
-    html += "<thead>";
+    html +="</tbody>";
+    html +="</table>"; 
+     html += "<table id='tabla' class='table table-hover table-bordered'>";
+            html += "<thead>";
             html += "<tr>";
             html += "<th>tipo</th>";
             html += "<th>Descripción</th>";
@@ -122,16 +132,16 @@ function semana(i){
             html += "</tr>";
             html += "</thead>";
             html += "<tbody>";
-            html += "<td></td>";
-            html += "<td><input type='text' name='descripcionEva' id='Descripcion' class='form-control validar'   /></td>";
-            html += "<td><input type='date' name='fechaEva' id='fecha' class='form-control validar' /></td>";
-            html += "<td><input type='text' name='ponderadoEva' id='ponderado' class='form-control validar' placeholder='%'' /></td>";
+            html += "<td  class='tipEva"+e+"'></td>";
+            html += "<td><input type='text' name='descripcionEva[]' id='Descripcion' class='form-control validar'   /></td>";
+            html += "<td><input type='date' name='fechaEva[]' id='fecha' class='form-control validar' /></td>";
+            html += "<td><input type='text' name='ponderadoEva[]' id='ponderado' class='form-control validar' /></td>";
             html += "</tbody>";
-            html += "</table> </tr>";
-    html +="</tbody>";
-    html +="</table>"; */
+            html += "</table>";
     $("#h"+i).html(html);
-    }
+    $('.tipEval').clone().appendTo('#tabla tbody .tipEva'+e).css("display","");
+    e++;
+   }
 }
 
 
