@@ -1,3 +1,6 @@
+<script type="text/javascript" src="../web/lib/alertify1.js"></script>
+<link rel="stylesheet" href="../web/themes/alertify.core1.css"  type="text/css"/>
+<link rel="stylesheet" href= "../web/themes/alertify.default1.css"  type="text/css"/>
 <h4>EVALUACIÓN</h4> <button id="" type="button" class="btn btn-default" onClick="eva()">Agregar</button> <br>
 <table class="table eva" id="eval">
 	<thead>
@@ -61,6 +64,7 @@
 	        //alert(edit + " "+campo + " " + ide);
 	        $.post('index.php', 'controller=cursosemestre&action=editarEva_tipo&Campo=' +campo+
 	                                                '&Evaluacion='+ide+'&Editar='+edit, function(data) {
+	                                                	alertify.success("Se guardaron sus cambios"); 
 	                          });
         });
     });
