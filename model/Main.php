@@ -2,6 +2,27 @@
 
 class Main {
 
+ //////////////////////////////////////////////////////////////////////////////////////////777
+    //////////////////////////////////////////////////////////////////////////////////////////////7777
+    
+    function getListTipoEva() {
+
+        $sth = $this->db->prepare("SELECT idtipo_evaluacion, descripcion FROM {$this->table} WHERE iddocente = {$_SESSION['idusuario']}");
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    function getListAsig() {
+
+        $sth = $this->db->prepare("SELECT idasignatura, descripcion FROM {$this->table} WHERE iddocente = {$this->idp}");
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+    
+    
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////7777/////////////777//77/ 
+
     protected $db;
     protected $rows = 10;
     protected $pag = 5;

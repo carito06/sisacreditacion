@@ -31,6 +31,26 @@ class User extends Main {
                                                 inner join comision on comision.idcomision = detalle_profesor_comision.idcomision
 					where comision.idcomision = 12 and cargo.idcargo = 1
                                         union all 
+
+					SELECT
+                                            matricula_cca.idmatricula as Codigo,
+                                           alumno_cca.dni as usuario,
+                                           CONCAT(alumno_cca.nombres,' ',
+                                           alumno_cca.apellidop,' ',
+                                           alumno_cca.apellidom) as nombres,
+                                           8 as idperfil,
+                                           'ALUMNO_CCA' as perfil,
+                                           alumno_cca.pass as contrasenia
+                                           FROM
+                                           matricula_cca
+                                           INNER JOIN alumno_cca ON matricula_cca.idalumno = alumno_cca.idalumno     
+
+
+                                        union all
+                                        select iddocente as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidop, ' ', apellidom) as nombres,9 as idperfil, 'DOCENTE_CCA' as perfil, pass as contrasenia from docente_cca
+                                        union all
+                                        select idusuario as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidos) as nombres, 10 as idperfil, 'USUARIO_CCA' as perfil, pass as contrasenia from usuario_cca
+                                       union all
                                         select 
                                                 detalle_profesor_comision.CodigoProfesor as Codigo,
                                                 concat('admin', detalle_profesor_comision.CodigoProfesor) as usuario,

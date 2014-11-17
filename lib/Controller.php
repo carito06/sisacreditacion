@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require_once '../model/Main.php';
 
@@ -11,6 +11,101 @@ class Controller {
     public function __call($name, $arguments) {
         throw new ControllerException("Error! El método {$name}  no está definido.");
     }
+
+//CCA----------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------------------------------------------------------------
+    public function grilla_cca($name,$name2,$accion, $columns, $rows, $options, $pag, $boton1,$boton2,$edit, $view, $select = false, $new = true,$asig,$chek,$presidente) {
+        $obj = new Main();
+        $data = array();
+        $data['nr'] = $obj->getnr();
+        $data['cols'] = $columns;
+        $data['rows'] = $rows;
+        $data['boton1']=$boton1;
+        $data['boton2']=$boton2;
+        $data['edit'] = $edit;
+        $data['view'] = $view;
+        $data['select'] = $select;
+        $data['name'] = $name;
+        $data['name2']=$name2;
+        $data['accion']=$accion;
+        $data['pag'] = $pag;
+        $data['new'] = $new;
+        $data['asig'] = $asig;
+        $data['chek'] = $chek;
+        $data['presidente'] = $presidente;
+        $data['combo_search'] = $this->Combo_Search($options);
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_grilla_cca.php');
+        $view->setLayout('../template/Layout.php');
+        return $view->renderPartial();
+    }
+          
+    public function lista_cca($name, $columns, $rows, $options, $pag,$pension,$requisitos, $detallar,$edit, $view, $select = false, $new = true,$asig,$chek,$presidente) {
+        $obj = new Main();
+        $data = array();
+        $data['nr'] = $obj->getnr();
+        $data['cols'] = $columns;
+        $data['rows'] = $rows;
+        $data['pension']=$pension;
+        $data['requisitos']=$requisitos;
+        $data['detallar']=$detallar;
+        $data['edit'] = $edit;
+        $data['view'] = $view;
+        $data['select'] = $select;
+        $data['name'] = $name;
+        $data['pag'] = $pag;
+        $data['new'] = $new;
+        $data['asig'] = $asig;
+        $data['chek'] = $chek;
+        $data['presidente'] = $presidente;
+        $data['combo_search'] = $this->Combo_Search($options);
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/comision_cca/_Lista.php');
+        $view->setLayout('../template/Layout.php');
+        return $view->renderPartial();
+    }
+    
+     public function SelectAsig($p) {
+    
+        $obj = new Main();
+        $obj->table = $p['table'];
+        $obj->idp = $p['idp'];
+        $data = array();
+
+        $data['rows'] = $obj->getListAsig();
+        $data['name'] = $p['name'];
+        $data['id'] = $p['id'];
+        $data['code'] = $p['code'];
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_Select.php');
+        return $view->renderPartial();
+    }
+    
+    public function SelectTipoEva($p) {
+    
+        $obj = new Main();
+        $obj->table = $p['table'];
+        $obj->idp = $p['idp'];
+        $data = array();
+
+        $data['rows'] = $obj->getListTipoEva();
+        $data['name'] = $p['name'];
+        $data['id'] = $p['id'];
+        $data['code'] = $p['code'];
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_Select.php');
+        return $view->renderPartial();
+    }
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------
 
 
     public function Select($p) {
