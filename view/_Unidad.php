@@ -1,3 +1,7 @@
+<script type="text/javascript" src="../web/lib/alertify1.js"></script>
+<link rel="stylesheet" href="../web/themes/alertify.core1.css"  type="text/css"/>
+<link rel="stylesheet" href= "../web/themes/alertify.default1.css"  type="text/css"/>
+
 <style>
     .codunidad:hover{
         background: #eaf8fc;
@@ -28,7 +32,7 @@
               <tr>
                 <th style="padding: 0px">
                   <h4> UNIDAD <?php echo utf8_encode($value[1]); ?> : 
-                    <input class="k1 kuninomb" id="nombreunidad" type="text" value="<?php echo utf8_encode($value[0]); ?>" style="background-color: #EAF8FC; border:none; width: 100%"/>   
+                    <input class="k1 kuninomb" id="nombreunidad" type="text" value="<?php echo utf8_encode($value[0]); ?>" style="background-color: #EAF8FC; border:none; width: 100%"/>
                   </h4>
                 </th>
                 <th> 
@@ -85,7 +89,6 @@
 </div>
  
 <script>
-
 $(document).ready(function(){
 
 var tamañodeuni= $(".tamañodeuni").length;
@@ -116,10 +119,17 @@ $('.codunidad').live("click",function(){
         edit= $(this).val();
         campo= $(this).attr('id');
         idu=$('#idunik').val();
+        
         //alert(edit + " "+campo + " " + idu);
         $.post('index.php', 'controller=cursosemestre&action=editarUni_nombre&Campo=' +campo+
-                                                '&Unidad='+idu+'&Editar='+edit, function(data) {
-                          });
+                                                '&Unidad='+idu+'&Editar='+edit, function(data)
+        
+        
+                   {
+
+                   alertify.success("Se guardaron sus cambios");  
+                   });
+
         });
  /*$('mtl').blur(function(){
     Edit= $(this).val();
@@ -132,6 +142,8 @@ $('.codunidad').live("click",function(){
 
 
 });
+
+
 
 </script>
 
