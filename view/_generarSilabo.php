@@ -133,23 +133,25 @@ $html.='
 	<strong>II. SUMILLA</strong>
 	<dir>'.$value[9].'</dir>
 </div>
-
+<br><br>
 <div style="text-align: left" >
 	<strong>III. OBJETIVO</strong>
 	<dir>'.$value[17].'</dir>
 </div>
-
+<br><br>
 <div style="text-align: left" >
 	<strong>IV. METODOLOGIA</strong>
 	<dir>'.$value[10].'</dir>
 </div>
+<br><br>
 <div style="text-align: left" >
 	<strong>V. COMPETENCIA</strong>
 	<dir>'.$value[11].'</dir>
-    
     <div>
+<br><br>
         <strong>VI. PROGRAMACIÓN DE DESARROLLO DEL CONTENIDO TEMÁTICO DE LA SUMILLA</strong>
-		<dir><strong>6.1. Diseño</strong></dir>
+		<dir>
+		<strong>4.1. Diseño</strong></dir>
 ';
 }
 if(isset($rows2)){
@@ -159,8 +161,8 @@ if(isset($rows2)){
  	 $i++;
  	}
  }
- $html.='</div>
-         <dir><strong>6.2. Contenido</strong></dir>
+ $html.='</div><br>
+         <dir><strong>4.2. Contenido</strong></dir> 
         ';
 if(isset($rows2)){
 	$f=1;
@@ -169,7 +171,7 @@ if(isset($rows2)){
 		    <dir><strong>4.2.1 Descripcion:</strong></dir><dir><p>'.$value[2].'</p></dir>
 			<dir><p><strong>4.2.2 Duracion:</strong>    '.$value[3].' Semanas</p></dir>
 			<dir><strong>4.2.3 Competencia:</strong></dir> <dir><p>'.$value[4].'</p></dir>
-			<dir><p><strong>4.2.4 Porcentaje:</strong>  '.$value[5].'%</p></dir>';
+			<dir><p><strong>4.2.4 Porcentaje:</strong>  '.$value[5].'%</p></dir><br>';
 			$f++;
 	if(isset($rows3)){
 		$html.='
@@ -228,78 +230,55 @@ $html.='<br>
 		            <th vertical-align="middle"><b>LA NOTA</b></th>
 		        </tr> 
 		        <tr>
-		            <th colspan="2"><b>ACAD = ACADEMICA(90%)</b></th>
-		            <th><b></b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>PC1</b></th>
-		            <th vertical-align="middle"><b>PRACTICA CALIFICADA 1</b></th>
-		            <th vertical-align="middle"><b>10%</b></th>
-		        </tr> 
-		        <tr>
-		            <th vertical-align="middle"><b>PC2</b></th>
-		            <th vertical-align="middle"><b>PRACTICA CALIFICADA 2</b></th>
-		            <th vertical-align="middle"><b>10%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>TP</b></th>
-		            <th vertical-align="middle"><b>PROYECTO DE CICLO</b></th>
-		            <th vertical-align="middle"><b>10%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>L</b></th>
-		            <th vertical-align="middle"><b>LABORATORIO</b></th>
-		            <th vertical-align="middle"><b>20%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>EP</b></th>
-		            <th vertical-align="middle"><b>EXAMEN PARCIAL</b></th>
-		            <th vertical-align="middle"><b>20%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>EF</b></th>
-		            <th vertical-align="middle"><b>EXAMEN FINAL</b></th>
-		            <th vertical-align="middle"><b>20%</b></th>
-		        </tr>
-		        <tr>
-		            <th colspan="2" vertical-align="middle"><b>EF = EVALUACION FORMATIVA(10%)</b></th>
-		            <th vertical-align="middle"><b>CONCEPTO</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>ET</b></th>
-		            <th vertical-align="middle"><b>EVENTOS DE TUTORIA</b></th>
-		            <th vertical-align="middle"><b>2%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>JL</b></th>
-		            <th vertical-align="middle"><b>JORNADA LABORAL</b></th>
-		            <th vertical-align="middle"><b>2%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>PIPS</b></th>
-		            <th vertical-align="middle"><b>INVESTIGACION Y/O PROYECCION SOCIAL</b></th>
-		            <th vertical-align="middle"><b>2%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>SEF</b></th>
-		            <th vertical-align="middle"><b>SEFISI Y/O ANIVERSARIO DE LA UNSM</b></th>
-		            <th vertical-align="middle"><b>2%</b></th>
-		        </tr>
-		        <tr>
-		            <th vertical-align="middle"><b>OT</b></th>
-		            <th vertical-align="middle"><b>CURSOS, PONENCIAS Y OTROS</b></th>
-		            <th vertical-align="middle"><b>2%</b></th>
-		        </tr>
-		        <tr>
-		            <th colspan="2" align="center" vertical-align="middle"><b>TOTAL</b></th>
-		            <th vertical-align="middle"><b>100</b></th>
+					<th colspan="2" align="center">
+						ACADEMICA(100%)
+					</th>
+
+					<th></th>
 		        </tr>
 		    </thead>
+		    <tbody>';
+			   if(isset($rows5)){
+				foreach ($rows5 as $key => $value) {
+					if($idu==$value[1]){
+			 	 $html.='<tr>
+			 	 			<td>';
+							$ar = explode(" ", $value[0]);
+							$aa = substr($ar[0], 0,1);
+							$bb = substr($ar[1], 0,1);
+							$html.= $aa.$bb;
+			 	 			$html.='</td>
+			 	 			<td>'.$value[0].'</td>
+			 	 			<td>'.$value[2].'%</td>
+			 	 		</tr>
+				         ';
+				     }
+			 	}
+			 }
+
+	$html.='</tbody>
+			<tfoot>
+				<th colspan="2" align="center">TOTAL</th>
+				<th align="center">100%</th>
+			</tfoot>
 		    </table>
 		    </div>
-		';
+		'.'
+		<br>
+			<strong>FORMULA:</strong> <br><br>
+			F= ';
+			   if(isset($rows5)){ $f="";
+				foreach ($rows5 as $key => $value) {
+					if($idu==$value[1]){
+						$ar = explode(" ", $value[0]);
+						$aa = substr($ar[0], 0,1);
+						$bb = substr($ar[1], 0,1);
+						$f .= ((int)$value[2]).'*'.$aa.$bb." + ";
+					}
+				}
+			}
 
-$html.='<br><div style="text-align: left" >
+$html.= '( '.substr($f, 0,-2).' )/100<br><br><div style="text-align: left" >
 	    <strong>VIII. BIBLIOGRAFIA</strong>';
 if(isset($rows4)){
 	foreach ($rows4 as $key => $value) {$idb=$value[3];
@@ -309,7 +288,7 @@ if(isset($rows4)){
 	     }
  	}
  }
-$html.='<dir><strong>LINKOGRAFIA</strong></dir>';
+$html.='<br><br><dir><strong>LINKOGRAFIA</strong></dir>';
 if(isset($rows4)){
 	foreach ($rows4 as $key => $value) {$idb=$value[3];
  if($idb==2){
@@ -320,11 +299,8 @@ if(isset($rows4)){
 	   }
  }
 
- $html.='<br><div class="bleach">
-         <p><script>
-         var f = new Date();
-         document.write("Tarapoto"+ "," +f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
-         </script></p></div>
+ $html.='<br><br><br><div class="bleach">
+         <p>Tarapoto, '.date_default_timezone_set().date("d/m/Y").'</p></div>
       ';
 
 foreach ($rows as $key => $value) { $curso=utf8_encode($value[0]); $semes=$value[12];

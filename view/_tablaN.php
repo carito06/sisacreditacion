@@ -23,6 +23,24 @@
 							<th>#</th>
 							<th>Código</th>
 							<th >NOMBRE</th>
+							<?php foreach ($rows4 as $key => $value) { ?>
+							<th>	<?php 
+									$new_array=explode(' ',$value[7]);
+									$acr='';
+									$contad=count($new_array);
+									if($contad>1){
+										foreach($new_array as $key=>$val){											
+											echo $val[0];
+										}
+									}else{
+										echo substr($value[7],0,3);
+									}
+									
+								?>
+							</th>
+							<?php }
+							?>
+
 							<?php $cont=0;foreach ($rows2 as $key => $value) { ?>
 							<th>
 								<?php 
@@ -45,6 +63,7 @@
        
 					</thead>
 					<tbody style="width:100%;">
+	
 						<?php $cont=1; foreach ($rows as $key => $value) { ?>
 						<tr> 
 							<td><?php echo $cont; $cont++;?></td>
@@ -55,7 +74,12 @@
 							<td style="font-size:11px;" align="left">
 								<?php echo strtoupper(utf8_encode($value[1]));?>
 							</td>
-
+							<?php foreach ($rows4 as $key => $value) { ?>
+							<td>
+								
+							</td>
+							<?php }
+							?>
 							<?php $alum= $value[0];
 								if (isset($rows2)){
 									foreach ($rows2 as $key => $value) {  $ie= $value[3];?>

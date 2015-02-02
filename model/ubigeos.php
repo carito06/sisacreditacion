@@ -48,12 +48,18 @@ class ubigeos extends Main {
 
 	  public function getDatos($id) {
       //print_r ($id); exit();
-        $sql= 'SELECT * FROM `detalle_proyecto_ubigeo` WHERE idproyecto="'.$id.'"';
+        $sql= 'SELECT ubigeo FROM `detalle_proyecto_ubigeo` WHERE idproyecto="'.$id.'"';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
 
+   public function listaUbigeo($param) {
+        $sql= 'SELECT * FROM `ubigeos$` WHERE ubigeo="'.$param.'"';
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }    
     public function listaprovincias($param) {
         $sql= 'SELECT distinct `ubigeos$`.PROVINCIA FROM `ubigeos$` WHERE `ubigeos$`.DEPARTAM="'.$param.'"';
         $stmt = $this->db->prepare($sql);

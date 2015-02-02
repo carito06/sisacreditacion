@@ -613,6 +613,7 @@ public function ListaPdf_ps($idevento) {
         $data['rows2'] = $obj->silUni();
         $data['rows3'] = $obj->getTema();
         $data['rows4'] = $obj->getBibliografiaS();
+        $data['rows5'] = $obj->getEvaluacion3();
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
@@ -631,6 +632,7 @@ public function ListaPdf_ps($idevento) {
         $data['rows'] = $obj->getListaA();
         $data['rows2'] = $obj->getSyllabus_P();
         $data['rows3'] = $obj->getRetornoN();
+        $data['rows4'] = $obj->getSyllabus_P3();
 
 //        $data['name'] = $p['name'];
 //        $data['id'] = $p['id'];
@@ -1463,3 +1465,4 @@ public function ListaPdf_ps($idevento) {
 }
 
 ?>
+

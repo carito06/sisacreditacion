@@ -74,9 +74,9 @@
 
            </td>
            <td> <?php echo (date("d-m-Y",strtotime($value[1])))?> </td>
-           <td><?php echo strtoupper(utf8_encode($value[2]));?>%</td>
+           <td><?php echo $value[10];?>%</td>
            <td id="act"> <?php $fechaE=$value[1];?>
-             <?php date_default_timezone_set('UTC');
+             <?php date_default_timezone_set();
              $fechaA= date("Y-m-d");
             //          echo $fechaA;
             ?>

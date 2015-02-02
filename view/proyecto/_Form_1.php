@@ -145,14 +145,14 @@ tinymce.init({
                                     </td>
                                     
                                 </tr>
-                                <?php if ($ubigeo == ""){ ?>
-                                <tr id='<?php echo $idubigeo; ?>'bgcolor='white' align='center'><td>
-                                <?php echo $departamento; ?>
-                                </td><td><?php echo $provincia; ?>
-                                </td><td><?php echo $valor; ?>
-                                </td> <td><a  class='btn btn-danger eli' id='<?php echo $idubigeo; ?>'
+                                <?php if ($rows) { foreach ($rows as $key => $value) {?>
+                                <tr id='<?php echo $value['0']['0']; ?>'bgcolor='white' align='center'><td>
+                                <?php echo $value['0']['1']; ?>
+                                </td><td><?php echo $value['0']['2'] ?>
+                                </td><td><?php echo $value['0']['3'] ?>
+                                </td> <td><a  class='btn btn-danger eli' id='<?php echo $value['0']['0']; ?>'
                                 onclick='javascript:elimina(this);' style='font-size: 10px;padding: 4px;'>Eliminar</a></td> </tr>
-                                <?php } ?>
+                                <?php }} ?>
 
                             </thead>
                             <tbody id="datos">

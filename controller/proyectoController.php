@@ -53,9 +53,14 @@ class ProyectoController extends Controller {
                 $data['linea_investigacion'] = $this->Select(array('id'=>'idlinea_investigacion','name'=>'idlinea_investigacion','table'=>'linea_investigacion','code'=>$obj->idlinea_investigacion));
                 $data['facultad'] = $this->Select(array('id'=>'CodigoFacultad','name'=>'CodigoFacultad','table'=>'facultades','code'=>$CodigoFacultad[0]['CodigoFacultad']));
                 $data['escuela'] = $this->Select(array('id'=>'CodigoEscuela','name'=>'CodigoEscuela','table'=>'vista_escuelaprofesional','code'=>$obj->CodigoEscuela));
-
-                $ubigeos = $ubigeo->getDatos($obj->idproyecto);
-
+               $d = $ubigeo->getDatos($obj->idproyecto);
+                //print_r ($d[0]['ubigeo']); exit();   
+            for($i=0;$i<count($d);$i++){
+            $aa[$i] = $ubigeo->listaUbigeo($d[$i]['ubigeo']);
+            
+            }
+            $data['rows']=$aa;
+            //print_r ($aa[0][0][0]); exit();
 
 
         $data['departamento'] = $this->Select(array('id' => 'departamento', 'name' => 'departamento', 'table' => 'vista_departamento', 'code' => $ubigeos['DEPARTAM']));

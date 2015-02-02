@@ -514,7 +514,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         C.DescripcionCurso,
                        TE.descripcion,
                        U.nombreunidad,
-                       U.idunidad
+                       U.idunidad,
+                       U.porcentaje
                         from evaluacion as E
                         inner join unidad as U on U.idunidad = E.idunidad
                         inner join silabus as S on S.idsilabus = U.idsilabus
@@ -535,7 +536,37 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+    function getSyllabus_P3() {
+        $query = "SELECT 
+                        E.descripcionevaluacion,
+                        E.fecha,
+                        E.ponderado,
+                        E.idevaluacion,
+                        CA.CodigoCurso,
+                        CA.CodigoSemestre,
+                        C.DescripcionCurso,
+                       TE.descripcion,
+                       U.nombreunidad,
+                       U.idunidad
+                        from evaluacion as E
+                        inner join unidad as U on U.idunidad = E.idunidad
+                        inner join silabus as S on S.idsilabus = U.idsilabus
+                        inner join carga_academica as CA on CA.idcargaacademica = S.idcargaacademica
+                        inner join cursos as C on C.CodigoCurso = CA.CodigoCurso
+                       inner join tipo_evaluacion as TE  on E.idtipo_evaluacion=TE.idtipo_evaluacion
 
+                                WHERE CA.{$this->filtro}= '{$this->criterio}' AND CA.{$this->filtro1}='{$this->criterio1}'
+                        ";
+
+
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+//        var_dump($sth);
+//        exit();
+        return $sth->fetchAll();
+    }
     function getSyllabus_P2() {
         $query = "SELECT 
                        
@@ -782,7 +813,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
         function getEvaluacion3() {
-        $query = "SELECT descripcion,idunidad FROM `evaluacion` inner join tipo_evaluacion on evaluacion.idtipo_evaluacion = tipo_evaluacion.idtipo_evaluacion
+        $query = "SELECT descripcion,idunidad,evaluacion.ponderado FROM `evaluacion` inner join tipo_evaluacion on evaluacion.idtipo_evaluacion = tipo_evaluacion.idtipo_evaluacion
                   ";
         $sth = $this->db->prepare($query);
         $sth->execute();
