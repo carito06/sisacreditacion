@@ -66,7 +66,7 @@ class comision_ccaController extends Controller {
         $data['obj'] = $obj;
         $view->setData($data);
         $view->setTemplate( '../view/comision_cca/_Form.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Vacia.php' );
         $view->render();
     }
     public function save(){

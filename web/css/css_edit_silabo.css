@@ -1,4 +1,8 @@
-.eliminar{ cursor: pointer; color: green; }
+
+    .fila-base{ display: none; } /* fila base oculta */
+    .eliminar{ cursor: pointer; color: green; }
+
+
 
 #tabla td{
   padding: 0px;

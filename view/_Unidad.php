@@ -1,6 +1,6 @@
-<script type="text/javascript" src="../web/lib/alertify1.js"></script>
-<link rel="stylesheet" href="../web/themes/alertify.core1.css"  type="text/css"/>
-<link rel="stylesheet" href= "../web/themes/alertify.default1.css"  type="text/css"/>
+<script type="text/javascript" src="lib/alertify.js"></script>
+<link rel="stylesheet" href="themes/alertify.core.css"  type="text/css"/>
+<link rel="stylesheet" href= "themes/alertify.default.css"  type="text/css"/>
 
 <style>
     .codunidad:hover{

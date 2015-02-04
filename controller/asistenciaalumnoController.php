@@ -31,7 +31,7 @@ class asistenciaalumnoController extends Controller {
         $view = new View();
         $view->setData($data);
         $view->setTemplate('../view/asistenciaalumno/_Index.php');
-        $view->setLayout('../template/Layout.php');
+        $view->setLayout('../template/Layout3.php');
         $view->render();
     }
     public function nota_de_tutoria(){
@@ -43,9 +43,7 @@ class asistenciaalumnoController extends Controller {
 
     public function save() {
         $obj = new asistenciaalumno();
-        
-        if ($_POST['identificador_editar'] == true) { 
-            $p = $obj->update($_POST);
+            $p = $obj->update($_REQUEST['idevento'],$_REQUEST['codigoalumno'],$_SESSION['idusuario'],$_REQUEST['asistencia']);
             if ($p[0]) {
 				die("<script> window.location='index.php?controller=asistenciaalumno'; </script>");
               
@@ -56,27 +54,27 @@ class asistenciaalumnoController extends Controller {
                 $data['url'] = 'index.php?controller=asistenciaalumno';
                 $view->setData($data);
                 $view->setTemplate('../view/_Error_App.php');
-                $view->setLayout('../template/Layout.php');
+                $view->setLayout('../template/Layout3.php');
                 $view->render();
             }
             
-        } else {
-            $p = $obj->insert($_POST);
-            
-            if ($p[0]) {
-
-                header('Location:index.php?controller=asistenciaalumno');
-            } else {
-                $data = array();
-                $view = new View();
-                $data['msg'] = $p[1];
-                $data['url'] = 'index.php?controller=asistenciaalumno';
-                $view->setData($data);
-                $view->setTemplate('../view/_Error_App.php');
-                $view->setLayout('../template/Layout.php');
-                $view->render();
-            }
+    }
+    
+    public function mostrar_alumnos(){
+        $obj = new asistenciaalumno();
+        $data = array();
+        $semestre_ultimo = $this->mostrar_semestre_ultimo();
+        $detector=$obj->detectando($_REQUEST['idevento'],$_SESSION['idusuario']);
+        if(empty($detector)){
+        $datos_alumnos=$obj->alumnos_de_profe($semestre_ultimo,$_SESSION['idusuario']);
+        $llenar=$obj->insert($_REQUEST['idevento'],$_SESSION['idusuario'],$datos_alumnos);
         }
+        $data['alumno_evento']=$obj->lista_alumnos($_REQUEST['idevento'],$_SESSION['idusuario'],$semestre_ultimo);
+        $data['idevento']=$_REQUEST['idevento'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/asistenciaalumno/lista_alumnos_asistencia.php');
+        echo $view->renderPartial();
     }
 
 }

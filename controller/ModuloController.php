@@ -20,7 +20,7 @@ class ModuloController extends Controller {
         $view = new View();
         $view->setData($data);
         $view->setTemplate( '../view/Modulo/_Index.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
     
@@ -33,7 +33,7 @@ class ModuloController extends Controller {
         $data['ModulosPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_modulo','code'=>$obj->idpadre));
         $view->setData($data);
         $view->setTemplate( '../view/Modulo/_Form.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
     public function save(){
@@ -49,7 +49,7 @@ class ModuloController extends Controller {
             $data['url'] =  'index.php?controller=Modulo';
             $view->setData($data);
             $view->setTemplate( '../view/_Error_App.php' );
-            $view->setLayout( '../template/Layout.php' );
+            $view->setLayout( '../template/Layout3.php' );
             $view->render();
             }
         } else {
@@ -63,7 +63,7 @@ class ModuloController extends Controller {
             $data['url'] =  'index.php?controller=Modulo';
             $view->setData($data);
             $view->setTemplate( '../view/_Error_App.php' );
-            $view->setLayout( '../template/Layout.php' );
+            $view->setLayout( '../template/Layout3.php' );
             $view->render();
             }
         }
@@ -80,7 +80,7 @@ class ModuloController extends Controller {
         $data['url'] =  'index.php?controller=Modulo';
         $view->setData($data);
         $view->setTemplate( '../view/_Error_App.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
         }
     }
@@ -90,7 +90,7 @@ class ModuloController extends Controller {
         $data['ModulosPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_modulo'));
         $view->setData($data);
         $view->setTemplate( '../view/Modulo/_Form.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
     public function show() {
@@ -102,7 +102,7 @@ class ModuloController extends Controller {
         $data['ModulosPadres'] = $this->Select(array('id'=>'idpadre','name'=>'idpadre','table'=>'vista_modulo','code'=>$obj->idpadre,'disabled'=>'disabled'));
         $view->setData($data);
         $view->setTemplate( '../view/Modulo/_Show.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
        }
 }

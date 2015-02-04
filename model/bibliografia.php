@@ -69,15 +69,18 @@ class bibliografia extends Main{
 
     //aki toy
     function actualizar_bibliografia($_P) {
-        echo "<pre>"; print_r ($_P);
-        $biblio=$_P["Bibliografia"];
+        echo "<pre>royserrre"; print_r($_P);    
+        $biblio=$_P["Bibliografia"];    
         $cam= $_P["Campo"];
         $edit= $_P["Editar"];
 
-        $stmt = $this->db->prepare("UPDATE bibliografia SET ".$cam." = :p2
+        echo $biblio.'  '.$cam.'  '.$edit;      
+
+        $stmt = $this->db->prepare("UPDATE bibliografia SET descripcion = :p2
                                     WHERE idbibliografia = :p1");
-        $stmt->bindValue(':p1', $biblio, PDO::PARAM_INT);
+        $stmt->bindValue(':p1', $biblio, PDO::PARAM_INT);   
         $stmt->bindValue(':p2', $edit, PDO::PARAM_STR);
+
         $p1 = $stmt->execute();
     }
 
@@ -87,6 +90,7 @@ class bibliografia extends Main{
         $biblio=$_P["Bibliografia"];
         $cam= $_P["Campo"];
         $edit= $_P["Editar"];
+
 
         $stmt = $this->db->prepare("UPDATE bibliografia SET ".$cam." = :p2
                                     WHERE idbibliografia = :p1");

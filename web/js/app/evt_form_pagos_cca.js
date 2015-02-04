@@ -12,13 +12,21 @@ $(document).ready(function() {
 //        bval = bval && $( "#sexo" ).required();
 //        bval = bval && $( "#direccion" ).required();
 //        bval = bval && $( "#procedencia" ).required();
-//        bval = bval && $( "#telefono" ).required();    
+//        bval = bval && $( "#telefono" ).required(); 
+
+         if ( bval ) {
+            $("#frm").submit();
+            alert("DATOS GUARDADOS");
+            window.close();
+        }
+        else{alert("LLENAR TODOS LOS CAMPOS!!!");}
+        return false; 
       
         
-        if ( bval ) {
-            $("#frm").submit();
-        }
-        return false;
+//        if ( bval ) {
+//            $("#frm").submit();
+//        }
+//        return false;
     }); 
 //    $("#partes").change(function(){
 //        $("#partes").required();

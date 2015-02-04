@@ -29,7 +29,7 @@ class usuario_cca extends Main{
         return $stmt->fetchObject();
     }
     function insert($_P ) {
-         $sentencia=$this->db->query("SELECT COUNT(idusuario) as cant from usuario_cca");         
+         $sentencia=$this->db->query("SELECT MAX(idusuario) as cant from usuario_cca");         
          $ct=$sentencia->fetch();      
           $xd=1+ (int)$ct['cant'];
          
@@ -58,7 +58,7 @@ class usuario_cca extends Main{
         $stmt->bindValue(':p4', $_P['dni'], PDO::PARAM_STR);
         $stmt->bindValue(':p5', $_P['direccion'], PDO::PARAM_STR);
         $stmt->bindValue(':p6', $_P['telefono'], PDO::PARAM_STR);
-        $stmt->bindValue(':p7', $_P['pass'], PDO::PARAM_STR);
+        $stmt->bindValue(':p7', $_P['dni'], PDO::PARAM_STR);
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);

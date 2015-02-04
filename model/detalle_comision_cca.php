@@ -38,12 +38,12 @@ class detalle_comision_cca extends Main{
         return $stmt->fetchObject();
     }
     function insert($_P ) {
-//        $sentencia=$this->db->query("SELECT MAX(iddetalle_comision) as cant from detalle_comision_cca");         
-//        $ct=$sentencia->fetch();      
-//        $xd=1+(int)$ct['cant'];      
+        $sentencia=$this->db->query("SELECT MAX(iddetalle_comision) as cant from detalle_comision_cca");         
+        $ct=$sentencia->fetch();      
+        $xd=1+(int)$ct['cant'];      
         $sql = $this->Query("sp_detalle_comision_iu_cca(0,:p1,:p2,:p3,:p4)");
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':p1', '' , PDO::PARAM_INT);
+        $stmt->bindValue(':p1', $xd , PDO::PARAM_INT);
         $stmt->bindValue(':p2', $_P['idcomision'] , PDO::PARAM_INT);
         $stmt->bindValue(':p3', $_P['iddocente'] , PDO::PARAM_INT);
         $stmt->bindValue(':p4', $_P['idcargocomision'] , PDO::PARAM_STR);

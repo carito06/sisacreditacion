@@ -38,7 +38,7 @@
                       </td>  
                       <td width="30%" >
 
-                          <input id="nombres" name="nombres" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->nombres;  if (isset($_GET['nombre'])){echo $_GET['nombre'];}?>"  required>                  
+                          <input required id="nombres" name="nombres" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->nombres;  if (isset($_GET['nombre'])){echo $_GET['nombre'];}?>"  required>                  
                           
                       </td>
 
@@ -48,14 +48,14 @@
                          <strong for="apellidop" align="right" >Apellido Paterno:</strong>
                        </td> 
                        <td>
-                           <input id="apellidop" name="apellidop" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidop; if (isset($_GET['apellidop'])){echo $_GET['apellidop'];}?>"  required>           
+                           <input required id="apellidop" name="apellidop" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidop; if (isset($_GET['apellidop'])){echo $_GET['apellidop'];}?>"  required>           
                          
                        </td>
                        <td align="left">
                            <strong for="apellidom"  >Apellido Materno:</strong>
                        </td>
                        <td>
-                           <input id="apellidom" name="apellidom" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidom; if (isset($_GET['apellidom'])){echo $_GET['apellidom'];}?>"  required>                  
+                           <input required id="apellidom" name="apellidom" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidom; if (isset($_GET['apellidom'])){echo $_GET['apellidom'];}?>"  required>                  
                            
                        </td>
                      </tr>
@@ -64,7 +64,7 @@
                             <strong for="dni"  >DNI:</strong>
                         </td> 
                         <td>
-                            <input id="dni" name="dni" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->dni; if (isset($_GET['dni'])){echo $_GET['dni'];}?>" required>                  
+                            <input required id="dni" name="dni" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->dni; if (isset($_GET['dni'])){echo $_GET['dni'];}?>" required>                  
 
                         </td>   
                         <td align="left">
@@ -84,14 +84,14 @@
                                  <strong for="direccion" class="labels" >Direccion:</strong>
                            </td>
                            <td>
-                                 <input id="direccion" name="direccion" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->direccion; ?>"  />                
+                                 <input required id="direccion" name="direccion" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->direccion; ?>"  />                
                                  
                            </td>
                            <td>
                                 <strong for="procedencia" class="labels" >Procedencia:</strong>
                             </td> 
                             <td>
-                                <input id="procedencia" name="procedencia" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->procedencia; ?>"  />                
+                                <input required id="procedencia" name="procedencia" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->procedencia; ?>"  />                
                                 
                             </td>        
                       </tr>
@@ -100,11 +100,11 @@
                                <strong for="telefono" class="labels" style="width: 130px;">Telefono:</strong>
                             </td>
                             <td>
-                                <input id="telefono" name="telefono" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->telefono; ?>"  />                
+                                <input required id="telefono" name="telefono" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->telefono; ?>"  />                
                                 
                             </td>
                             <td>
-                                 <strong for="idtipo_alumno" class="labels" >Tipo Alumno:</strong>
+                                 <strong required for="idtipo_alumno" class="labels" >Tipo Alumno:</strong>
                             </td>
                             <td>        
                                 <?php echo $descripcion; ?>
@@ -123,6 +123,18 @@
                  </div>   
               </fieldset>
               </div>
+              <script type="text/javascript">
+
+    $( "#save" ).click(function(){
+        
+            $("#frm").submit();
+            alert();      
+
+    
+        window.close();
+        });   
+
+              </script>
         </div>
     </div>
 </form>

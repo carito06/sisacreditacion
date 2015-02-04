@@ -70,12 +70,12 @@ class matricula_cca extends Main {
 
         
                        $sentencia3 = $this->db->query("SELECT
-requisitos_cca.idrequisito
+                        requisitos_cca.idrequisito
 
-FROM
-comision_cca
-INNER JOIN requisitos_cca ON comision_cca.idcomision = requisitos_cca.idcomision
- where requisitos_cca.idcomision=".$_P['idcomision']."");
+                        FROM
+                        comision_cca
+                        INNER JOIN requisitos_cca ON comision_cca.idcomision = requisitos_cca.idcomision
+                        where requisitos_cca.idcomision=".$_P['idcomision']."");
 //                       die("SELECT
 //requisitos_cca.idrequisito
 //

@@ -287,9 +287,6 @@ $.post('index.php', 'controller=cursosemestre&action=getEdiSillabus&Codigo=' + i
  $(".regresar").css("display", "none");
  });
 
-$.post('index.php', 'controller=cursosemestre&action=getEdiSillabus', function(data) {
- });
-
 }
 
 $(".unidad").live("click", function() {

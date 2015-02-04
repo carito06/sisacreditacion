@@ -1,7 +1,7 @@
 <?php  include("../lib/functions.php"); ?>
 <script type="text/javascript" src="js/app/evt_form_docente_cca.js" ></script>
-<script type="text/javascript" src="js/validateradiobutton.js"></script>
-<script type="text/javascript">
+<!--<script type="text/javascript" src="js/validateradiobutton.js"></script>-->
+<!--<script type="text/javascript">
  
       function get2(p1,p2)
     {   
@@ -10,7 +10,7 @@
          window.close();
 
     }
-</script>
+</script>-->
     
 <div class="div_container">
 <h6 class="ui-widget-header">Registro de Docentes CCA</h6>
@@ -30,14 +30,14 @@
                         <span for="iddocente" ><strong>ID:</strong></label>
                       </td>
                       <td width="30%">
-                        <input id="iddocente" name="iddocente" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->iddocente; ?>" readonly />                
+                          <input  id="iddocente" name="iddocente" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->iddocente; ?>" readonly />                
                       </td>
                       <td width="20%" align="left">
                          <strong for="nombres" >Nombres:</strong>
                       </td>  
                       <td width="30%" >
-                         <input id="nombres" name="nombres" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->nombres; ?>"  />                
-                         <a onclick='window.open("index.php?controller=docente_cca&action=buscar","ventana8" , "width=860,height=400,top=150,left=250");' /><img alt="" src="images/lupa.gif" /></a>
+                          <input id="nombres" name="nombres" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php  echo $obj->nombres; ?>"  />                
+                         <!--<a onclick='window.open("index.php?controller=docente_cca&action=buscar","ventana8" , "width=860,height=400,top=150,left=250");' /><img alt="" src="images/lupa.gif" /></a>-->
                          
                       </td>
                     </tr>
@@ -46,16 +46,14 @@
                          <strong for="apellidop" align="right" >Apellido Paterno:</strong>
                        </td> 
                        <td>
-                         <input id="apellidop" name="apellidop" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidop; ?>"  />           
+                           <input id="apellidop" name="apellidop" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidop; ?>"  />           
                        
                        </td>
                        <td align="left">
                            <strong for="apellidom"  >Apellido Materno:</strong>
                        </td>
                        <td>
-                           <input id="apellidom" name="apellidom" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidom; ?>"  />                
-                           
-                      
+                           <input id="apellidom" name="apellidom" class="text ui-widget-content ui-corner-all" style=" width: 150px; text-align: left;" value="<?php echo $obj->apellidom; ?>"  /> 
                        </td>
                      </tr>
                      <tr class="fil">

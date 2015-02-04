@@ -9,3 +9,4 @@
         <?php }  ?>
     <?php } ?>
 </select>
+<input type="hidden" id="idsemeestreacademicoescondido" name="idsemeestreacademicoescondido" />

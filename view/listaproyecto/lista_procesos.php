@@ -279,7 +279,7 @@
              for(i=0;i<fields.length;i++)
              {
                  alert(fields[i][0]);
-             }*/if(fields.length==0&t==fields.length)
+             }*/if(fields.length==0||f==fields.length)
         {
                 e.preventDefault();
                 

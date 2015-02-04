@@ -108,7 +108,7 @@ INNER JOIN matricula_cca ON matricula_cca.idalumno = alumno_cca.idalumno
         $stmt->bindValue(':p8', $_P['direccion'], PDO::PARAM_STR);
         $stmt->bindValue(':p9', $_P['procedencia'], PDO::PARAM_STR);
         $stmt->bindValue(':p10', $_P['telefono'], PDO::PARAM_STR);
-        $smtp->bindValue(':p11', $_P['pass'], PDO::PARAM_STR);
+        $smtp->bindValue(':p11', $_P['dni'], PDO::PARAM_STR);
 
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();

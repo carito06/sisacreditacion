@@ -4,13 +4,9 @@ $(function() {
         var pedazo = cadena.split(",");
         idevento=pedazo[0];
         evento=pedazo[1];evento = evento.toUpperCase();
-         $("#evento").html(evento);
-         document.getElementById("idevento").value = idevento;
-         $("#lista_eventos").css("display","none");
-         $("#lista").css("display","");
-         $.post('index.php', 'controller=asignaciontutoria&action=mostrar_alumnos_asignados_template_vacio&idevento='+idevento, function(data) {
+         $.post('index.php', 'controller=asistenciaalumno&action=mostrar_alumnos&idevento='+idevento+'&evento='+evento, function(data) {
             console.log(data);
-            $("#lista_alumnos").empty().append(data);
+            $("#lista_eventos").empty().append(data);
         });
        
     });
@@ -22,13 +18,5 @@ $(function() {
             $("#nota").empty().append(data);
         });
 
-    $("#save").click(function() {
-        bval = true;
-        
-        if (bval) {
-            $("#frm").submit();
-        }
-        return false;
-    });
 });
 

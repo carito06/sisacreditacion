@@ -1,16 +1,17 @@
 <?php  include("../lib/functions.php"); ?>
 <script type="text/javascript" src="js/app/evt_form_comision_cca.js" ></script>
 <script type="text/javascript" src="js/validateradiobutton.js"></script>
-<div id="mayor" style="margin-top: 0px; margin-left: 210px; width: 600px; height: 350px;" >
+<div id="mayor" style="margin-top: 0px; margin-left: 80px; width: 600px; height: 350px;" >
 <!--<div class="div_container"  style="background-color: red">-->
     <form id="frm" action="index.php" method="POST" accept-charset="UTF-8">
     <input type="hidden" name="controller" value="comision_cca" />
     <input type="hidden" name="action" value="save" />
+    <h6 class="ui-widget-header">Registro de comisiones de CCA</h6>
     <!--<div class="contFrm ui-corner-all" style="background: #fff;" >-->
         <?php if(isset($_POST['b'])){?>
-        <div class="contenido" style="margin:0 auto; width: 550px; " align="center">
+        <div class="contenido" style="margin:0 auto; width: 600px; " align="center">
         <?php }else{?>
-            <div class="contenido" style="margin:0 auto; width: 550px; " align="center">
+            <div class="contenido" style="margin-left:0%; width: 600px; " align="center">
              <?php }?>
                 <fieldset class="ui-corner-all" >
                 <legend>Datos</legend>
@@ -54,12 +55,11 @@
                 </table>
                 </fieldset>
             </div>
-            <div style="margin:0 auto; width: 550px; height: 70px;">
+            <div style="margin-left:0%; width: 600px; height: 70px;">
             <fieldset class="ui-corner-all" >
             <legend>Accion</legend>
                 <div  style="clear: both; padding: 10px; width: auto;text-align: center">
                     <a href="#" id="save" class="button">GRABAR</a>
-                    <a href="index.php?controller=comision_cca" class="button">ATRAS</a>
                 </div>
                 </fieldset>
             </div>

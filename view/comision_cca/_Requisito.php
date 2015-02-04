@@ -2,9 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h4 align="center">LISTA DE REQUISITOS</h4>
 <a id="nuevor" class="button">NUEVO</a>
-<div style="width: 100%; height: 200px; overflow: scroll">
-    <table class="table table-bordered">
-        <tr>
+<div style="width: 100%; height: 240px; overflow: scroll">
+    <table class="table table-bordered" style="background-color: #dfeffc">
+        <tr style="background-color: #afd9ee; border-style: double; font-size: larger">
             <td>REQUISITO</td>
             <td>ACCION</td>
         </tr>

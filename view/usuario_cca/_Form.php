@@ -84,10 +84,10 @@
                 <legend>Accion</legend> 
                  <div  style="clear: both; padding: 10px; width: auto;text-align: center">
                     <a href="#" id="save" class="button">GRABAR</a>
-                    <a href="index.php?controller=usuario_cca" class="button">ATRAS</a>
                  </div>   
               </fieldset>
               </div>
+              
         </div>
     </div>
 </form>

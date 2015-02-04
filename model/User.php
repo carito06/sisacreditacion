@@ -6,23 +6,22 @@
 include_once("../lib/dbfactory.php");
 class User extends Main {
     function Start($user,$pass) {
+        $fecha=  date("Y-m-d");
         $statement = $this->db->prepare("select * from 
                                         (select CodigoAlumno as Codigo,CodAlumnoSira as usuario, CONCAT(NombreAlumno,' ',ApellidoPaterno,' ',ApellidoMaterno) as  nombres, 2  as idperfil,'ALUMNO'as perfil,CodAlumnoSira as  contrasenia
                                         from alumnos
-                                        union all
-                                        select CodigoProfesor as Codigo,CodigoProfesor as usuario, CONCAT(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno) as nombres, 3 as idperfil,'PROFESOR' as perfil,CodigoProfesor as contrasenia
-                                         from profesores
+                                        
                                         union all
                                         select idempleado as Codigo,usuario,concat(nombres,'',apellidos)as nombres,1 as idperfil,'ADMIN'as perfil,clave as contrasenia
                                         from empleado
                                         union all
                                         select 
                                                 detalle_profesor_comision.CodigoProfesor as Codigo,
-                                                concat('admin', detalle_profesor_comision.CodigoProfesor) as usuario,
+                                                concat( detalle_profesor_comision.CodigoProfesor) as usuario,
                                                 Concat(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno ) as nombres,
                                                 
                                                 4 as idperfil,
-                                                'PRESIDENTE DE LA COMISION DE TUTORIA' as perfil,
+                                                'PRESIDENTE T.' as perfil,
                                                 detalle_profesor_comision.CodigoProfesor as contrasenia
                                                 from 
                                                 detalle_profesor_comision
@@ -30,30 +29,77 @@ class User extends Main {
                                                 inner join cargo on cargo.idcargo = detalle_profesor_comision.idcargo
                                                 inner join comision on comision.idcomision = detalle_profesor_comision.idcomision
 					where comision.idcomision = 12 and cargo.idcargo = 1
-                                        union all 
-
-					SELECT
-                                            matricula_cca.idmatricula as Codigo,
-                                           alumno_cca.dni as usuario,
-                                           CONCAT(alumno_cca.nombres,' ',
-                                           alumno_cca.apellidop,' ',
-                                           alumno_cca.apellidom) as nombres,
-                                           8 as idperfil,
-                                           'ALUMNO_CCA' as perfil,
-                                           alumno_cca.pass as contrasenia
-                                           FROM
-                                           matricula_cca
-                                           INNER JOIN alumno_cca ON matricula_cca.idalumno = alumno_cca.idalumno     
-
-
-                                        union all
-                                        select iddocente as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidop, ' ', apellidom) as nombres,9 as idperfil, 'DOCENTE_CCA' as perfil, pass as contrasenia from docente_cca
-                                        union all
-                                        select idusuario as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidos) as nombres, 10 as idperfil, 'USUARIO_CCA' as perfil, pass as contrasenia from usuario_cca
-                                       union all
+																				union all
                                         select 
                                                 detalle_profesor_comision.CodigoProfesor as Codigo,
-                                                concat('admin', detalle_profesor_comision.CodigoProfesor) as usuario,
+                                                concat( detalle_profesor_comision.CodigoProfesor) as usuario,
+                                                Concat(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno ) as nombres,
+                                                
+                                                7 as idperfil,
+                                                'PRESIDENTE E. P.' as perfil,
+                                                detalle_profesor_comision.CodigoProfesor as contrasenia
+                                                from 
+                                                detalle_profesor_comision
+                                                inner join profesores on profesores.CodigoProfesor = detalle_profesor_comision.CodigoProfesor
+                                                inner join cargo on cargo.idcargo = detalle_profesor_comision.idcargo
+                                                inner join comision on comision.idcomision = detalle_profesor_comision.idcomision
+					where comision.idcomision = 6 and cargo.idcargo = 1
+                                        union all 
+
+                                        SELECT
+                                        matricula_cca.idmatricula as Codigo,
+                                        alumno_cca.dni as usuario,
+                                        CONCAT(alumno_cca.nombres,' ',
+                                        alumno_cca.apellidop,' ',
+                                        alumno_cca.apellidom) as nombres,
+                                        8 as idperfil,
+                                        'ALUMNO_CCA' as perfil,
+                                        alumno_cca.pass as contrasenia
+                                        FROM
+                                        matricula_cca
+                                        INNER JOIN alumno_cca ON matricula_cca.idalumno = alumno_cca.idalumno     
+
+
+                                        union all 
+                                        
+                                        SELECT
+                                        detalle_comision_cca.idcargocomision as Codigo,
+                                        docente_cca.dni as usuario,
+                                        CONCAT(docente_cca.nombres,' ',
+                                        docente_cca.apellidop,' ',
+                                        docente_cca.apellidom) as nombres,
+                                        11 as idperfil,
+                                        'PRESIDENTE_CCA' as perfil,
+                                        docente_cca.pass as contrasenia
+                                        FROM
+                                        detalle_comision_cca
+                                        INNER JOIN docente_cca ON detalle_comision_cca.iddocente = docente_cca.iddocente
+                                        INNER JOIN comision_cca ON detalle_comision_cca.idcomision=comision_cca.idcomision
+                                        WHERE idcargocomision=1 AND fecha_inicio < '$fecha' AND fecha_termino > '$fecha'
+                                        
+                                        union all
+
+                                        select iddocente as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidop, ' ', apellidom) as nombres,9 as idperfil, 'DOCENTE_CCA' as perfil, pass as contrasenia from docente_cca
+                                        WHERE
+                                        iddocente <> 
+                                        (SELECT
+                                        docente_cca.iddocente
+                                        FROM
+                                        detalle_comision_cca
+                                        INNER JOIN docente_cca ON detalle_comision_cca.iddocente = docente_cca.iddocente
+                                        INNER JOIN comision_cca ON detalle_comision_cca.idcomision=comision_cca.idcomision
+                                        WHERE idcargocomision=1 AND fecha_inicio < '$fecha' AND fecha_termino > '$fecha')
+                                        
+                                        union all 
+                                        select idusuario as Codigo, dni as usuario, CONCAT(nombres, ' ', apellidos) as nombres, 10 as idperfil, 'USUARIO_CCA' as perfil, pass as contrasenia from usuario_cca
+                                        union all
+
+
+
+
+                                        select 
+                                                detalle_profesor_comision.CodigoProfesor as Codigo,
+                                                concat( detalle_profesor_comision.CodigoProfesor) as usuario,
                                                 Concat(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno ) as nombres,
                                                 
                                                 5 as idperfil,
@@ -69,12 +115,15 @@ class User extends Main {
                                          select CodigoProfesor as Codigo, concat('admin',CodigoProfesor) as usuario, CONCAT(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno) as nombres, 6 as idperfil,'PRESIDENTE EVALUACION FORMATIVA' as perfil,CodigoProfesor as contrasenia
                                         from profesores
                                         where CodigoProfesor = 0700004
+                                        union all
+                                        select CodigoProfesor as Codigo,CodigoProfesor as usuario, CONCAT(NombreProfesor,' ',ApellidoPaterno,' ',ApellidoMaterno) as nombres, 3 as idperfil,'PROFESOR' as perfil,CodigoProfesor as contrasenia
+                                         from profesores
                                         ) Usuarios
-                                        WHERE usuario =:user AND contrasenia =:password");
+                                        WHERE usuario =:user AND contrasenia = :password");
         $statement->bindParam (":user", $user ,PDO::PARAM_STR);
         $statement->bindParam (":password", $pass,PDO::PARAM_STR);
-        $statement->execute();                
-        $obj = $statement->fetchObject();
+        $statement->execute();  
+        $obj = $statement->fetchAll();
 
         return array('flag'=>$statement->rowCount(),'obj'=>$obj);
     }
@@ -91,7 +140,7 @@ class User extends Main {
                                 ");
         
         $statement->execute();                               
-        $obj = $statement->fetchObject();
+        $obj = $statement->fetchAll();
         return array('flag'=>$statement->rowCount(),'obj2'=>$obj);
     }
 //    function getOficinas()

@@ -1,4 +1,5 @@
 <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="../web/css/css.css"> 
 <style>
     .nav a{
         color:#428bca; 
@@ -8,58 +9,21 @@
 
 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
     <!--INICIO foreach-->
-    <input type="hidden" id="idsilabus" value="<?php echo $value[7]?>"/>
+     
     <?php if ($rows) { foreach ($rows as $key => $value) { ?>
-    <ul class="nav nav-tabs" id="myTab">
-        <li class="active"><a href="#obGen" data-toggle="tab">Objetivos Generales</a></li>
-        <li><a href="#unidad" data-toggle="tab" class="unidad">Unidad</a></li>
-        <li><a href="#bibliografia" data-toggle="tab">Bibliografia</a></li>
-    </ul> 
-    
+   
         <input type="hidden" id="codigosemestre" value="<?php echo $value[4]?>"/>
-        <input type="hidden" id="codigocurso" value="<?php echo $value[5]?>"/>
-        <div class="tab-content col-md-11">
-            <div class="tab-pane active" id="obGen" align="justify">
-             <table class="table table-hover table-bordered">
-                <tbody>
-                   <tr>
-                       <td><label>competencia</label>
-                       <?php echo strtoupper(utf8_encode($value[0]));?>
-                       </td>
-                       <td>
-                         <label>metodologia</label>
-                        <?php echo strtoupper(utf8_encode($value[1]));?>
-                       </td>
-                   </tr>
-                   <tr>
-                       <td>
-                         <label>objetivo</label>
-                         <?php echo strtoupper(utf8_encode($value[2]));?>
-                       </td>
-                       <td>
-                        <label>sumilla</label>
-                        <?php echo strtoupper(utf8_encode($value[3]));?>
-                       </td>
-                   </tr>
-                </tbody>
-            </table>           
-
-
-
-            </div>
-       
-                
+        <input type="hidden" id="codigocurso" value="<?php echo $value[5]?>"/>   
+        <input type="hidden" id="idsilabus" value="<?php echo $value[6]?>"/>  
+              
                    
  <?php } ?> 
-        <div class="tab-pane" id="unidad" > </div>
-        <div class="tab-pane" id="bibliografia"><?php echo strtoupper(utf8_encode($value[5]));?></div>
-        <div class="tab-pane" id="regresar"></div>
-        </div>
-
-        <div id="unidadid"></div>
-        <div id="silabusid"></div>    
-        <div id="temas"></div>
-                
+ <div class="col-md-12">
+ <br> 
+ <h5>Descargar</h5>
+<a class="btn btn-default gensil" title="descargar" target="_blank"
+  href='index.php?controller=cursosemestre&action=generarsilabo&CodSemestre=<?php echo $value[4];?>&CodCurso=<?php echo$value[5];?>&CodSilabo=<?php echo $value[6];?>'></a>   
+ </div>                    
 
 
 <?php } else{?>
@@ -91,8 +55,8 @@
         <tbody class="pn4" ></tbody>
         <?php foreach ($rows as $key => $value) { ?> 
 
-        <tr class="evaluacion<?php echo $conta;?> oa" id="<?php echo $value[3]+110?>"> 
-           <td><?php echo $value[3]?></td>    
+        <tr class="evaluacion<?php echo $conta;?> oa" id="<?php echo $conta+100?>"> 
+           <td><?php echo $conta?></td>    
            <td align="left">
              <input type="hidden"  class="codevaluacion" value="<?php echo $value[3]?>"/>
              <strong><?php echo utf8_encode($value[8])?></strong> <br>
@@ -123,7 +87,9 @@
            <td colspan="4"> <a class="btn btn-info btn-sm" href="curso.pdf" target="_blanc">Generar Sylabu</a>   </td>
          </tr> -->
     </table>
+    <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
     <span style="cursor:pointer; top:-19px;"  class="glyphicon glyphicon-chevron-down sp3" ></span>     
+        <?php }?>   
     <script>
 $(document).ready(function(){
    $('.sp3').click(function(){
@@ -131,7 +97,7 @@ $(document).ready(function(){
   });
 
   tdiv= $('.oa').length;
-  for (var i = 111; i <= tdiv+110; i++) {
+  for (var i = 101; i <= tdiv+100; i++) {
     if ($('#'+i+' button').html()=="Insertar"){
       $('#'+i).appendTo('.pn4');
     }else{
@@ -140,8 +106,8 @@ $(document).ready(function(){
   }
   
   $('.oa').click(function(){
-     tid= $(this).attr('id');
-     for (i = 111; i <= tdiv+110; i++) {
+      tid= $(this).attr('id');
+     for (i = 101; i <= tdiv+100; i++) {
          if (i==parseInt(tid)) {
             $('#'+i).appendTo('.pn4');
          }else{

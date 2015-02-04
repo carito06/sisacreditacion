@@ -1,22 +1,20 @@
-
-$(function() {
-//    $( "#nombres_error" ).fadeOut();
-//    $( "#apellidop_error" ).fadeOut();
-//    $( "#apellidom_error" ).fadeOut();  
-//    $( "#dni_error" ).fadeOut();
-//    $( "#dni_numeros" ).fadeOut();
-//    $( "#dni_tamano" ).fadeOut();
-//    $( "#sexo_error" ).fadeOut();
-//    $( "#direccion_error" ).fadeOut();
-//    $( "#telefono_error" ).fadeOut();    
+$(function() {    
     $( "#save" ).click(function(){
         bval = true; 
-
-        
+        bval = bval && $( "#nombres" ).required();
+        bval = bval && $( "#apellidop" ).required();
+        bval = bval && $( "#apellidom" ).required();       
+        bval = bval && $( "#dni" ).required();
+        bval = bval && $( "#sexo" ).required();
+        bval = bval && $( "#direccion" ).required();
+        bval = bval && $( "#telefono" ).required();         
         if ( bval ) {
             $("#frm").submit();
+            alert("DATOS GUARDADOS");
+            window.close();
         }
-
-    });   
+        else{alert("LLENAR TODOS LOS CAMPOS!!!");}
+        return false;
+    });  
 });
 

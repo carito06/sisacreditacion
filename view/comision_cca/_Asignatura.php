@@ -2,12 +2,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h4 align="center">LISTA DE ASIGNATURAS</h4>
 <a id="nuevaa" class="button">NUEVA</a><br><br>
-<div style="width: 100%; height: 200px; overflow: scroll;">
-    <table class="table table-bordered">
-        <tr>
+<div style="width: 100%; height: 240px; overflow: scroll;">
+    <table class="table table-bordered" style="background-color: #dfeffc">
+        <tr style="background-color: #afd9ee; border-style: double; font-size: larger">
             <td>ASIGNATURA</td>
             <td>DOCENTE</td>
-                        <td>ACCION</td>
+            <td>ACCION</td>
 
         </tr>
 

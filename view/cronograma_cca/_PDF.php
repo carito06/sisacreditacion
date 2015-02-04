@@ -140,7 +140,7 @@ tr:hover td { background: #C763D8; color: #C763D8;}
 //    $pdf->writeHTML($conten);
 //    $pdf->pdf->IncludeJS("print(TRUE)");
 //    $pdf->Output('matricula_cca.pdf');
-require_once("../lib/dompdf/dompdf_config.inc.php");
+require_once("../dompdf-master/dompdf_config.inc.php");
 
 $dompdf = new DOMPDF();
 $dompdf->load_html(ob_get_clean());

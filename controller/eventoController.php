@@ -12,19 +12,19 @@ class eventoController extends Controller {
         $obj = new evento();
         $data = array();  
         $semestre_ultimo = $this->mostrar_semestre_ultimo();
-         if($_SESSION['cargo']=='Presidente' && $_SESSION['comicion']=='COMISION ESPECIAL DE TUTORIA'){$presidente=true;}
+         if($_SESSION['cargo']=='Presidente' && $_SESSION['comicion']=='COMISION ESPECIAL DE TUTORIA'){$presidente=false;}
         $data['data'] = $obj->index($_GET['q'],$_GET['p'],$_GET['criterio'],$semestre_ultimo,$_SESSION['idusuario']);
         $data['query'] = $_GET['q'];
         $data['pag'] = $this->Pagination(array('rows'=>$data['data']['rowspag'],'url'=>'index.php?controller=evento&action=index','query'=>$_GET['q']));                
        
-        $cols = array("CODIGO","Tema","Tipo Evento","Fecha");        
-        $opt = array("tipo_evento.descripcion"=>"Tema","evento.fecha"=>"Fecha ");
+        $cols = array("CODIGO","Tema","Tipo Evento","Fecha","Hora");        
+        $opt = array("evento.Tema"=>"Tema","evento.fecha"=>"Fecha ","evento.hora"=>"Hora");
         
         $data['grilla'] = $this->grilla("evento",$cols, $data['data']['rows'],$opt,$data['pag'],true,true,false,true,false,false,$presidente);
         $view = new View();
         $view->setData($data);
         $view->setTemplate( '../view/evento/_Index.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
     
@@ -33,12 +33,17 @@ class eventoController extends Controller {
         $data = array();
         $view = new View();
         $obj = $obj->edit($_GET['id']);
-        $data['obj'] = $obj;
         
-        $data['tipo_evento'] = $this->Select(array('id'=>'idtipo_evento','name'=>'idtipo_evento','table'=>'tipo_evento','code'=>$obj->idtipo_evento));
+        $data['obj'] = $obj;
+         if($_SESSION['perfil2']=='PROFESOR'){$WHERE=" where tipo_evento.idtipo_evento=2";$code='2';$label='Consejeria';} ;
+//        $dep=$this->mostrar_Facultad_idUsusario($_SESSION['idusuario']);
+        if($_SESSION['idperil']==4){$WHERE=" where tipo_evento.idtipo_evento= '2' or tipo_evento.idtipo_evento='1'"; $code='1';$label='Tutoria';} ;
+        if(isset($_GET['modo_sin_cargo'])){$code="2";$label='Consejeria';}
+        $data['tipo_evento']="<input type='hidden' id='idtipo_evento' name='idtipo_evento' value='".$code."'><strong>".$label."</strong>";
+//        $data['tipo_evento'] = $this->Select(array('id'=>'idtipo_evento','name'=>'idtipo_evento','table'=>"tipo_evento ".$WHERE,'code'=>$code,'readonly'=>'true'));
         $view->setData($data);
         $view->setTemplate( '../view/evento/_Form.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
     public function save(){ 
@@ -54,7 +59,7 @@ class eventoController extends Controller {
             $data['url'] ='index.php?controller=evento';
             $view->setData($data);
             $view->setTemplate( '../view/_Error_App.php' );
-            $view->setLayout( '../template/Layout.php' );
+            $view->setLayout( '../template/Layout3.php' );
             $view->render();
             }
         } else {
@@ -68,7 +73,7 @@ class eventoController extends Controller {
             $data['url'] = 'index.php?controller=evento';
             $view->setData($data);
             $view->setTemplate( '../view/_Error_App.php' );
-            $view->setLayout( '../template/Layout.php' );
+            $view->setLayout( '../template/Layout3.php' );
             $view->render();
             }
         }
@@ -85,19 +90,28 @@ class eventoController extends Controller {
         $data['url'] =  'index.php?controller=evento';
         $view->setData($data);
         $view->setTemplate( '../view/_Error_App.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
         }
     }
     public function create() {
+
         $data = array();
         $view = new View();
-        $data['tipo_evento'] = $this->Select(array('id'=>'idtipo_evento','name'=>'idtipo_evento','table'=>'tipo_evento','code'=>$obj->idtipo_evento));
+        if($_SESSION['perfil2']=='PROFESOR'){$WHERE=" where tipo_evento.idtipo_evento=2";$code='2';$label='Consejeria';} ;
+//        $dep=$this->mostrar_Facultad_idUsusario($_SESSION['idusuario']);
+        if($_SESSION['idperil']==4){$WHERE=" where tipo_evento.idtipo_evento= '2' or tipo_evento.idtipo_evento='1'"; $code='1';$label='Tutoria';} ;
+        if(isset($_GET['modo_sin_cargo'])){$code="2";$label='Consejeria';}
+        $data['tipo_evento']="<input type='hidden' id='idtipo_evento' name='idtipo_evento' value='".$code."'><strong>".$label."</strong>";
+//        $data['tipo_evento'] = $this->Select(array('id'=>'idtipo_evento','name'=>'idtipo_evento','table'=>"tipo_evento ".$WHERE,'code'=>$code,'readonly'=>'true'));
         $view->setData($data);
         $view->setTemplate( '../view/evento/_Form.php' );
-        $view->setLayout( '../template/Layout.php' );
+        $view->setLayout( '../template/Layout3.php' );
         $view->render();
     }
+    
+ 
+    
     public function getTipoEvento()
     {
         $ofic = $this->Select_ajax(array('id'=>'idcriterio','name'=>'idcriterio','table'=>'evento','filtro'=>'idtipo_evento','criterio'=>$_POST['idtipo_evento']));

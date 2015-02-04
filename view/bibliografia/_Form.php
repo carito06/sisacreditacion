@@ -16,12 +16,10 @@
                
                 <label for="tipo_bibliografia" class="labels" style="width: 100px" >Tipo Bibliografia:</label>
                 <?php echo $tipo_bibliografia; ?>  
-                
                 <br/>
                 
                 <label for="referencia" class="labels" style="width: 110px" >Referencia:</label>
                 <input id="referencia" maxlength="100" name="referencia" class="text ui-widget-content ui-corner-all" style=" width: 320px; text-align: left;" value="<?php echo $obj->referencia; ?>" />
-               
                 <br/>
                 
                 <label for="identificador" class="labels" style="width: 110px" >Identificador:</label>

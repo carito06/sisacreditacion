@@ -24,7 +24,7 @@
             <div id="notas">
                 
             </div>
-            <img src="http://carpenoctem2012.files.wordpress.com/2012/03/silabo2.jpeg" class="silaboo" style="margin-bottom: -250px;" >
+            <img src="../web/images/silabo2.jpeg" class="silaboo"width="500px" height="250px"  style="margin-bottom: -250px;" >
         </div>
     
 </div>

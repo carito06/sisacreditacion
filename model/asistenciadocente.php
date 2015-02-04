@@ -4,16 +4,15 @@ include_once("../lib/dbfactory.php");
 
 class asistenciadocente extends Main {
 
-    function index($query, $p, $c,$semestre_ultimo) {
-        $sql = "        SELECT
-                        evento.idevento,
-                        evento.tema,
-                        tipo_evento.descripcion,
-                        evento.fecha
-                        FROM
-                        tipo_evento
-                        Inner Join evento ON evento.idevento = tipo_evento.idtipo_evento
-                        where    evento.CodigoSemestre='".$semestre_ultimo."'and " . $c . " like :query";
+      function index($query, $p, $c,$semestre_ultimo) {
+        $sql = "        SELECT evento.idevento,
+evento.tema, 
+tipo_evento.descripcion,
+evento.fecha,
+evento.CodigoProfesor
+FROM evento Inner Join tipo_evento ON tipo_evento.idtipo_evento = evento.idtipo_evento 
+where tipo_evento.idtipo_evento='1' and evento.CodigoSemestre='".$semestre_ultimo."'";
+//        echo $sql;exit;
         $param = array(array('key' => ':query', 'value' => "%$query%", 'type' => 'STR'));
         $data['total'] = $this->getTotal($sql, $param);
         $data['rows'] = $this->getRow($sql, $param, $p);
@@ -21,16 +20,18 @@ class asistenciadocente extends Main {
         return $data;
     }
      function mostrar_Facultad_idUsusario($idusuario){
-       
-        $facultad=$this->db->query("SELECT
+       $sql = "SELECT
         profesores.CodigoDptoAcad as depfac
         FROM
         profesores
-        where profesores.CodigoProfesor='".$idusuario."'");         
-        $ct=$facultad->fetch();      
-        $facultad=$ct['depfac'];return $facultad;
+        where profesores.CodigoProfesor='".$idusuario."'";
+ 
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetch();
+        return $data;
     } 
-     function docentes_asignados($query,$p,$idfacultad,$sem,$idevento) 
+     function docentes_asignados($idfacultad,$sem,$idevento) 
     {       
             $sql = "  select    DISTINCT
 
@@ -50,14 +51,45 @@ class asistenciadocente extends Main {
                         where
                         departamentoacademico.CodigoDptoAcad='".$idfacultad."' and semestreacademico.CodigoSemestre= '".$sem."'
                        ";
-        
-        $param = array(array('key'=>':query' , 'value'=>"%$query%" , 'type'=>'STR' ));
-        $data['total'] = $this->getTotal( $sql, $param );
-        $data['rows'] =  $this->getRow($sql, $param , $p );        
-        $data['rowspag'] = $this->getRowPag($data['total'], $p );        
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll();
         return $data;
     }
-    function devolver_asistencias($query,$p,$idevento){ 
+    
+    function profesores_acti($facul,$seme){
+        $sql = "select DISTINCT
+
+                        profesores.CodigoProfesor,
+                        concat(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno) as Docente,
+                         profesores.CodigoDptoAcad
+                        FROM
+                        detalle_matricula
+                        INNER JOIN semestreacademico ON detalle_matricula.CodigoSemestre = semestreacademico.CodigoSemestre
+                        INNER JOIN profesores ON profesores.CodigoProfesor = detalle_matricula.CodigoProfesor
+                        INNER JOIN departamentoacademico ON profesores.CodigoDptoAcad = departamentoacademico.CodigoDptoAcad
+                  where
+                            departamentoacademico.CodigoDptoAcad='".$facul."' and semestreacademico.CodigoSemestre= '".$seme."'";
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll();
+        return $data;
+    }
+            
+    function detector_de_evento($idevento){
+                $sql = "SELECT
+detalle_asistencia_docente_tutoria.idevento
+FROM
+detalle_asistencia_docente_tutoria
+WHERE detalle_asistencia_docente_tutoria.idevento='".$idevento."'";
+        $statement = $this->db->prepare($sql);
+        $statement->execute();
+        $data = $statement->fetchAll();
+        return $data;
+    }
+    
+    
+            function devolver_asistencias($query,$p,$idevento){ 
         $sql="SELECT
             detalle_asistencia_docente_tutoria.asistencia_docente,
             detalle_asistencia_docente_tutoria.CodigoProfesor,
@@ -72,20 +104,20 @@ class asistenciadocente extends Main {
         $data['rowspag'] = $this->getRowPag($data['total'], $p );        
         return $data;
     }
-    function insert($_P) {
+    function insert($iddocen,$idevento) {
         $sql2 = $this->Query("sp_detalle_asistencia_docente_tutoria_iu(0,:p1,:p2,:p3,:p4)");     
         $stmt2 = $this->db->prepare($sql2);
-       $fecha=date("Y-m-d");$idevento=$_P['idevento'];
         try{
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->db->beginTransaction();
             $estado = false;$n=0;
-            foreach($_P['codigo_primera_columna'] as $key => $r) 
-            {    $n=$n+1;
-                $stmt2->bindValue(':p1', $_P['codigo_primera_columna'][$key] , PDO::PARAM_STR);
+            
+            foreach($iddocen as $key => $r) 
+            {
+                $stmt2->bindValue(':p1', $r['CodigoProfesor'], PDO::PARAM_STR);
                 $stmt2->bindValue(':p2', $idevento , PDO::PARAM_STR);          
-                $stmt2->bindValue(':p3', $fecha, PDO::PARAM_STR); 
-                $stmt2->bindValue(':p4', $_P['chek'][$key+1], PDO::PARAM_STR); 
+                $stmt2->bindValue(':p3', NULL, PDO::PARAM_STR); 
+                $stmt2->bindValue(':p4', NULL, PDO::PARAM_STR); 
 //                echo  $_P['codigo_primera_columna'][$key]."/".$idevento."/".$fecha."/".$_P['chek'][$key+1]; exit;
                
                 $stmt2->execute();          
@@ -106,21 +138,20 @@ class asistenciadocente extends Main {
         return array($p1 , $p2[2]);
         
     }
-  function update($_P) {
+  function update($ideve,$idprof,$asis) {
         
         $sql2 = $this->Query("sp_detalle_asistencia_docente_tutoria_iu(1,:p1,:p2,:p3,:p4)");     
         $stmt2 = $this->db->prepare($sql2);
-        $fecha=date("Y-m-d");$idevento=$_P['idevento'];
         try{
             $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->db->beginTransaction();
-            $estado = false;$n=0;
-            foreach($_P['codigo_primera_columna'] as $key => $r) 
-            {    $n=$n+1;
-                $stmt2->bindValue(':p1', $_P['codigo_primera_columna'][$key] , PDO::PARAM_STR);
-                $stmt2->bindValue(':p2', $idevento , PDO::PARAM_STR);          
-                $stmt2->bindValue(':p3', $fecha, PDO::PARAM_STR); 
-                $stmt2->bindValue(':p4', $_P['chek'][$key+1], PDO::PARAM_STR); 
+            $estado = false;    
+            foreach($idprof as $key => $r) 
+            {
+                $stmt2->bindValue(':p1', $r , PDO::PARAM_STR);
+                $stmt2->bindValue(':p2', $ideve , PDO::PARAM_STR);          
+                $stmt2->bindValue(':p3', NULL, PDO::PARAM_STR); 
+                $stmt2->bindValue(':p4', $asis[$r], PDO::PARAM_STR); 
 //                echo  $_P['codigo_primera_columna'][$key]."/".$idevento."/".$fecha."/".$_P['chek'][$key+1]; exit;
                
                 $stmt2->execute();          

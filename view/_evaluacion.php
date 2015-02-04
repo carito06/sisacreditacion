@@ -1,4 +1,4 @@
-<h4>EVALUACIÓN</h4> <button id="" type="button" class="btn btn-default" onClick="eva()">Agregar</button> <br>
+<h4>EVALUACIÓN</h4> <br>
 <table class="table eva" id="eval">
 	<thead>
 		<tr>

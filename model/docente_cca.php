@@ -51,7 +51,7 @@ class docente_cca extends Main{
         $stmt->bindValue(':p6', $_P['sexo'] , PDO::PARAM_STR);
         $stmt->bindValue(':p7', $_P['direccion'] , PDO::PARAM_STR);
         $stmt->bindValue(':p8', $_P['telefono'] , PDO::PARAM_STR);
-        $stmt->bindValue(':p9', $_P['pass'], PDO::PARAM_STR);
+        $stmt->bindValue(':p9', $_P['dni'], PDO::PARAM_STR);
         
         
         $p1 = $stmt->execute();
@@ -60,7 +60,7 @@ class docente_cca extends Main{
     }
     function update($_P ) {
         
-        $sql = $this->Query("sp_docente_iu_cca(1,:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8)");
+        $sql = $this->Query("sp_docente_iu_cca(1,:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9)");
         $stmt = $this->db->prepare($sql);
         if($_P['idpadre']==""){$_P['idpadre']=null;}       
         $stmt->bindValue(':p1', $_P['iddocente'] , PDO::PARAM_INT);
@@ -71,6 +71,8 @@ class docente_cca extends Main{
         $stmt->bindValue(':p6', $_P['sexo'] , PDO::PARAM_STR);
         $stmt->bindValue(':p7', $_P['direccion'] , PDO::PARAM_STR);
         $stmt->bindValue(':p8', $_P['telefono'] , PDO::PARAM_STR);
+        $stmt->bindValue(':p9', $_P['dni'] , PDO::PARAM_STR);
+
         
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();

@@ -3,18 +3,19 @@ $(function() {
     $("#comision" ).focus();   
     $("#fecha_inicio").datepicker({'dateFormat':'yy-mm-dd'});  
     $("#fecha_termino").datepicker({'dateFormat':'yy-mm-dd'}); 
-    $( "#descripcion").focus();
     $( "#save" ).click(function(){
         bval = true;  
-//        bval = bval && $( "#comision" ).required();
-//        bval = bval && $( "#fecha_inicio" ).required();
-//        bval = bval && $( "#fecha_termino" ).required();
-//        bval = bval && $( "#descripcion" ).required();
+        bval = bval && $( "#comision" ).required();
+        bval = bval && $( "#fecha_inicio" ).required();
+        bval = bval && $( "#fecha_termino" ).required();
+        bval = bval && $( "#descripcion" ).required();
       
         if ( bval ) {
             $("#frm").submit();
+            alert("DATOS GUARDADOS");
+            window.close();
         }
-        
+        else{alert("LLENAR TODOS LOS CAMPOS!!!");}
         return false;
     });
 //    

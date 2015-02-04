@@ -21,6 +21,7 @@
 				<table class="table table-hover table-bordered" id="ola" >
 					<thead>   
 						<tr style="background-color:#eaf8fc;" > 
+							<th>#</th>
 							<th>Código</th>
 							<th >NOMBRE</th>
 							<?php $cont=0;foreach ($rows2 as $key => $value) { ?>
@@ -45,8 +46,9 @@
        
 					</thead>
 					<tbody style="width:100%;">
-						<?php foreach ($rows as $key => $value) { ?>
+						<?php $cont=1; foreach ($rows as $key => $value) { ?>
 						<tr> 
+							<td><?php echo $cont; $cont++;?></td>
 							<td>
 								<?php echo strtoupper(utf8_encode($value[2]));?>
 								<input type="hidden" name="idalumno[]" value="<?php echo $value[0] ?>" >

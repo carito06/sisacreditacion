@@ -1,8 +1,8 @@
 
 
 //editar silabo
-	//competencia
-	 $( "#comp" ).click(function() {
+  //competencia
+   $( "#comp" ).click(function() {
      cp= $("#comp").html();
      $("#edits").val(cp);
      $(".modal-title").html("competencia");
@@ -12,7 +12,7 @@
       //$( "#dialogoo" ).dialog( "open" );
     });
 
-	//metodologia 
+  //metodologia 
       $( "#met" ).click(function() {
       me=  $("#met").html();
       $("#edits").val(me);
@@ -32,7 +32,7 @@
 $( "#su" ).click(function() {
   su=  $("#su").html();
   $("#edits").val(su);
-	$(".modal-title").html("sumilla");
+  $(".modal-title").html("sumilla");
   $("#soyunid").addClass("su");
 });
 
@@ -42,7 +42,7 @@ $( "#su" ).click(function() {
 var ii=2;
 function agregarUni(){
    if (($('#duracion1').val()==17) || ($('#porcentaje1').val()==100)) {
-        alert("cambie de valores para insertar nueva unidad");
+        alert("cambie la duracion para insertar nueva unidad");
    }else{
       idAlumno= $("input[name='porcentaje[]']").serializeArray();
       duracion= $("input[name='duracion[]']").serializeArray();
@@ -79,7 +79,6 @@ var temp= [];
 var temp2= [];
  j=0;
  t=  0;   
- e=0;   
 function semana(i){
   //alert("entre");
    var html="";
@@ -116,35 +115,43 @@ function semana(i){
             html +="<td><input type='text' id='Conceptual' class='form-control validar' rows='5' cols='30'' name='conce"+k+"-"+i+"'/></td>";  
             html +="<td><input type='text' id='procedimental' class='form-control validar' rows='5' cols='30' name='proc"+k+"-"+i+"' /></td>";  
             html +="<td><input type='text' id='actitudinal'  class='form-control validar' rows='5' cols='30' name='act"+k+"-"+i+"' /></td>";
-           // html += "<td><button type='button' class='btn btn-default' onClick='clase("+i+")'>+</button></td> ";
             html  +="</tr>";
            j++;
     }
     html +="</tbody>";
     html +="</table>"; 
-     html += "<table id='tabla' class='table table-hover table-bordered'>";
-            html += "<thead>";
-            html += "<tr>";
-            html += "<th>tipo</th>";
-            html += "<th>Descripción</th>";
-            html += "<th>Fecha</th>";
-            html += "<th>Ponderado</th>";
-            html += "</tr>";
-            html += "</thead>";
-            html += "<tbody>";
-            html += "<td  class='tipEva"+e+"'></td>";
-            html += "<td><input type='text' name='descripcionEva[]' id='Descripcion' class='form-control validar'   /></td>";
-            html += "<td><input type='date' name='fechaEva[]' id='fecha' class='form-control validar' /></td>";
-            html += "<td><input type='text' name='ponderadoEva[]' id='ponderado' class='form-control validar' /></td>";
-            html += "</tbody>";
-            html += "</table>";
+
+    html +="<div class='ee"+i+"'>";
+     html +="  <button type='button' style='margin-left:40%;' onclick='agregarEva("+i+")' class='btn btn-default'>";
+      html +="       Agregar</button>";
+      html +="        <button  type='button' class='btn btn-default ' onclick='eliminarE("+i+")'>x</button>";
+      html +="       <table id='tabla"+i+"' class='table table-hover table-bordered'>";
+       html +="          <thead>";
+        html +="           <tr>";
+        html +="               <th>tipo de evaluacion</th>";
+         html +="              <th>Descripción</th>";
+           html +="            <th>fecha</th>";
+          html +="             <th>ponderado</th>";
+         html +="          </tr>";
+      html +="           </thead>";
+       html +="         <tbody>";
+       html +="          <tr class='tev'>";
+        html +="          <td class='tipEvac'></td>";
+       html +="             <td><textarea id='descripcionEva' class='form-control' name='descripcionEva"+i+"[]'></textarea></td>";
+       html +="             <td><input type='date' id='fechaEva' class='form-control' name='fechaEva"+i+"[]' /></td>";
+       html +="             <td><input type='number' id='ponderadoEva' class='form-control' name='ponderadoEva"+i+"[]' /></td>";
+      html +="           </tr>";
+      html +="        </tbody>";
+      html +="        </table>";
+     html +="</div>"; 
     $("#h"+i).html(html);
-    $('.tipEval').clone().appendTo('#tabla tbody .tipEva'+e).css("display","");
-    e++;
+    $('.tipEvaa').clone().appendTo(".ee"+i+" .tipEvac").removeClass('tipEvaa').attr("name","tipEva"+i+"[]");
    }
 }
 
-
+function agregarEva(p){
+  $("#tabla"+p+" tbody .tev").clone().appendTo("#tabla"+p+" tbody").removeClass('tev');
+}
 
 // Evento que selecciona la fila y la elimina 
   $(".eliminar").click(function(){
@@ -161,7 +168,14 @@ function semana(i){
                 $("#bibl tbody>tr:nth-child("+(parseInt(trs)-1)+"").remove();
             }
     });
-//silabo
+    function eliminarE(o){
+      var trs=$("#tabla"+o+" tr").length;
+             if(trs>2){
+                    // Eliminamos la columna
+                $("#tabla"+o+" tbody>tr:nth-child("+(parseInt(trs)-1)+"").remove();
+            }
+          }
+   //silabo
 //$("#guardarS").click(function(){
   //var idsilabo=$("#silabo").val();
   //var campo=$("#edits").html();

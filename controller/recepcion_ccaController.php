@@ -22,7 +22,7 @@ class recepcion_ccaController extends Controller {
 //                print "<pre>"; print_r($data); print "</pre>\n";exit();
         $data['query'] = $_GET['q'];
         $data['pag'] = $this->Pagination(array('rows' => $data['data']['rowspag'], 'url' => 'index.php?controller=recepcion_cca&action=index', 'query' => $_GET['q']));
-        $cols = array("Id","Nombres", "Apellidos", "Identificacion");
+        $cols = array("Id","Nombres y Apellidos", "Identificacion");
         $opt = array("alumno_cca.nombres" => "nombres");
              $data['a']=$_GET['a'];
                      $data['grilla_cca'] = $this->grilla_cca("alumno_cca","recepcion_cca","lista_requisitos", $cols, $data['data']['rows'], $opt, $data['pag'], true);

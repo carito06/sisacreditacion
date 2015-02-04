@@ -2,27 +2,6 @@
 
 class Main {
 
- //////////////////////////////////////////////////////////////////////////////////////////777
-    //////////////////////////////////////////////////////////////////////////////////////////////7777
-    
-    function getListTipoEva() {
-
-        $sth = $this->db->prepare("SELECT idtipo_evaluacion, descripcion FROM {$this->table} WHERE iddocente = {$_SESSION['idusuario']}");
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-
-    function getListAsig() {
-
-        $sth = $this->db->prepare("SELECT idasignatura, descripcion FROM {$this->table} WHERE iddocente = {$this->idp}");
-        $sth->execute();
-        return $sth->fetchAll();
-    }
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////7777/////////////777//77/ 
-
     protected $db;
     protected $rows = 10;
     protected $pag = 5;
@@ -39,7 +18,6 @@ class Main {
             header("Location:index.php?controller=BaseDatos&action=orror&str=" . $error);
         }
     }
-
 
     public function Query($partSQL) {
 
@@ -66,6 +44,120 @@ class Main {
         }
     }
 
+   function get_datos_profesores_por_facultad($_evt,$semes,$idfacul){
+//        $query = "select DISTINCT
+//
+//                        profesores.CodigoProfesor,
+//                        concat(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno) as Docente,
+//                         profesores.CodigoDptoAcad
+//                        FROM
+//                        detalle_matricula
+//                        INNER JOIN semestreacademico ON detalle_matricula.CodigoSemestre = semestreacademico.CodigoSemestre
+//                        INNER JOIN profesores ON profesores.CodigoProfesor = detalle_matricula.CodigoProfesor
+//                        INNER JOIN departamentoacademico ON profesores.CodigoDptoAcad = departamentoacademico.CodigoDptoAcad
+//                  where
+//                            departamentoacademico.CodigoDptoAcad='07' and semestreacademico.CodigoSemestre= '20132'";
+$query ="select DISTINCT
+                        detalle_asistencia_docente.id_cargo,
+                        profesores.CodigoProfesor,
+                        concat(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno) as Docente,
+                         profesores.CodigoDptoAcad,
+case when (detalle_asistencia_docente.CodigoProfesor =profesores.CodigoProfesor) then 'yes' else 'no' end asignado
+FROM
+detalle_matricula
+INNER JOIN semestreacademico ON detalle_matricula.CodigoSemestre = semestreacademico.CodigoSemestre
+INNER JOIN profesores ON profesores.CodigoProfesor = detalle_matricula.CodigoProfesor
+INNER JOIN departamentoacademico ON profesores.CodigoDptoAcad = departamentoacademico.CodigoDptoAcad
+left JOIN detalle_asistencia_docente ON profesores.CodigoProfesor = detalle_asistencia_docente.CodigoProfesor and detalle_asistencia_docente.idevento='".$_evt."'
+where
+                            departamentoacademico.CodigoDptoAcad='".$idfacul."' and semestreacademico.CodigoSemestre= '".$semes."'
+";
+//echo $query;exit; 
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        $profesores= $sth->fetchAll();
+
+        return $profesores;
+    }
+
+    function getDetalle_evento() {
+        $query = "SELECT 
+                        evento.idevento,
+                        evento.tema,
+                        tipo_evento.descripcion,
+                        evento.CodigoSemestre,
+                        evento.fecha,
+                        evento.fecha_termino,
+                        evento.lugar,
+                        evento.hora_evento,
+                        `ubigeos$`.DISTRITO,
+                        `ubigeos$`.PROVINCIA,
+                        `ubigeos$`.DEPARTAM,
+                        CONCAT(profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno,' ',profesores.NombreProfesor) AS Responsable,
+                        CONCAT(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno,' ',alumnos.NombreAlumno) AS Participante
+
+                        FROM
+                        evento
+                        INNER JOIN tipo_evento ON evento.idtipo_evento = tipo_evento.idtipo_evento
+                        INNER JOIN `ubigeos$` ON evento.Ubigeo = `ubigeos$`.UBIGEO
+                        INNER JOIN profesores ON evento.CodigoProfesor = profesores.CodigoProfesor
+                        INNER JOIN detalle_asistencia_alumno ON evento.idevento = detalle_asistencia_alumno.idevento
+                        INNER JOIN alumnos ON detalle_asistencia_alumno.CodigoAlumno = alumnos.CodigoAlumno
+
+                        where evento.idevento='{$this->criterio}'
+                   
+                            ";
+                      
+                      
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
+
+
+function getDetalle_evento_eu() {
+        $query = "SELECT 
+                        evento.idevento,
+                        evento.tema,
+                        tipo_evento.descripcion,
+                        evento.CodigoSemestre,
+                        evento.fecha,
+                        evento.fecha_termino,
+                        evento.lugar,
+                        evento.hora_evento,
+                        `ubigeos$`.DISTRITO,
+                        `ubigeos$`.PROVINCIA,
+                        `ubigeos$`.DEPARTAM,
+                        CONCAT(profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno,' ',profesores.NombreProfesor) AS Responsable,
+                        CONCAT(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno,' ',alumnos.NombreAlumno) AS Participante
+
+                        FROM
+                        evento
+                        INNER JOIN tipo_evento ON evento.idtipo_evento = tipo_evento.idtipo_evento
+                        INNER JOIN `ubigeos$` ON evento.Ubigeo = `ubigeos$`.UBIGEO
+                        INNER JOIN profesores ON evento.CodigoProfesor = profesores.CodigoProfesor
+                        INNER JOIN detalle_asistencia_alumno ON evento.idevento = detalle_asistencia_alumno.idevento
+                        INNER JOIN alumnos ON detalle_asistencia_alumno.CodigoAlumno = alumnos.CodigoAlumno
+
+                        where evento.idevento='{$this->criterio}'
+                   
+                            ";
+                      
+                      
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
     function cinco_ultimos_semestres() {
         $query = "SELECT 
                         distinct
@@ -80,7 +172,8 @@ class Main {
         $sth->execute();
         return $sth->fetchAll();
     }
-    function silDG(){
+
+    function silDG() {
         $query = "SELECT cu.DescripcionCurso, cu.Creditos, cu.TipoCurso, cu.Ciclo, cu.CodCursoSira,
             ac.DescripcionArea, cu.HorasTeoria, cu.HorasPractica, si.idsilabus,
              si.sumilla, si.metodologia, si.competencia, sac.Abreviatura, sac.FechaInicio, sac.FechaTermino, 
@@ -98,13 +191,40 @@ class Main {
         $sth->execute();
         return $sth->fetchAll();
     }
-    function silUni(){
+
+    function get_sub_eventos($idevento) {
+
+        $query = " select * from evento where evento.idevento_padre='" . $idevento . "'";
+//        echo $query;exit;
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        $datos = $sth->fetchAll();
+        return $datos;
+    }
+
+    function get_pre_actividades($idevento) {
+        $query = " select * from p_c_evento where idevento='" . $idevento . "'";
+//        echo $query;exit;
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        $datos = $sth->fetchAll();
+        return $datos;
+    }
+
+    function silUni() {
         $query = "SELECT idunidad,nombreunidad, descripcionunidad, duracion, competencia,porcentaje from unidad  
             where idsilabus = {$this->filtro2} ";
         $sth = $this->db->prepare($query);
         $sth->bindValue(':filtro2', $this->filtro2, PDO::PARAM_INT);
         $sth->execute();
         return $sth->fetchAll();
+    }
+
+    public function getFiels($p) {
+        $query = "SELECT * from {$this->tabla} where {$this->tabla}.{$this->campo}={$this->idtabla}";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetch();
     }
 
     function getList() {
@@ -151,10 +271,9 @@ class Main {
         return $sth->fetchAll();
     }
 
+    function getRetornoN() {
 
-   function getRetornoN(){
-        
-         $query = "SELECT 
+        $query = "SELECT 
                         distinct
                         C.CodigoAlumno,
                         C.nota,
@@ -175,14 +294,12 @@ class Main {
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
-       $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_INT);
+        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_INT);
         $sth->execute();
 //    var_dump($sth);
 //    exit();
         return $sth->fetchAll();
-        
     }
-
 
     function getSemestre() {
 
@@ -248,7 +365,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
 
-     function getDatos_grilla_facultad() {
+    function getDatos_grilla_facultad() {
 
         $query = "select DISTINCT
 
@@ -296,17 +413,17 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function get_mostrar_mis_asistencias_eventos_tutoria_alumno() {
-        $query = "   SELECT
-                        evento.idevento,
-                        evento.tema,
-                        tipo_evento.descripcion,
-                        evento.fecha,
-            case when ( detalle_asistencia_alumno_tutoria.asistencia_alumno=1 and detalle_asistencia_alumno_tutoria.idevento=evento.idevento )  then 'Asistio' else ' No Asistio ' end Estado
-                        FROM
-                        tipo_evento
-                        Inner Join evento ON evento.idevento = tipo_evento.idtipo_evento
-                        Inner Join detalle_asistencia_alumno_tutoria ON evento.idevento = detalle_asistencia_alumno_tutoria.idevento
-                        where  evento.CodigoSemestre='{$this->criterio}' and detalle_asistencia_alumno_tutoria.CodigoAlumno={$this->criterio2}";
+        $query = "SELECT
+ evento.idevento,
+ evento.tema,
+ tipo_evento.descripcion,
+ evento.fecha,
+ case when ( detalle_asistencia_alumno_tutoria.asistencia_alumno=1 and detalle_asistencia_alumno_tutoria.idevento=evento.idevento ) then 'Asistio' else ' No Asistio ' end Estado
+ FROM
+ tipo_evento
+ Inner Join evento ON evento.idtipo_evento = tipo_evento.idtipo_evento
+ Inner Join detalle_asistencia_alumno_tutoria ON evento.idevento = detalle_asistencia_alumno_tutoria.idevento
+                        where  evento.CodigoSemestre='{$this->criterio}' and detalle_asistencia_alumno_tutoria.CodigoAlumno='{$this->criterio2}'";
 
 
         $sth = $this->db->prepare($query);
@@ -352,14 +469,14 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     function getListaA() {
         $query = "SELECT 
                         A.CodigoAlumno,
-                        concat(A.NombreAlumno,' ',A.ApellidoPaterno,' ',A.ApellidoMaterno) as alumno,
+                        concat(A.ApellidoPaterno,' ',A.ApellidoMaterno,', ',A.NombreAlumno) as alumno,
                         A.CodAlumnoSira
                         from detalle_matricula as DM
                         inner join alumnos AS A on A.CodigoAlumno = DM.CodigoAlumno
                         inner join cursos as C on C.CodigoCurso = DM.CodigoCurso
 
-                        WHERE DM.{$this->filtro}= '{$this->criterio}' AND DM.{$this->filtro1}='{$this->criterio1}' Order by alumno ASC";
-
+                        WHERE DM.{$this->filtro}= '{$this->criterio}' AND DM.{$this->filtro1}='{$this->criterio1}'
+                        ORDER By alumno asc";
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
         $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
@@ -468,6 +585,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+
     function estadoSil() {
         $query = "SELECT CodigoCurso from carga_academica inner join silabus on 
         carga_academica.idcargaacademica = silabus.idcargaacademica
@@ -486,7 +604,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                             silabus.objetivo,
                             silabus.sumilla,
                             carga_academica.CodigoSemestre,
-                            carga_academica.CodigoCurso
+                            carga_academica.CodigoCurso,
+                            silabus.idsilabus
                             from 
                             carga_academica
                             inner join silabus on silabus.idcargaacademica=carga_academica.idcargaacademica
@@ -500,6 +619,16 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function getBibliografia() {
+        $query = "SELECT bi.idbibliografia, bi.referencia, bi.descripcion, tb.idtipo_bibliografia,
+                        tb.descripcion_tipobibliografia, bi.identificador
+                 FROM bibliografia as bi inner join tipo_bibliografia as tb on
+                    tb.idtipo_bibliografia = bi.idtipo_bibliografia
+                     WHERE identificador = 1 ";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+ function getBibliografiaS() {
         $query = "SELECT bi.idbibliografia, bi.referencia, bi.descripcion, tb.idtipo_bibliografia,
                         tb.descripcion_tipobibliografia, bi.identificador
                  FROM bibliografia as bi inner join tipo_bibliografia as tb on
@@ -524,7 +653,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                             from 
                             carga_academica
                             inner join silabus on silabus.idcargaacademica=carga_academica.idcargaacademica
-                                WHERE carga_academica.{$this->filtro}='$this->criterio' and carga_academica.{$this->filtro1}='$this->criterio1'";
+                                WHERE carga_academica.{$this->filtro}='$this->criterio0' and carga_academica.{$this->filtro1}='$this->criterio1'";
 
         $sth = $this->db->prepare($query);
         $sth->execute();
@@ -640,9 +769,16 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+
     function getEvaluacion() {
         $query = "SELECT idtipo_evaluacion, descripcionevaluacion, fecha, ponderado,idevaluacion FROM `evaluacion`
                   WHERE idunidad= {$this->criterio} ";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+        function getTipEva() {
+        $query = "SELECT idtipo_evaluacion, descripcion FROM `tipo_evaluacion`";
         $sth = $this->db->prepare($query);
         $sth->execute();
         return $sth->fetchAll();
@@ -729,7 +865,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function getDatos_grilla_solicitudes() {
-        $codigo=$_SESSION['idusuario'];
+        $codigo = $_SESSION['idusuario'];
         $query = "SELECT
                     proyecto.idproyecto,
                     CONCAT(alumnos.NombreAlumno,' ',alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno) as Alumno,
@@ -742,7 +878,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                     INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
                     INNER JOIN proyecto ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto)
                     INNER JOIN detalle_profesor_proy_fun ON proyecto.idproyecto=detalle_profesor_proy_fun.idproyecto
-                    WHERE detalleproyecto_matrixalumno.estado=0 AND detalle_profesor_proy_fun.CodigoProfesor='".$codigo."'";
+                    WHERE detalleproyecto_matrixalumno.estado=0 AND detalle_profesor_proy_fun.CodigoProfesor='" . $codigo . "'";
 
         $sth = $this->db->prepare($query);
 //        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
@@ -767,6 +903,216 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
 
+    function getDatos_grilla_solicitudes_ps() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    CONCAT(alumnos.NombreAlumno,' ',alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno)as Nombre,
+                    detalle_alumno_evento.CodigoAlumno,
+                    detalle_alumno_evento.mensaje,
+                    detalle_alumno_evento.fecha,
+                    detalle_alumno_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_alumno_evento ON evento.idevento = detalle_alumno_evento.idevento ) 
+                    inner join alumnos ON detalle_alumno_evento.CodigoAlumno=alumnos.CodigoAlumno)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE detalle_alumno_evento.estado='en espera' and evento.idtipo_evento in (3,5) AND evento.CodigoProfesor='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+//        echo $query;exit;
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+function getDatos_grilla_solicitudes_eu() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    CONCAT(alumnos.NombreAlumno,' ',alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno)as Nombre,
+                    detalle_alumno_evento.CodigoAlumno,
+                    detalle_alumno_evento.mensaje,
+                    detalle_alumno_evento.fecha,
+                    detalle_alumno_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_alumno_evento ON evento.idevento = detalle_alumno_evento.idevento ) 
+                    inner join alumnos ON detalle_alumno_evento.CodigoAlumno=alumnos.CodigoAlumno)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE detalle_alumno_evento.estado='en espera'  and  evento.idtipo_evento in (4,6) AND evento.CodigoProfesor='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+     function getDatos_grilla_solicitudes_docentes_ps() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    CONCAT(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno)as Nombre,
+                    detalle_profesor_evento.CodigoProfesor,
+                    detalle_profesor_evento.mensaje,
+                    detalle_profesor_evento.fecha,
+                    detalle_profesor_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_profesor_evento ON evento.idevento = detalle_profesor_evento.idevento ) inner join profesores ON detalle_profesor_evento.CodigoProfesor=profesores.CodigoProfesor)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE detalle_profesor_evento.estado='en espera' and evento.idtipo_evento in (3,5) AND evento.CodigoProfesor='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+    function getDatos_grilla_solicitudes_docentes_eu() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    CONCAT(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno)as Nombre,
+                    detalle_profesor_evento.CodigoProfesor,
+                    detalle_profesor_evento.mensaje,
+                    detalle_profesor_evento.fecha,
+                    detalle_profesor_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_profesor_evento ON evento.idevento = detalle_profesor_evento.idevento ) inner join profesores ON detalle_profesor_evento.CodigoProfesor=profesores.CodigoProfesor)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE detalle_profesor_evento.estado='en espera' and evento.idtipo_evento in (4,6) AND evento.CodigoProfesor='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+    
+       function getDatos_grilla_notificaciones_docentes_ps() {
+        $codigo = $_SESSION['idusuario'];
+       $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    detalle_profesor_evento.CodigoProfesor,
+                    detalle_profesor_evento.mensaje_confirmacion,
+                    detalle_profesor_evento.fecha,
+                    detalle_profesor_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_profesor_evento ON evento.idevento = detalle_profesor_evento.idevento ) inner join profesores ON detalle_profesor_evento.CodigoProfesor=profesores.CodigoProfesor)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE   evento.idtipo_evento in (3,5) and detalle_profesor_evento.CodigoProfesor='" . $codigo . "'" 
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+    function getDatos_grilla_notificaciones_docentes_eu() {
+        $codigo = $_SESSION['idusuario'];
+       $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    detalle_profesor_evento.CodigoProfesor,
+                    detalle_profesor_evento.mensaje_confirmacion,
+                    detalle_profesor_evento.fecha,
+                    detalle_profesor_evento.estado,
+                    evento.idevento
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_profesor_evento ON evento.idevento = detalle_profesor_evento.idevento ) inner join profesores ON detalle_profesor_evento.CodigoProfesor=profesores.CodigoProfesor)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE  evento.idtipo_evento in (4,6) and detalle_profesor_evento.CodigoProfesor='" . $codigo . "'" 
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+    function getDatos_grilla_notificaciones_alumnos_ps() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    detalle_alumno_evento.CodigoAlumno,
+                    detalle_alumno_evento.mensaje_confirmacion,
+                    detalle_alumno_evento.fecha,
+                    detalle_alumno_evento.estado
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_alumno_evento ON evento.idevento = detalle_alumno_evento.idevento ) inner join alumnos ON detalle_alumno_evento.CodigoAlumno=alumnos.CodigoAlumno)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE  evento.idtipo_evento in (3,5) and detalle_alumno_evento.CodigoAlumno='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+    function getDatos_grilla_notificaciones_alumnos_eu() {
+        $codigo = $_SESSION['idusuario'];
+        $query = "SELECT
+                    evento.tema,
+                    evento.idtipo_evento,
+                    tipo_evento.descripcion,
+                    evento.CodigoProfesor,
+                    detalle_alumno_evento.CodigoAlumno,
+                    detalle_alumno_evento.mensaje_confirmacion,
+                    detalle_alumno_evento.fecha,
+                    detalle_alumno_evento.estado
+                    FROM
+                    ((evento  
+                    INNER JOIN detalle_alumno_evento ON evento.idevento = detalle_alumno_evento.idevento ) inner join alumnos ON detalle_alumno_evento.CodigoAlumno=alumnos.CodigoAlumno)
+                    INNER JOIN tipo_evento ON evento.idtipo_evento=tipo_evento.idtipo_evento 
+                    WHERE  evento.idtipo_evento in (4,6) and detalle_alumno_evento.CodigoAlumno='" . $codigo . "'"
+                . "ORDER BY fecha asc";
+
+        $sth = $this->db->prepare($query);
+//        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+//        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
     function getDatos_grilla_proyecto() {
         $query = "SELECT 
                         proyecto.idproyecto,
@@ -811,8 +1157,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
         return $sth->fetchAll();
     }
-    
-    
+
     function getDatos_grilla_solicitaproyectos() {
         $query = "SELECT 
                         proyecto.idproyecto,
@@ -858,7 +1203,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
         return $sth->fetchAll();
     }
-    
+
     function getDetalle_proyecto() {
         $query = "SELECT 
                         proyecto.idproyecto,
@@ -924,14 +1269,14 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                             ";
 
         $sth = $this->db->prepare($query);
-       $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
         $sth->execute();
 
         return $sth->fetchAll();
     }
 
-    function getDatos_grilla_objetivos() { 
+    function getDatos_grilla_objetivos() {
         $query = "SELECT
                     proyecto.idproyecto,
                     proyecto.nombre_proyecto,
@@ -945,7 +1290,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                             ";
 
         $sth = $this->db->prepare($query);
-             $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
         $sth->execute();
 
@@ -1045,7 +1390,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                     ";
 
         $sth = $this->db->prepare($query);
-   $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
         $sth->execute();
 
@@ -1065,7 +1410,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function getDatos_grilla_alumnos() {
-       
+
         $query = "SELECT
                    proyecto.idproyecto,
                    proyecto.nombre_proyecto,
@@ -1083,14 +1428,14 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
-      
+
         $sth->execute();
 
         return $sth->fetchAll();
     }
 
-    function getDatos_Actividades(){
-      
+    function getDatos_Actividades() {
+
         $query = "SELECT
                             actividad.idactividad,
                             actividad.nombre_actividad,
@@ -1103,12 +1448,12 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
-      
+
         $sth->execute();
 
         return $sth->fetchAll();
     }
-    
+
     function getVerNotasProyecto() {
         $query = "SELECT
                     concepto.nombre_concepto,
@@ -1121,12 +1466,12 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                     FROM
                     detalle_concepto_detproyecto
                     Inner Join concepto ON detalle_concepto_detproyecto.idconcepto = concepto.idconcepto
-                    where detalle_concepto_detproyecto.CodigoAlumno='".$_SESSION['idusuario']."' and detalle_concepto_detproyecto.idproyecto='{$this->criterio}'
+                    where detalle_concepto_detproyecto.CodigoAlumno='" . $_SESSION['idusuario'] . "' and detalle_concepto_detproyecto.idproyecto='{$this->criterio}'
                    
                             ";
 
         $sth = $this->db->prepare($query);
-       $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
         $sth->execute();
 
@@ -1134,7 +1479,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     }
 
     function getDatos_FiltroEditar() {
-      
+
         $query = "SELECT
                                     actividad.idactividad,
                                     proyecto.idproyecto,
@@ -1151,7 +1496,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
-      
+
         $sth->execute();
 
         return $sth->fetchAll();
@@ -1159,9 +1504,9 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 
     function getDatos_grilla_miproyecto() {
 
-        $codigo=$_SESSION['idusuario'];
-        if($_SESSION['perfil'] == 'ALUMNO'){
-        $query = "SELECT
+        $codigo = $_SESSION['idusuario'];
+        if ($_SESSION['perfil'] == 'ALUMNO') {
+            $query = "SELECT
                         proyecto.idproyecto,
                         proyecto.nombre_proyecto,
                         proyecto.periodo_ejecucion,
@@ -1206,14 +1551,12 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
 
-        $sth->execute();
-     
-        return $sth->fetchAll();
-        
-        } 
-        if($_SESSION['perfil'] == 'PROFESOR')
-        {
-             $query = "SELECT
+            $sth->execute();
+
+            return $sth->fetchAll();
+        }
+        if ($_SESSION['perfil'] == 'PROFESOR') {
+            $query = "SELECT
                  
                                     detalle_profesor_proy_fun.idproyecto as id, 
                                     proyecto.nombre_proyecto,
@@ -1427,65 +1770,69 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
             $xy = $this->nota[$i];
             $sql = "insert into calificacion values(NULL,$this->evaluacion,'$xd',$xy)";
 
-         
-        for ($i=0;$i<count($this->alumno);$i++)
-            {        
-                
+
+            for ($i = 0; $i < count($this->alumno); $i++) {
+
                 $a = $this->alumno[$i];
                 $n = $this->nota[$i];
-                $sql="insert into calificacion values(NULL,$this->evaluacion,'$a',$n)";
+                $sql = "insert into calificacion values(NULL,$this->evaluacion,'$a',$n)";
 
 //               echo  $this->alumno[$i]."---".$this->nota[$i];
 //               exit();
 //                echo $sql;exit();
-            $stmt = $this->db->prepare($sql);
-            $stmt->execute();
-        }
+                $stmt = $this->db->prepare($sql);
+                $stmt->execute();
+            }
 
 
 //        
 //        $p1 = $stmt->execute();
 //        $p2 = $stmt->errorInfo();
 //        return array($p1 , $p2[2]);
-    }
+        }
 
-    
-      function InsertarA() {
-          
-         for ($a=0;$a<count($this->alumno);$a++)
-            {        
-                
-                $al= $this->alumno[$a];
-                
-                $as= $this->asistencia[$a];
-               
-            
+        function InsertarA() {
 
+            for ($a = 0; $a < count($this->alumno); $a++) {
+
+                $al = $this->alumno[$a];
+
+                $as = $this->asistencia[$a];
             }
-            
-            $sql="insert into asistencia_clase values(NULL,$this->clase,'$al','$as')";
+
+            $sql = "insert into asistencia_clase values(NULL,$this->clase,'$al','$as')";
 //               echo  $this->alumno[$a]."---".$this->asistencia[$a]."---".$asistencia."---".$alumno;
 //               exit();
 //                 echo $sql;exit();
-                $stmt = $this->db->prepare($sql);
-                $stmt->execute();
-        
-              $mensaje="se inserto correctamente";
-        
- 
-        $p1 = $stmt->execute();
-        $p2 = $stmt->errorInfo();
-        return array($p1 , $p2[2]);
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+
+            $mensaje = "se inserto correctamente";
+
+
+            $p1 = $stmt->execute();
+            $p2 = $stmt->errorInfo();
+            return array($p1, $p2[2]);
 //         return $mensaje;
-     
+        }
+
     }
 
+    //MITCHELLL
+        function getListTipoEva() {
 
+        $sth = $this->db->prepare("SELECT idtipo_evaluacion, descripcion FROM {$this->table} WHERE iddocente = {$_SESSION['idusuario']}");
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    function getListAsig() {
+
+        $sth = $this->db->prepare("SELECT idasignatura, descripcion FROM {$this->table} WHERE iddocente = {$this->idp}");
+        $sth->execute();
+        return $sth->fetchAll();
+    }
 
 }
-
-            }
-
-            
 
 ?>

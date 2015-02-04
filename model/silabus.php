@@ -51,6 +51,7 @@ class silabus extends Main{
  function insert($_P) {
         
       echo "<pre>"; print_r ($_P);
+      
         $coddocente  = $_P["coddocente"];
         $codcurso    = $_P["codcurso"];
         $codsemestre = $_P["codemestre"];
@@ -66,6 +67,7 @@ class silabus extends Main{
         $result = $stmt->fetch();
 
         /*guardamos silabo*/
+        
         $idcargaacademica = $result["idcargaacademica"];
         $competencia = $_P["competencia"];
         $metodologia = $_P["metodologia"];
@@ -85,7 +87,7 @@ class silabus extends Main{
         $stmt2->bindValue(':p6', $objetivo , PDO::PARAM_STR);
         
         $p1 = $stmt2->execute();
-
+       
         $sentencia2=$this->db->query("SELECT MAX(idsilabus) as ids from silabus");         
         $ct2=$sentencia2->fetch(); 
         $ultimosilabus = $ct2["ids"];
@@ -95,11 +97,11 @@ class silabus extends Main{
         //ingresamos unidades
         $c=0;
         for ($i=0; $i<$cuentaunidad ;$i++) { 
-
+ 
             $sentencia3=$this->db->query("SELECT MAX(idunidad) as un from unidad");         
             $ct3=$sentencia3->fetch();      
             $xd2=1+ (int)$ct3['un'];
-          
+         
             $sql = $this->Query("sp_uni_iu(0,:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
             $stmt3 = $this->db->prepare($sql);
             $stmt3->bindValue(':p1', $xd2 , PDO::PARAM_INT);
@@ -140,13 +142,34 @@ class silabus extends Main{
                     $stmt4->bindValue(':p7', $_P['act'.$d.'-'.$s.''] , PDO::PARAM_STR);
                     $p3 = $stmt4->execute();
                 }
-            }       
+            }  
+               //isertamos la evaluacion
+            $hh = $i+1;
+             $cuentaEva = count($_P['tipEva'.$hh]);
+             echo "string";
+             echo $cuentaEva;
+             for ($t=0; $t<$cuentaEva; $t++) { 
+                     $sentencia6=$this->db->query("SELECT MAX(idevaluacion) as eva from evaluacion");         
+                     $ct6=$sentencia6->fetch();      
+                      $xd51=1+ (int)$ct6['eva'];
+                      echo "asdasd33";
+                    $sql = $this->Query("sp_eva_iu(0,:p1,:p2,:p3,:p4,:p5,:p6)");
+                    $stmt41 = $this->db->prepare($sql);
+                    $stmt41->bindValue(':p1', $xd51 , PDO::PARAM_INT);
+                    $stmt41->bindValue(':p2', $ultimaunidad , PDO::PARAM_INT);
+                    $stmt41->bindValue(':p3', $_P['tipEva'.$hh][$t] , PDO::PARAM_INT);
+                    $stmt41->bindValue(':p4', $_P['descripcionEva'.$hh][$t] , PDO::PARAM_STR);
+                    $stmt41->bindValue(':p5', $_P['fechaEva'.$hh][$t] , PDO::PARAM_STR);
+                    $stmt41->bindValue(':p6', $_P['ponderadoEva'.$hh][$t] , PDO::PARAM_INT);
+                    $p41 = $stmt41->execute();
+                }   
+                echo "hola";
         } 
 
         //ingresamos bibliografia
-        $uss= count($_P["descripcion"]);         
+        $uss= count($_P["descripcionBibio"]);         
         $ref=1;  
-        for ($o=0; $o < $uss; $o++) { 
+        for ($o=0; $o <$uss; $o++) { 
         $sentencia6=$this->db->query("SELECT MAX(idbibliografia) as cant from bibliografia");         
         $ct=$sentencia6->fetch();      
         $xd6=1+(int)$ct['cant'];
@@ -154,12 +177,12 @@ class silabus extends Main{
         $sql = $this->Query("sp_biblio_iu(0,:p1,:p2,:p3,:p4,:p5)");
         $stmt6 = $this->db->prepare($sql);
         $stmt6->bindValue(':p1', $xd6 , PDO::PARAM_INT);
-        $stmt6->bindValue(':p2', $ref , PDO::PARAM_STR);
-        $stmt6->bindValue(':p3', $ultimosilabus , PDO::PARAM_INT);
-        $stmt6->bindValue(':p4', $_P['descripcion'][$o] , PDO::PARAM_STR);
+        $stmt6->bindValue(':p2', $ultimosilabus , PDO::PARAM_INT);
+        $stmt6->bindValue(':p3', $ref , PDO::PARAM_INT);
+        $stmt6->bindValue(':p4', $_P['descripcionBibio'][$o] , PDO::PARAM_STR);
         $stmt6->bindValue(':p5', $_P['tipbibl'][$o] , PDO::PARAM_INT);
         $p6 = $stmt6->execute();
-         }
+         } 
 }
      
     

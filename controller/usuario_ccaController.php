@@ -17,7 +17,7 @@ class usuario_ccaController extends Controller {
         $data['pag'] = $this->Pagination(array('rows' => $data['data']['rowspag'], 'url' => 'index.php?controller=alumno_cca&action=index', 'query' => $_GET['q']));
         $cols = array("Id","Nombres", "Apellidos", "Identificacion");
         $opt = array("usuario_cca.nombres" => "Nombres","usuario_cca.dni" => "DNI");//"alumno_cca.idalumno" => "codigo"
-        $data['grilla_cca'] = $this->grilla_cca("usuario_cca", NULL, NULL,$cols, $data['data']['rows'], $opt, $data['pag'], false, false, true, true,false,true);
+        $data['grilla_cca'] = $this->grilla_cca("usuario_cca", NULL, NULL,$cols, $data['data']['rows'], $opt, $data['pag'], false, false, false, true,false,true);
         
         $view = new View();
         $view->setData($data);
@@ -53,7 +53,7 @@ class usuario_ccaController extends Controller {
         if ($_POST['idusuario'] == '') {
             $p = $obj->insert($_POST);
             if ($p[0]) {
-                header('Location:index.php?controller=usuario_cca');
+               header('Location:index.php?controller=usuario_cca');
             } else {
                 $data = array();
                 $view = new View();
@@ -78,8 +78,8 @@ class usuario_ccaController extends Controller {
                 $view->setLayout('../template/Layout.php');
                 $view->render();
             }
-        }
-    }
+        } 
+   } 
 
     public function delete() {
         $obj = new usuario_cca();

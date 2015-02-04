@@ -4,16 +4,19 @@ class Sistema extends Main
 {
     function menu()
     {
-        $stmt = $this->db->prepare("select * from view_menupadres where idperfil = :p1");
+        $stmt = $this->db->prepare("select * from view_menupadres where idperfil = :p1 or idperfil= :p2");
         $stmt->bindValue(':p1', $_SESSION['idperil'] , PDO::PARAM_INT);
+        $stmt->bindValue(':p2', $_SESSION['idperil2'] , PDO::PARAM_INT);
         $stmt->execute();        
         $items = $stmt->fetchAll();
         $cont = 0;
         $cont2 = 0;
         foreach ($items as $valor)
         {
-            $stmt = $this->db->prepare("select * from view_menuhijos where idpadre=".$valor['idmodulo']." and idperfil=:p1");
+            $stmt = $this->db->prepare("select * from view_menuhijos where idpadre=".$valor['idmodulo']." and  (idperfil = :p1 or idperfil in (select idperfil from view_menuhijos where idperfil=:p2 and idpadre=".$valor['idmodulo']." ))");
+//            $stmt = $this->db->prepare("select * from view_menuhijos where idpadre=".$valor['idmodulo']." and  idperfil = :p1 or idperfil= :p2");
             $stmt->bindValue(':p1', $_SESSION['idperil'] , PDO::PARAM_INT);
+            $stmt->bindValue(':p2', $_SESSION['idperil2'] , PDO::PARAM_INT);
             $stmt->execute();
             $hijos = $stmt->fetchAll();
             if($valor['url']=="") {$url = "#";}
@@ -31,6 +34,7 @@ class Sistema extends Main
               $cont2 ++;
             }
             $cont ++;
+            
         }
         return $menu;
     }

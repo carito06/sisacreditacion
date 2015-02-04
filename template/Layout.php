@@ -19,6 +19,9 @@
         <script type="text/javascript" src="js/validateradiobutton.js"></script>
         <script type="text/javascript" src="js/utiles.js"></script>
         <link rel="stylesheet" href="css/css.css">   
+        <script type="text/javascript" src="js/jquery.blockUI.js"></script>
+        <script src="js/datatables_mrm2.js"></script>
+        <link href="css/datatables_mrm.css" type="text/css" rel="stylesheet"/>
 
         <script language="javascript" type="text/javascript">
 

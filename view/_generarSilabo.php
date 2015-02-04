@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once '../dompdf-master/dompdf_config.inc.php';
 $html='';
 $html.='
@@ -11,19 +11,23 @@ $html.='
 	#customers{
 		margin: 0 auto;
 		border: 0px dashed skyblue;
-		width: 670px;
+		width: 625px;
 		padding: 40px;
 		border-radius: 5px 5px 5px 5px;
 	}
 	.unsm{
 		float: left;
 		vertical-align: middle;
-		width: 95px; height:95px; 
+		width: 80px; height:95px; 
 	}
  .cont p{
- 	margin-right: 100px;
+ 	margin-left: -3.5em;
  	text-align: center;
  }
+
+ .bleach p{text-align: right;}
+
+ .zatch p{margin: 0.5em; text-align: center;}
 
  p{margin: 0.5em;
    text-align: justify;
@@ -31,7 +35,9 @@ $html.='
 
  ol{margin: 0.5em 25px;}
 
- dir{margin: 0.3em 0px;}
+ dir{margin: 0.3em 0px;
+     text-align: justify;
+ }
 
 .tb tr td{padding: 10px; text-align: justify;}
 
@@ -48,7 +54,7 @@ $html.='
 	 <p> FACULTAD DE INGENIERÍA DE SISTEMAS E INFORMÁTICA  </p>
 	 <p> Escuela Académico Profesional de Ingeniería de Sistemas e Informática </p>
  ';
- foreach ($rows as $key => $value) {  $curso= utf8_encode($value[0]); $semes= $value[12];
+ foreach ($rows as $key => $value) { $curso=utf8_encode($value[0]); $semes=$value[12];
 
  	$html.='<p><strong> Semestre Académico: '.$value[12].'</strong></p>
 </div>
@@ -69,7 +75,9 @@ $html.='
 	</tr>
 			
 			<tr>
-				<td><dir>3. SEMESTRE ACADÉMICO</dir>
+				<td><dir>3. SEMESTRE ACADÉMICO</dir></td>
+				<td>:</td>
+				<td>'.$value[12].'</td>
 			</tr>
 			<tr>
 				<td><ol>I. Fecha Inicio</ol></td>
@@ -114,7 +122,7 @@ $html.='
 			<tr>
 				<td><dir>10. DOCENTE RESPONDABLE</dir></td>
 				<td>:</td>
-				<td>'.$value[16].'</td>
+				<td>Ing.'.$value[16].'</td>
 			</tr>
 		</tbody>
 	</table>
@@ -123,42 +131,46 @@ $html.='
 <br>
 <div style="text-align: left" >
 	<strong>II. SUMILLA</strong>
-	<dir><p>'.$value[9].'</p></dir>
+	<dir>'.$value[9].'</dir>
 </div>
 
 <div style="text-align: left" >
 	<strong>III. OBJETIVO</strong>
-	<dir><p>'.$value[17].'</p></dir>
+	<dir>'.$value[17].'</dir>
 </div>
 
 <div style="text-align: left" >
 	<strong>IV. METODOLOGIA</strong>
-	<dir><p>'.$value[10].'</p></dir>
+	<dir>'.$value[10].'</dir>
 </div>
 <div style="text-align: left" >
 	<strong>V. COMPETENCIA</strong>
-	<dir><p>'.$value[11].'</p></dir>
+	<dir>'.$value[11].'</dir>
     
     <div>
-        <strong>VI. PROGRAMACIÓN DE DESARROLLO TEMÁTICO DE LA SUMILLA</strong>
+        <strong>VI. PROGRAMACIÓN DE DESARROLLO DEL CONTENIDO TEMÁTICO DE LA SUMILLA</strong>
 		<dir><strong>6.1. Diseño</strong></dir>
 ';
 }
 if(isset($rows2)){
-	foreach ($rows2 as $key => $value) {
- 	 $html.='<dir><p>UNIDAD '.$value[0].': '.strtolower(utf8_encode($value[1])).'</p></dir>';
+	$i=1;
+	foreach ($rows2 as $key => $value ) {
+ 	 $html.='<dir><p>UNIDAD '.$i.': '.strtolower(utf8_encode($value[1])).'</p></dir>';
+ 	 $i++;
  	}
  }
  $html.='</div>
          <dir><strong>6.2. Contenido</strong></dir>
         ';
 if(isset($rows2)){
+	$f=1;
    foreach ($rows2 as $key => $value) { $idu= $value[0];
-   	$html.='<strong><p><dir>UNIDAD '.$value[0].':  '.utf8_encode($value[1]).'</dir></p></strong>
+   	$html.='<strong><p><dir>UNIDAD '.$f.':  '.utf8_encode($value[1]).'</dir></p></strong>
 		    <dir><strong>4.2.1 Descripcion:</strong></dir><dir><p>'.$value[2].'</p></dir>
-			<dir><p><strong>4.2.2 Duracion:</strong>    '.$value[3].'</p></dir>
+			<dir><p><strong>4.2.2 Duracion:</strong>    '.$value[3].' Semanas</p></dir>
 			<dir><strong>4.2.3 Competencia:</strong></dir> <dir><p>'.$value[4].'</p></dir>
-			<dir><p><strong>4.2.4 Porcentaje:</strong>  '.$value[5].'</p></dir>';
+			<dir><p><strong>4.2.4 Porcentaje:</strong>  '.$value[5].'%</p></dir>';
+			$f++;
 	if(isset($rows3)){
 		$html.='
 			<table class="table table-striped table-bordered tb" rules="all" border="1" align="justify">
@@ -292,23 +304,47 @@ $html.='<br><div style="text-align: left" >
 if(isset($rows4)){
 	foreach ($rows4 as $key => $value) {$idb=$value[3];
 		if($idb==1){
- 	 $html.='<dir><p>'.$value[2].'.'.$value[4].'</p></dir>
-	         </div>
-	         ';
-	     }else{
-	     	$html.='<div style="text-align: left" >
-	        <dir><strong>LINKOGRAFIA</strong></dir>
-	        <dir><p>'.$value[2].'.'.$value[4].'</p></dir>
-	         </div>
+ 	 $html.='<dir><p>'.$value[2].'</p></dir>
 	         ';
 	     }
  	}
  }
+$html.='<dir><strong>LINKOGRAFIA</strong></dir>';
+if(isset($rows4)){
+	foreach ($rows4 as $key => $value) {$idb=$value[3];
+ if($idb==2){
+	     $html.='
+	        <dir><p>'.$value[2].'</p></dir>
+	         ';
+	       }
+	   }
+ }
+
+ $html.='<br><div class="bleach">
+         <p><script>
+         var f = new Date();
+         document.write("Tarapoto"+ "," +f.getDate() + "/" + (f.getMonth() +1) + "/" + f.getFullYear());
+         </script></p></div>
+      ';
+
+foreach ($rows as $key => $value) { $curso=utf8_encode($value[0]); $semes=$value[12];
+$html.='
+      <br><br><div class="zatch">
+          <p>--------------------------------------------------</p>
+          <p>Ing.'.$value[16].'</p>
+          <p>Responsable del Curso</p>
+      </div>
+      ';
+  }
+
 $html.='
 	 </div>	
 	</div>
   </body>
 </html>';
+
+//echo $html;
+
 
 # Instanciamos un objeto de la clase DOMPDF.
 $mipdf = new DOMPDF();
@@ -324,5 +360,6 @@ $mipdf ->load_html($html);
 $mipdf ->render();
 # Enviamos el fichero PDF al navegador.
 $mipdf ->stream(''.$curso.'--'.$semes);
+
 ?>
  

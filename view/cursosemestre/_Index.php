@@ -49,6 +49,5 @@
             
 <img src="../web/images/silabo2.jpeg" class="silaboo"width="500px" height="250px"  style="margin-bottom: -250px;" >
         </div>
-    </div>
 </div>
 

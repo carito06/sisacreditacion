@@ -1,23 +1,13 @@
--$(function() {    
-//    $("#descripcion_error").fadeOut();
+$(function() {    
     $( "#save" ).click(function(){
         bval = true; 
-//        bval = bval && $( "#descripcion" ).required();
-//        var descripcion = $( "#descripcion" ).val();
-//        if(descripcion=="")
-//        {
-//          bval = bval && descripcion;
-//          $("#descripcion").fadeIn();
-//        }
-//        else
-//        {
-//          bval = bval && descripcion;
-//          $("#descripcion").fadeIn();  
-//        }
-//             
+        bval = bval && $( "#descripcion" ).required();            
         if ( bval ) {
             $("#frm").submit();
+            alert("DATOS GUARDADOS");
+            window.close();
         }
+        else{alert("LLENAR TODOS LOS CAMPOS!!!");}
         return false;
     });   
 });

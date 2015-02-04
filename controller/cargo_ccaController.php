@@ -14,10 +14,10 @@ class cargo_ccaController extends Controller {
         $data['data'] = $obj->index($_GET['q'],$_GET['p'],$_GET['criterio']);
         $data['query'] = $_GET['q'];
         $data['pag'] = $this->Pagination(array('rows'=>$data['data']['rowspag'],'url'=>'index.php?controller=cargo_cca&action=index','query'=>$_GET['q']));                
-        $cols = array("CODIGO","DESCRIPCION");               
+        $cols = array("ID","DESCRIPCION");               
         
         $opt = array("cargo_cca.descripcion"=>"Nombre Cargo");
-        $data['grilla_cca'] = $this->grilla_cca("cargo_cca",$cols, $data['data']['rows'],$opt,$data['pag'],true,true);
+        $data['grilla_cca'] = $this->grilla_cca("cargo_cca",NULL, NULL,$cols, $data['data']['rows'],$opt,$data['pag'],false, false,true,true);
         $view = new View();
         $view->setData($data);
         $view->setTemplate( '../view/cargo_cca/_Index.php' );

@@ -109,7 +109,7 @@ class cursosemestreController extends Controller {
 
 
         
-        $envio=$this->detalle_silabus(array('filtro' => 'CodigoCurso','filtro1' =>'CodigoSemestre','criterio' => $codcurso,'criterio1' => $codsemestre));      
+        $envio=$this->detalle_silabus(array('filtro' => 'CodigoCurso','filtro1' =>'CodigoSemestre','criterio0' => $codcurso,'criterio1' => $codsemestre));      
 //        echo $codcurso;
 //        echo $codsemestre;
        

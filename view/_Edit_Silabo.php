@@ -25,7 +25,7 @@
     </div>
     <?php 
    if($rows){
-    foreach ($rows as $key => $value) { ?>
+    foreach ($rows as $key => $value) { $sem=$value[4]; ?>
 
         <div class="tab-content col-md-11">
             <div class="tab-pane active" id="obGen" align="justify">
@@ -58,7 +58,7 @@
 </div>
 
         <input type="hidden" id="semestre" value="<?php echo $value[4] ?>"/>
-        <input type="hidden" id="curso" value="<?php echo $value[5] ?>"/>
+        <input type="hidden" id="curso" value="<?php echo $value[5]; $cursok= $value[5];  ?>"/>
         <input type="hidden" id="silabo" value="<?php echo $value[6]; $idsilak=$value[6]; ?>"/>
 <!--        unidad inicio-->
         <div class="tab-pane"  id="unidad" align="justify">
@@ -69,22 +69,21 @@
             <input  type="hidden" id="curs" value="<?php echo $value[5] ;?>"/>
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
               <br>
-            <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button>
+           <!--- <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button> -->
                    <table id="bibl" class='table table-hover table-bordered'>
                             <thead>
                               <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
                               <th>tipo de bibliografía</th>
                               <th>Descripción</th>
-                              <th></th>
                               </tr>
                             </thead>
 
                             <tbody>
-                                <?php foreach ($rows2 as $key => $value) { 
+                                 <?php $asd=1; foreach ($rows2 as $key => $value)  { 
                                        if ($value[1]==$idsilak) {
                                      
                                   ?>
-                                <input type="hidden" id="idbibliok"class="idbibliog" value="<?php echo $value[0]?>" />
+                                <input type="hidden" class="idbibliog<?php echo $asd;  ?>" value="<?php echo $value[0]?>" />
                                   <tr class="dtp">
                                     <td>
                                         <?php 
@@ -104,13 +103,8 @@
                                       ?>      
                                     </td>
 
-                                    <td><input type='text' id='descripcion' name='descripcion[]' value="<?php echo utf8_encode($value[2]); ?>"
+                                    <td><input type='text' id="<?php echo $asd; $asd++;?>"   name='descripcionBibio[]' value="<?php echo utf8_encode($value[2]); ?>"
                                       class='text ui-widget-content ui-corner-all' style='width: 100%; text-align: left;'/>
-                                    </td>
-                                    <td class="eliminar">
-                                      <button type="button" class="btn btn-default " >
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                      </button>
                                     </td>
                                   </tr>
                         <?php }   }?>
@@ -120,13 +114,11 @@
                     <script type="text/javascript">
                     $(document).ready(function(){
                         $('.dtp input').blur(function(){
+                            id= $(this).attr('id');
                             edit= $(this).val();
-                            campo= $(this).attr('id');
-                            idb= $('idbibliog').val();
-                            //alert(campo);
-                           $.post('index.php', 'controller=cursosemestre&action=editarBiblio&Campo=' +campo+
-                                                '&Bibliografia='+idb+'&Editar='+edit, function(data) {
-                          });
+                            idb= $('.idbibliog'+id).val();
+                           $.post('index.php', 'controller=cursosemestre&action=editarBiblio&Bibliografia='+idb+'&Editar='+edit, function(data) {
+                          }); 
                       });
 
                         $('.dtp select').change(function(){
@@ -144,7 +136,8 @@
         </div>
         <div class="tab-pane" id="generarsilabo">
           <br>
-          <a class="btn btn-default gensil" title="descargar" target="_blank" href='http://127.0.0.1/sisacreditacion/web/index.php?controller=cursosemestre&action=generarsilabo&CodSemestre=<?php echo $value[4] ;?>&CodCurso=<?php echo $value[5] ;?>&CodSilabo=<?php echo $value[6] ;?>'></a>
+          <a class="btn btn-default gensil" title="descargar" target="_blank"
+  href='index.php?controller=cursosemestre&action=generarsilabo&CodSemestre=<?php echo $sem ;?>&CodCurso=<?php echo $cursok;?>&CodSilabo=<?php echo $idsilak ;?>'></a>
         </div>
         </div>
 <!--        edit fin-->
@@ -237,29 +230,29 @@
                 <!-- Cuerpo de la tabla con los campos -->
                 <tbody>
                    <tr>
-                    <td><textarea id='nombreunidad1' placeholder='nombre de unidad' class='form-control' name='nombreuni[]'></textarea></td>
-                    <td><textarea class='form-control' placeholder='competencia' name='competencia[]'></textarea></td>
-                    <td><textarea class='form-control' placeholder='descripcion' name='descripcion[]'></textarea></td>
-                    <td><input type='number' value="17" class='form-control' id='duracion1' name='duracion[]'/></td>
-                    <td><input type='number'  id='porcentaje' class='form-control' name='porcentaje[]' value='100'/></td>
+                    <td><textarea id='nombreunidad1' class='form-control' name='nombreuni[]'></textarea></td>
+                    <td><textarea class='form-control' name='competencia[]'></textarea></td>
+                    <td><textarea class='form-control' name='descripcion[]'></textarea></td>
+                    <td><input type='number' class='form-control' id='duracion1' value="17" name='duracion[]'/></td>
+                    <td><input type='number' id='porcentaje1' class='form-control' name='porcentaje[]' value='100'/></td>
                     <td><button type='button' class='btn btn-default' onClick='semana(1)'>+</button></td>
                   </tr>
                 </tbody>
                  
             </table>
-             <?php 
-                mysql_connect("localhost", "root", "");
-                mysql_select_db("sisacreditacion");
-              $consulta=mysql_query("SELECT * from tipo_evaluacion ");
-                echo "<select  name='tipEva[]' style='display:none; width:65%;' class='form-control tipEval'>";
-                  while($registro=mysql_fetch_row($consulta)){
-                    echo "<option value='".$registro[0]."'>".$registro[1]."</option>";
-                  }
-                echo "</select>";   
-            ?> 
             <br>
             <div id='h1'></div>
             <div id="a"></div>
+            <div style="display:none">
+                  <select  style='width:65%;' class='form-control tipEvaa'>
+                      <?php if ($rows4){ 
+                          foreach ($rows4 as $key => $value) { ?>
+                        ?>
+                          <option value='<?php echo $value[0];?>'><?php echo $value[1];?></option>
+                       
+                      <?php }} ?>
+                     </select>
+            </div>
         </div>
 
         <!-- Ingresar bibliografia -->
@@ -281,9 +274,10 @@
               <tr class="dtp">
                 <td> 
                 <?php 
-
-                $consulta=mysql_query("SELECT descripcion_tipobibliografia,idtipo_bibliografia from tipo_bibliografia ");
-                echo "<select  name='tipbibl[]' style='width:65%;' class='form-control dts'>";
+                mysql_connect("localhost", "root", "");
+                mysql_select_db("sisacreditacion");
+                $consulta=mysql_query("SELECT descripcion_tipobibliografia, idtipo_bibliografia from tipo_bibliografia ");
+                echo "<select  name='tipbibl[]' style='width:65%; display:;' class='form-control dts'>";
                   while($registro=mysql_fetch_row($consulta)){
                     echo "<option value='".$registro[1]."'>".$registro[0]."</option>";
                   }
@@ -291,7 +285,7 @@
                 echo '<br/>'; 
                ?> 
                 </td>
-                <td><input type='text' id='descripcion' name='descripcion[]' 
+                <td><input type='text' id='descripcionBibio' name='descripcionBibio[]' 
                   class='text ui-widget-content ui-corner-all' rows='3' cols='40' style='width: 100%; 
                   text-align: left;' placeholder='Ingresar Descripción'/>
                 </td>
