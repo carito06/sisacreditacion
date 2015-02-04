@@ -513,7 +513,8 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         CA.CodigoSemestre,
                         C.DescripcionCurso,
                        TE.descripcion,
-                       U.nombreunidad
+                       U.nombreunidad,
+                       U.idunidad
                         from evaluacion as E
                         inner join unidad as U on U.idunidad = E.idunidad
                         inner join silabus as S on S.idsilabus = U.idsilabus
@@ -521,7 +522,10 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
                         inner join cursos as C on C.CodigoCurso = CA.CodigoCurso
                        inner join tipo_evaluacion as TE  on E.idtipo_evaluacion=TE.idtipo_evaluacion
 
-                        WHERE CA.{$this->filtro}= '{$this->criterio}' AND CA.{$this->filtro1}='{$this->criterio1}'";
+                                WHERE CA.{$this->filtro}= '{$this->criterio}' AND CA.{$this->filtro1}='{$this->criterio1}'
+                    group by U.nombreunidad
+                        ";
+
 
         $sth = $this->db->prepare($query);
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
@@ -773,6 +777,13 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     function getEvaluacion() {
         $query = "SELECT idtipo_evaluacion, descripcionevaluacion, fecha, ponderado,idevaluacion FROM `evaluacion`
                   WHERE idunidad= {$this->criterio} ";
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+        function getEvaluacion3() {
+        $query = "SELECT descripcion,idunidad FROM `evaluacion` inner join tipo_evaluacion on evaluacion.idtipo_evaluacion = tipo_evaluacion.idtipo_evaluacion
+                  ";
         $sth = $this->db->prepare($query);
         $sth->execute();
         return $sth->fetchAll();

@@ -1,6 +1,5 @@
-<script type="text/javascript" src="lib/alertify.js"></script>
-<link rel="stylesheet" href="themes/alertify.core.css" />
-<link rel="stylesheet" href="themes/alertify.default.css" />
+
+</script>
 <style>
 	 #ola .tnota{
 		padding: 0px;
@@ -120,3 +119,6 @@
 	});
 */
 </script>
+
+
+    

@@ -650,7 +650,7 @@ public function ListaPdf_ps($idevento) {
         $obj->criterio1 = $p['criterio1'];
         $data = array();
         $data['rows'] = $obj->getSyllabus_P();
-        $data['rows2'] = $obj->getNombre();
+        $data['rows3'] = $obj->getEvaluacion3();
 
 //        $data['name'] = $p['name'];
 //        $data['id'] = $p['id'];
