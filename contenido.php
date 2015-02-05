@@ -358,15 +358,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b163c7', end
                    
               <?php if(!isset($_SESSION['user'])) { ?>
                     <form id="frmlogin" method="post"  action="web/process.php">
-                        <?php if($_GET['error']) {echo "<div style='color:red; text-align:center;'>MSG: Al parecer olvidó sus datos!</div>";} ?>
-    <div id="block">
-        <label id="user" for="name">p</label>
-        <input type="text"  class="text ui-widget-content ui-corner-all" name="usuario" size="10" id="usuario" title="usuario" onfocus="clearText(this)" onblur="clearText(this)" placeholder="Usuario" required/>
-        <label id="pass" for="password">k</label>
-        <input type="password"value="" class="text ui-widget-content ui-corner-all" name="clave" size="10" id="clave" title="clave" placeholder="Password" required />
-        <input type="submit" id="ingresar" value="a"/>
-    </div>
-                </form>
+                        <?php if($_GET['error']) {echo "<div style='color:red; text-align:center;'>MSG: Al parecer olvido sus datos!</div>";} ?>
+                    <div id="block">
+                        <label id="user" for="name">p</label>
+                        <input type="text"  class="text ui-widget-content ui-corner-all" name="usuario" size="10" id="usuario" title="usuario" onfocus="clearText(this)" onblur="clearText(this)" placeholder="Usuario" required/>
+                        <label id="pass" for="password">k</label>
+                        <input type="password"value="" class="text ui-widget-content ui-corner-all" name="clave" size="10" id="clave" title="clave" placeholder="Password" required />
+                        <input type="submit" id="ingresar" value="a"/>
+                    </div>
+                    </form>
+                     <?php }else{ ?>
+                        <br><br>
+                        <a class="btn btn-primary" href="/web" >REGRESAR AL SISTEMA</a>
                      <?php } ?>
                 </div>
                 

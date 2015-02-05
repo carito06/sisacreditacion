@@ -1,3 +1,4 @@
+<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
 <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="../web/css/css.css"> 
 <style>

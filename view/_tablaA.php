@@ -1,9 +1,19 @@
+<link href="css/jquery.dataTables_themeroller.css" type="text/css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css">
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/datatables_mrm2.js"></script>
+<script> 
+ // $("#ta1").datatables();
+  $(document).ready(function() {
+    $('#ta1').dataTable();
+} );
+</script>
 <?php if ($opcion=="normal"){?>
 <div class="row">
 <div class=" col-md-11 " >
     <div class="container-fluid">
         <h4 style="font-family: comic; font-size:18px " >Alumnos Matriculados al curso</h4>
-      <table class="table table-striped table-hover table-bordered" style="width: 75%; margin: auto; ">
+      <table class="table table-striped table-hover table-bordered" id="ta1" style="width: 75%; margin: auto; ">
          <thead>
           <tr   style="background-color:#eaf8fc;" > 
             <th style="text-align:center">N°</th>

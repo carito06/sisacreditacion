@@ -209,9 +209,10 @@ function VerRegistro(id) {
   $(".silaboo").css("display","none");
 $("#tablaevaluaciones").css("display", "");
 $("#borrarb").css("display", "");
+$("#lista").empty().css("display", "none");
     $.post('index.php', 'controller=cursosemestre&action=getSillabysD&Codigo=' + id + '&idSemestre=' + idsemestre, function(data) {
         $("#accordion").css("display", "none");
-        $("#lista").css("display", "none");
+        
         $("#evaluaciones").css("display", "inline");
         $("#silaedit").css("display", "none");
          $("#boton").css("display", "none");
