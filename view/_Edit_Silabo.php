@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="../web/css/css_edit_silabo.css" />
 <script src="../web/js/app/evt_form_edit_silabo.js"></script>  
 <link rel="stylesheet" href="../web/css/css.css">   
+<script type="text/javascript" src="lib/alertify.js"></script>
+<link rel="stylesheet" href="themes/alertify.core.css"  type="text/css"/>
+<link rel="stylesheet" href= "themes/alertify.default.css"  type="text/css"/>
   <?php 
         foreach ($rows22 as $key => $value) { ?>
         <?php    echo $value[0]; echo $value[1]; echo $value[2]; echo $value[3]; echo $value[4];?> <br>
@@ -85,12 +88,12 @@
                                   ?>
                                 <input type="hidden" class="idbibliog<?php echo $asd;  ?>" value="<?php echo $value[0]?>" />
                                   <tr class="dtp">
-                                    <td>
+                                    <td width="10%">
                                         <?php 
                                           mysql_connect("localhost", "root", "123");
                                           mysql_select_db("sisacreditacion");
                                          $consulta=mysql_query("SELECT descripcion_tipobibliografia,idtipo_bibliografia  from tipo_bibliografia ");
-                                         echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='idtipo_bibliografia'>";
+                                         echo "<select name='descripcion_tipobibliografia' style='width:100px;' class='form-control' id='idtipo_bibliografia'>";
                                              while($registro=mysql_fetch_row($consulta)){
                                                  if ($value[3] != $registro[1] ) {
                                                     echo "<option value='".$registro[1]."'> ".$registro[0]."</option>";
@@ -118,6 +121,7 @@
                             edit= $(this).val();
                             idb= $('.idbibliog'+id).val();
                            $.post('index.php', 'controller=cursosemestre&action=editarBiblio&Bibliografia='+idb+'&Editar='+edit, function(data) {
+                            alertify.success("Se guardaron sus cambios");  
                           }); 
                       });
 
@@ -128,6 +132,7 @@
                             //alert("olassssii  "+ campo + "  " +idb+ "  " + edit);
                            $.post('index.php', 'controller=cursosemestre&action=editarBiblio_tipo&Campo=' +campo+
                                                 '&Bibliografia='+idb+'&Editar='+edit, function(data) {
+                                                  alertify.success("Se guardaron sus cambios");  
                           });
                       });
                     });
