@@ -49,9 +49,7 @@ class silabus extends Main{
     }
 
  function insert($_P) {
-        
-      echo "<pre>"; print_r ($_P);
-      
+
         $coddocente  = $_P["coddocente"];
         $codcurso    = $_P["codcurso"];
         $codsemestre = $_P["codemestre"];
@@ -69,7 +67,7 @@ class silabus extends Main{
         /*guardamos silabo*/
         
         $idcargaacademica = $result["idcargaacademica"];
-        $competencia = $_P["competencia"];
+        $competencia = $_P["competenciaS"];
         $metodologia = $_P["metodologia"];
         $objetivo = $_P["objetivo"];
         $sumilla = $_P["sumilla"];
@@ -87,6 +85,7 @@ class silabus extends Main{
         $stmt2->bindValue(':p6', $objetivo , PDO::PARAM_STR);
         
         $p1 = $stmt2->execute();
+        $p1 = $stmt2->errorInfo();
        
         $sentencia2=$this->db->query("SELECT MAX(idsilabus) as ids from silabus");         
         $ct2=$sentencia2->fetch(); 
@@ -112,6 +111,7 @@ class silabus extends Main{
             $stmt3->bindValue(':p6', $_P['duracion'][$i] , PDO::PARAM_STR);
             $stmt3->bindValue(':p7', $_P['porcentaje'][$i] , PDO::PARAM_STR);
             $p2 = $stmt3->execute();
+            $p2 = $stmt3->errorInfo();
             
             //capturamos la ultima unidad
            $sentencia4=$this->db->query("SELECT MAX(idunidad) as cuni from unidad");         
@@ -141,18 +141,16 @@ class silabus extends Main{
                     $stmt4->bindValue(':p6', $_P['proc'.$d.'-'.$s.''] , PDO::PARAM_STR);
                     $stmt4->bindValue(':p7', $_P['act'.$d.'-'.$s.''] , PDO::PARAM_STR);
                     $p3 = $stmt4->execute();
+                    $p3 = $stmt4->errorInfo();
                 }
             }  
                //isertamos la evaluacion
             $hh = $i+1;
              $cuentaEva = count($_P['tipEva'.$hh]);
-             echo "string";
-             echo $cuentaEva;
              for ($t=0; $t<$cuentaEva; $t++) { 
                      $sentencia6=$this->db->query("SELECT MAX(idevaluacion) as eva from evaluacion");         
                      $ct6=$sentencia6->fetch();      
                       $xd51=1+ (int)$ct6['eva'];
-                      echo "asdasd33";
                     $sql = $this->Query("sp_eva_iu(0,:p1,:p2,:p3,:p4,:p5,:p6)");
                     $stmt41 = $this->db->prepare($sql);
                     $stmt41->bindValue(':p1', $xd51 , PDO::PARAM_INT);
@@ -162,27 +160,32 @@ class silabus extends Main{
                     $stmt41->bindValue(':p5', $_P['fechaEva'.$hh][$t] , PDO::PARAM_STR);
                     $stmt41->bindValue(':p6', $_P['ponderadoEva'.$hh][$t] , PDO::PARAM_INT);
                     $p41 = $stmt41->execute();
+                    $p41 = $stmt41->errorInfo();
                 }   
-                echo "hola";
         } 
 
         //ingresamos bibliografia
         $uss= count($_P["descripcionBibio"]);         
         $ref=1;  
         for ($o=0; $o <$uss; $o++) { 
-        $sentencia6=$this->db->query("SELECT MAX(idbibliografia) as cant from bibliografia");         
-        $ct=$sentencia6->fetch();      
-        $xd6=1+(int)$ct['cant'];
+            $sentencia6=$this->db->query("SELECT MAX(idbibliografia) as cant from bibliografia");         
+            $ct=$sentencia6->fetch();      
+            $xd6=1+(int)$ct['cant'];
 
-        $sql = $this->Query("sp_biblio_iu(0,:p1,:p2,:p3,:p4,:p5)");
-        $stmt6 = $this->db->prepare($sql);
-        $stmt6->bindValue(':p1', $xd6 , PDO::PARAM_INT);
-        $stmt6->bindValue(':p2', $ultimosilabus , PDO::PARAM_INT);
-        $stmt6->bindValue(':p3', $ref , PDO::PARAM_INT);
-        $stmt6->bindValue(':p4', $_P['descripcionBibio'][$o] , PDO::PARAM_STR);
-        $stmt6->bindValue(':p5', $_P['tipbibl'][$o] , PDO::PARAM_INT);
-        $p6 = $stmt6->execute();
+            $sql = $this->Query("sp_biblio_iu(0,:p1,:p2,:p3,:p4,:p5)");
+            $stmt6 = $this->db->prepare($sql);
+            $stmt6->bindValue(':p1', $xd6 , PDO::PARAM_INT);
+            $stmt6->bindValue(':p2', $ultimosilabus , PDO::PARAM_INT);
+            $stmt6->bindValue(':p3', $ref , PDO::PARAM_INT);
+            $stmt6->bindValue(':p4', $_P['descripcionBibio'][$o] , PDO::PARAM_STR);
+            $stmt6->bindValue(':p5', $_P['tipbibl'][$o] , PDO::PARAM_INT);
+            $p6 = $stmt6->execute();
+            $p6 = $stmt6->errorInfo();
          } 
+
+        
+    header('Location: /web/index.php?controller=cursosemestre');
+
 }
      
     

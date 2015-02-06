@@ -30,10 +30,10 @@
         <div class="tab-content col-md-11">
             <div class="tab-pane active" id="obGen" align="justify">
             <br>
-             <table class="table table-hover table-bordered">
+             <table class="table table-hover table-bordered" style="width:800px; margin-left:-70px;">
                 <tbody>
-                   <tr>
-                       <td data-toggle="modal" data-target="#myModal"><label>competencia</label>
+                   <tr >
+                       <td data-toggle="modal" data-target="#myModal" width="50%"><label>competencia</label>
                        <p id="comp" class="compet"><?php echo ($value[0]) ?></p> 
                        </td>
                        <td data-toggle="modal" data-target="#myModal">
@@ -70,7 +70,7 @@
             <input type="hidden" id="semes" value="<?php echo $value[4] ; ?>">
               <br>
            <!--- <button id="biblio" type="button" class="btn btn-default" onClick="bib()">Agregar</button> -->
-                   <table id="bibl" class='table table-hover table-bordered'>
+                   <table id="bibl" class='table table-hover table-bordered' style="width:800px; margin-left:-70px;">
                             <thead>
                               <tr style='background-color:#EAF8FC;font-size:12px;text-transform:uppercase;color:#000'>
                               <th>tipo de bibliografía</th>
@@ -87,7 +87,7 @@
                                   <tr class="dtp">
                                     <td>
                                         <?php 
-                                          mysql_connect("localhost", "root", "");
+                                          mysql_connect("localhost", "root", "123");
                                           mysql_select_db("sisacreditacion");
                                          $consulta=mysql_query("SELECT descripcion_tipobibliografia,idtipo_bibliografia  from tipo_bibliografia ");
                                          echo "<select name='descripcion_tipobibliografia' style='width:300px;' class='form-control' id='idtipo_bibliografia'>";
@@ -169,7 +169,7 @@
                 <tbody>
                    <tr>
                        <td><label>competencia</label>
-                       <textarea id="competencia_1" class="form-control validar" name="competencia" required rows="3"> </textarea>
+                       <textarea id="competencia_1" class="form-control validar" name="competenciaS" required rows="3"> </textarea>
                        </td>
                        <td>
                          <label>metodologia</label>
@@ -274,7 +274,7 @@
               <tr class="dtp">
                 <td> 
                 <?php 
-                mysql_connect("localhost", "root", "");
+                mysql_connect("localhost", "root", "123");
                 mysql_select_db("sisacreditacion");
                 $consulta=mysql_query("SELECT descripcion_tipobibliografia, idtipo_bibliografia from tipo_bibliografia ");
                 echo "<select  name='tipbibl[]' style='width:65%; display:;' class='form-control dts'>";
