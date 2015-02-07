@@ -45,8 +45,10 @@ class ubigeos extends Main {
       $statement->execute();
       return $statement->fetchAll();
       } */
+
 	  public function getDatos($id) {
-        $sql= 'SELECT * FROM `ubigeos$` WHERE UBIGEO="'.$id.'"';
+      //print_r ($id); exit();
+        $sql= 'SELECT * FROM `detalle_proyecto_ubigeo` WHERE idproyecto="'.$id.'"';
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
         return $stmt->fetch();

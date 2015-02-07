@@ -82,7 +82,7 @@ tinymce.init({
 					<span class="input-group-addon"><label class="control-label"><strong for="nombre_proyecto">NOMBRE DE PROYECTO:</strong></label></span>
 					</div>
 					<div class="col-md-12 colpad ">
-                        <input id="nombre_proyecto" name="nombre_proyecto" type="text" class="form-control" placeholder="Nombre proyecto"  value="<?php /*echo $obj->nombre_proyecto; */?>" />
+                        <input id="nombre_proyecto" required name="nombre_proyecto" type="text" class="form-control" placeholder="Nombre proyecto"  value="<?php echo $obj->nombre_proyecto; ?>" />
                   <!-- <textarea id="nombre_proyecto" name="nombre_proyecto" class="form-control" rows="2" placeholder="Nombre proyecto"><?php /*echo $obj->nombre_proyecto; */?></textarea>-->
 
                     </div>
@@ -145,6 +145,15 @@ tinymce.init({
                                     </td>
                                     
                                 </tr>
+                                <?php if ($ubigeo == ""){ ?>
+                                <tr id='<?php echo $idubigeo; ?>'bgcolor='white' align='center'><td>
+                                <?php echo $departamento; ?>
+                                </td><td><?php echo $provincia; ?>
+                                </td><td><?php echo $valor; ?>
+                                </td> <td><a  class='btn btn-danger eli' id='<?php echo $idubigeo; ?>'
+                                onclick='javascript:elimina(this);' style='font-size: 10px;padding: 4px;'>Eliminar</a></td> </tr>
+                                <?php } ?>
+
                             </thead>
                             <tbody id="datos">
                                 
@@ -163,7 +172,7 @@ tinymce.init({
 					<span class="input-group-addon"><label class="control-label"><strong for="periodo_ejecucion">PERIODO DE EJECUCION:</strong></label></span>
 					</div>
 					<div class="col-md-12 colpad">
-                    <input id="periodo_ejecucion" name="periodo_ejecucion" type="text" class="form-control" placeholder="Periodo de ejecucion"  value="<?php echo $obj->periodo_ejecucion; ?>" />
+                    <input id="periodo_ejecucion" required name="periodo_ejecucion" type="text" class="form-control" placeholder="Periodo de ejecucion"  value="<?php echo $obj->periodo_ejecucion; ?>" />
                     </div>
 					</div>
                     </div>
@@ -435,7 +444,7 @@ tinymce.init({
 					<span class="input-group-addon"><label class="control-label"><strong for="tipo_investigacion">TIPO DE INVESTIGACION:</strong></label></span>
 					</div>
 					<div class="col-md-12 colpad">
-					<textarea id="tipo_investigacion" name="tipo_investigacion" class="form-control" rows="4" placeholder="Tipo de Investigacion"><?php echo $obj->tipo_investigacion; ?></textarea>
+					<textarea id="tipo_investigacion" required name="tipo_investigacion" class="form-control" rows="4" placeholder="Tipo de Investigacion"><?php echo $obj->tipo_investigacion; ?></textarea>
                     </div>
 					</div>
                     </div>

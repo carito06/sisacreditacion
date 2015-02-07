@@ -213,7 +213,7 @@ return $dia.'-'.$mes.'-'.$anio;
 //        
 //    }
     function update($_P ) {
-        
+        print_r($_P); exit();
         $sql = $this->Query("sp_proyec_iu(1,:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12,:p13,:p14,:p15,:p16,:p17,:p18,:p19,:p20,:p21,:p22,:p23,:p24,:p25,:p26,:p27,:p28,:p29,:p30,:p31,:p32,:p33,:p34))");
         $stmt = $this->db->prepare($sql);
         if($_P['idpadre']==""){$_P['idpadre']=null;}
@@ -256,16 +256,23 @@ return $dia.'-'.$mes.'-'.$anio;
         return array($p1 , $p2[2]);
     }
     function delete($p) { 	
-        $stmt1 = $this->db->prepare("DELETE FROM objetivo_proyecto WHERE idproyecto = :p1");
-        $stmt1->bindValue(':p1', $p, PDO::PARAM_INT);
+        //print_r($p); exit();
+        $stmt1 = $this->db->prepare("DELETE FROM control_proyecto WHERE idproyecto = ".$p."");
         $p1 = $stmt1->execute();
-        $p2 = $stmt1->errorInfo();
+
+        $stmt2 = $this->db->prepare("DELETE FROM detalle_profesor_proy_fun WHERE idproyecto = ".$p."");
+        $p3 = $stmt2->execute();
+        $p4 = $stmt2->errorInfo();
+
         
-        $stmt = $this->db->prepare("DELETE FROM proyecto WHERE idproyecto = :p1");
-        $stmt->bindValue(':p1', $p, PDO::PARAM_INT);
-        $p3 = $stmt->execute();
-        $p4 = $stmt->errorInfo();
-        return array($p1 , $p2[2], $p3 , $p4[2]);
+        $stmt3 = $this->db->prepare("DELETE FROM detalle_proceso_proyecto WHERE idproyecto = ".$p."");
+        $p7 = $stmt3->execute();
+        $p8 = $stmt3->errorInfo();
+
+        $stmt = $this->db->prepare("DELETE FROM proyecto WHERE idproyecto = ".$p."");
+        $p5 = $stmt->execute();
+        $p6 = $stmt->errorInfo();
+        return array($p5,$p6[2]);
     }
 }
 ?>

@@ -4,6 +4,8 @@ require_once '../lib/Controller.php';
 require_once '../lib/View.php';
 require_once '../model/ubigeos.php';
 require_once '../model/proyecto.php';
+require_once '../model/escuelaprofesional.php';
+require_once '../model/linea_investigacion.php';
 
 class ProyectoController extends Controller {  
     
@@ -36,21 +38,31 @@ class ProyectoController extends Controller {
         $ubigeo = new ubigeos();
         $data = array();
         $view = new View();
+        $ep = new escuelaprofesional();
+        $et = new linea_investigacion();
         $obj = $obj->edit($_GET['id']);
+
+        //print_r($obj); exit();
         $data['obj'] = $obj;
-       
+                
+                $CodigoFacultad = $ep->verFac($obj->CodigoEscuela);     
+                $eje_tematico = $et->verEje($obj->idlinea_investigacion);                
+                //print_r($eje_tematico[0]['idejetematico']); exit();
                 $data['tipo_proyecto'] = $this->Select(array('id'=>'idtipo_proyecto','name'=>'idtipo_proyecto','table'=>'tipo_proyecto','code'=>$obj->idtipo_proyecto));
-                $data['eje_tematico'] = $this->Select(array('id'=>'idejetematico','name'=>'idejetematico','table'=>'eje_tematico','code'=>$obj->idejetematico));
+                $data['eje_tematico'] = $this->Select(array('id'=>'idejetematico','name'=>'idejetematico','table'=>'eje_tematico','code'=>$eje_tematico[0]['idejetematico']));
                 $data['linea_investigacion'] = $this->Select(array('id'=>'idlinea_investigacion','name'=>'idlinea_investigacion','table'=>'linea_investigacion','code'=>$obj->idlinea_investigacion));
-                $data['facultad'] = $this->Select(array('id'=>'CodigoFacultad','name'=>'CodigoFacultad','table'=>'facultades','code'=>$obj->CodigoFacultad));
+                $data['facultad'] = $this->Select(array('id'=>'CodigoFacultad','name'=>'CodigoFacultad','table'=>'facultades','code'=>$CodigoFacultad[0]['CodigoFacultad']));
                 $data['escuela'] = $this->Select(array('id'=>'CodigoEscuela','name'=>'CodigoEscuela','table'=>'vista_escuelaprofesional','code'=>$obj->CodigoEscuela));
-       
-                $ubigeos = $ubigeo->getDatos($obj->Ubigeo);
+
+                $ubigeos = $ubigeo->getDatos($obj->idproyecto);
+
+
+
         $data['departamento'] = $this->Select(array('id' => 'departamento', 'name' => 'departamento', 'table' => 'vista_departamento', 'code' => $ubigeos['DEPARTAM']));
         $data['provincia'] = $this->Select_ajax_string_prov(array('id' => 'provincia', 'name' => 'provincia', 'table' => 'ubigeos$', 'filtro' => 'DEPARTAM', 'criterio' => $ubigeos['DEPARTAM'],  'code' => $ubigeos['PROVINCIA'], 'ajax'=> false));
         $data['distrito'] = $this->Select_ajax_string_dis(array('id' => 'distrito', 'name' => 'distrito', 'table' => 'ubigeos$', 'filtro' => 'PROVINCIA', 'criterio' => $ubigeos['PROVINCIA'],  'code' => $obj->Ubigeo, 'ajax'=> false));
        
-                
+
         $view->setData($data);
         $view->setTemplate( '../view/proyecto/_Form_1.php' );
         $view->setLayout( '../template/Layout.php' );
@@ -82,6 +94,7 @@ class ProyectoController extends Controller {
             }
           //print_r (json_encode($p2));
         } else {
+
             $p = $obj->update($_POST);
             for($i=1;$i<=$_POST["conta"];$i++)
             {

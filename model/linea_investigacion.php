@@ -57,5 +57,11 @@ class linea_investigacion extends Main{
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
     }
+    function verEje($p){
+        $stmt = $this->db->prepare("SELECT idejetematico FROM linea_investigacion WHERE idlinea_investigacion = :p1");
+        $stmt->bindValue(':p1', $p, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 ?>

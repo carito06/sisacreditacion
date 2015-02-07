@@ -80,5 +80,11 @@ class escuelaprofesional extends Main{
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
     }
+    function verFac($p) {
+        $stmt = $this->db->prepare("SELECT CodigoFacultad FROM escuelaprofesional WHERE CodigoEscuela = :p1");
+        $stmt->bindValue(':p1', $p, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }
 ?>
