@@ -605,15 +605,16 @@ public function ListaPdf_ps($idevento) {
 //        $obj->table = $p['table'];
         $obj->filtro = 0;
         $obj->criterio = 0;
-        $obj->filtro1 = $p['filtro1'];
-        $obj->filtro2 = $p['filtro2'];
+        $obj->cod = $p['filtro']; # codsemestre
+        $obj->filtro1 = $p['filtro1']; # codcruso
+        $obj->filtro2 = $p['filtro2']; #codsilabo
 
         $data = array();
         $data['rows'] = $obj->silDG();
         $data['rows2'] = $obj->silUni();
         $data['rows3'] = $obj->getTema();
         $data['rows4'] = $obj->getBibliografiaS();
-        $data['rows5'] = $obj->getEvaluacion3();
+        $data['rows5'] = $obj->getSyllabus_P4();
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);

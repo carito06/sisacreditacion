@@ -122,7 +122,7 @@ $html.='
 			<tr>
 				<td><dir>10. DOCENTE RESPONDABLE</dir></td>
 				<td>:</td>
-				<td>Ing.'.$value[16].'</td>
+				<td>Ing.'.utf8_encode($value[16]).'</td>
 			</tr>
 		</tbody>
 	</table>
@@ -240,20 +240,26 @@ $html.='<br>
 		    <tbody>';
 			   if(isset($rows5)){
 				foreach ($rows5 as $key => $value) {
-					if($idu==$value[1]){
 			 	 $html.='<tr>
 			 	 			<td>';
-							$ar = explode(" ", $value[0]);
-							$aa = substr($ar[0], 0,1);
-							$bb = substr($ar[1], 0,1);
-							$html.= $aa.$bb;
+									$new_array=explode(' ',$value[0]);
+									$acr='';
+									$contad=count($new_array);
+									if($contad>1){
+										foreach($new_array as $key=>$val){											
+											$html.= $val[0];
+										}
+									}else{
+										$html.= substr($value[0],0,3);
+									}
+									
+
 			 	 			$html.='</td>
 			 	 			<td>'.$value[0].'</td>
-			 	 			<td>'.$value[2].'%</td>
+			 	 			<td>'.$value[1].'%</td>
 			 	 		</tr>
 				         ';
 				     }
-			 	}
 			 }
 
 	$html.='</tbody>
@@ -269,12 +275,10 @@ $html.='<br>
 			F= ';
 			   if(isset($rows5)){ $f="";
 				foreach ($rows5 as $key => $value) {
-					if($idu==$value[1]){
 						$ar = explode(" ", $value[0]);
 						$aa = substr($ar[0], 0,1);
 						$bb = substr($ar[1], 0,1);
-						$f .= ((int)$value[2]).'*'.$aa.$bb." + ";
-					}
+						$f .= ((int)$value[1]).'*'.$aa.$bb." + ";
 				}
 			}
 
@@ -307,7 +311,7 @@ foreach ($rows as $key => $value) { $curso=utf8_encode($value[0]); $semes=$value
 $html.='
       <br><br><div class="zatch">
           <p>--------------------------------------------------</p>
-          <p>Ing.'.$value[16].'</p>
+          <p>Ing.'.utf8_encode($value[16]).'</p>
           <p>Responsable del Curso</p>
       </div>
       ';
@@ -319,7 +323,7 @@ $html.='
   </body>
 </html>';
 
-//echo $html;
+//echo $html; exit();
 
 
 # Instanciamos un objeto de la clase DOMPDF.

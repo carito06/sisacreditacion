@@ -567,6 +567,31 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+    function getSyllabus_P4() {
+        $query = "SELECT 
+                        TE.descripcion, E.ponderado,
+                       
+                       U.nombreunidad,
+                       U.idunidad
+                        from evaluacion as E
+                        inner join unidad as U on U.idunidad = E.idunidad
+                        inner join silabus as S on S.idsilabus = U.idsilabus
+                        inner join carga_academica as CA on CA.idcargaacademica = S.idcargaacademica
+                        inner join cursos as C on C.CodigoCurso = CA.CodigoCurso
+                       inner join tipo_evaluacion as TE  on E.idtipo_evaluacion=TE.idtipo_evaluacion
+
+                                WHERE CA.CodigoCurso= '{$this->filtro1}' AND CA.CodigoSemestre='{$this->cod}'
+                        ";
+
+
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':filtro1', $this->filtro1, PDO::PARAM_STR);
+        $sth->bindValue(':filtro', $this->cod, PDO::PARAM_STR);
+        $sth->execute();
+//        var_dump($sth);
+//        exit();
+        return $sth->fetchAll();
+    }
     function getSyllabus_P2() {
         $query = "SELECT 
                        
