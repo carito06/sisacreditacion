@@ -73,20 +73,41 @@
 
 
            </td>
-           <td> <?php echo (date("d-m-Y",strtotime($value[1])))?> </td>
-           <td><?php echo $value[10];?>%</td>
-           <td id="act"> <?php $fechaE=$value[1];?>
+           <td>
+           <br>
+            <?php foreach ($rows3 as $key => $value2) {
+
+                if ($value[9]==$value2[1]) {
+                          ?>     
+                          <p align="center"><?php echo date("d-m-Y",strtotime($value2[3]));?></p>
+            <?php }} ?>
+            </td>
+           <td><br>
+            <?php foreach ($rows3 as $key => $value2) {
+
+                if ($value[9]==$value2[1]) {
+                          ?>     
+                          <p align="center"><?php echo $value2[2];?>%</p>
+            <?php }} ?>
+           </td>
+           <td id="act"> 
              <?php date_default_timezone_set();
-             $fechaA= date("Y-m-d");
-            //          echo $fechaA;
+             $fechaA= date("d-m-Y");
             ?>
-             <?php if ($fechaE > $fechaA){?>
-              <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value[3]?>',this)" value="Insertar">Insertar</button>
+            <?php foreach ($rows3 as $key => $value2) {
+
+                if ($value[9]==$value2[1]) {
+                          ?>     
+                          <p align="center"><?php $fechaE= date("d-m-Y",strtotime($value2[3]));?></p>
+              <?php if ($fechaE > $fechaA){?>
+              <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value2[4]?>',this)" value="Insertar">Insertar</button>
               <?php }else {?>
               <button class="btn btn-primary btn-xs" type="button"  value="Inactivo" style="background-color: red;">Inactivo</button>
                   <?php }?>
               <input type="hidden" class="codcurso"  value="<?php echo $value[4]?>" />
-              <input type="hidden" class="codsemestre"   value="<?php echo $value[5]?>" />
+              <input type="hidden" class="codsemestre"   value="<?php echo $value[5]?>" />                          
+            <?php }} ?>            
+
             </td>
         </tr>
                 <?php $conta=$conta+1;}?>
