@@ -12,12 +12,13 @@
 		height: 30px;
 		border: none;
 	}
+
 </style>
 <div class="row">
     <div class="col-md-12" id="aumentar">
 		<div class='container-fluid' id="grande">
 			<form id="formnotas" method="post">
-				<table class="table table-hover table-bordered" id="ola" >
+				<table class="table table-hover table-bordered" id="ola" style="margin-left: -100px;width:850px" >
 					<thead>   
 						<tr style="background-color:#eaf8fc;" > 
 							<th>#</th>
@@ -59,7 +60,7 @@
 					</thead>
 					<tbody style="width:100%;">
 	
-						<?php $cont=1; $i=1; foreach ($rows as $key => $value) { ?>
+						<?php $cont=1; $i=1; foreach ($rows as $key => $value) {  ?>
 						<tr> 
 							<td><?php echo $cont; $cont++;?></td>
 							<td>
@@ -72,14 +73,15 @@
 
 							<?php $alum= $value[0];
 								if (isset($rows2)){ $j=1;
-									foreach ($rows2 as $key => $value) {   $idU= $value[9]; ?>
+									foreach ($rows2 as $key => $value) {   $idU= $value[9]; $por= $value[10]; ?>
 										
 											<?php if (isset($rows4)){$ev=1;
 												foreach ($rows4 as $key => $value5) {$ie= $value5[3]; $ponderado= $value5[2]; 
 													//echo $value5[9]; 
 													if ($idU== $value5[9]) { ?>
 													<td class="tnota U<?php echo $j;?> U<?php echo $j.'-'.$i.'-'.$ev; $ev++;?>">
-													<?php if (isset($rows3)){ 
+													<?php  #echo $ponderado;
+													 if (isset($rows3)){ 
 													 foreach ($rows3 as $key => $value) { ?>
 																	<?php if (($value[0]==$alum) && ($value[2]==$ie)){ ?>
 																 		<input type='text' maxlength='2'  pattern='{0-9}+'  class='form-control nota' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($value[1]*$ponderado)/100;?>"value="<?php echo (int)$value[1];?>" onblur='hi(this)'/>	
@@ -91,12 +93,17 @@
 													</td>
 											<?php }}?>
 										
-										<td bgcolor="#eaf8fc" class="Uni"  id="<?php echo $i.','.$j ?>"><?php echo $i.','.$j ?></td>
+										<td bgcolor="#eaf8fc" class="Uni tnota"  >
+											
+											<input type="text" disabled name="<?php echo $por; ?>" class='form-control nota'maxlength='2' id="<?php echo $j.'-'.$i ?>">
+												
+										</td>
 								<?php   $j++; } ?>
 
 							<?php }?>
-							<td id="<?php echo $i.','.($j-1).'p'; ?>">
-								<?php echo $i.','.($j-1).'p'; ?>
+							<td  class="tnota">
+								<input class='form-control nota' id="<?php echo $i.'p'; ?>"disabled type="text" name="" value="" placeholder="">
+								
 							</td>
 						</tr>
 					<?php $i++;} ?>
@@ -119,28 +126,61 @@
 nroFilas= $("#ola tbody tr:nth-child(1) td").length-3;
 nroColumnas= $("#ola tbody tr").length;
 nroUnidades= $("#ola tbody tr:nth-child(1) .Uni").length;
-	var n = [];
-	alert(nroFilas-nroUnidades);
-//for (var f = 1; f < (nroFilas-nroUnidades); f++) {
+	var n = [], b= [];
+
+for (var u = 1; u <= nroUnidades; u++) {	
+	b[u]=[];
 	for (var c = 1; c <= nroColumnas; c++) {
-		//n[c]=[];
-		for (var u = 1; u <= nroUnidades; u++) {
+			
+		//for (var u = 1; u <= nroUnidades; u++) {
 			tam= $('#ola tbody tr:nth-child(1) .U'+u).length;
-			n[c]=[];
+			//alert(tam);
 			if(tam==1){
-				n[c]=$('.U'+u+'-'+c+'-'+tam+' input').attr('id');
+				b[c]= $('.U'+u+'-'+c+'-'+tam+' input').attr('id');
+				
+				
 			}else{
+				//alert("yes");
+				n[c]=[];
 				for (var t = 1; t <= tam; t++) {
 					n[c].push($('.U'+u+'-'+c+'-'+t+' input').attr('id'));
 				}
 			}
-			//n[c].push(n[u]);
-		}
-		
 	}
-//}
-	console.log(n);
-	//alert(n.length);
+	if (nroUnidades!=1){
+		for (var cc = 1; cc <= nroColumnas; cc++) {
+			$('#'+u+'-'+cc).val(parseInt(b[cc]));
+		}
+		console.log(b);
+	}
+
+}	
+console.log(n);
+
+if (nroUnidades!=1){
+	for (var c = 1; c <= nroColumnas; c++) {
+		a=0;
+		for (var u = 1; u <= nroUnidades; u++) {	
+		
+			a+=($('#'+u+'-'+c).val()*parseInt($('#'+u+'-'+c).attr('name')))/100;
+
+		}
+		$('#'+c+'p').val(parseInt(a));
+	}
+}else{
+	for (var c = 1; c <= nroColumnas; c++) {
+		b=0;
+		
+		tam= $('#ola tbody tr:nth-child(1) .U1').length;
+		for (var t = 0; t < tam; t++) {
+				b+=parseFloat(n[c][t]);
+		}
+		$('#1-'+c).val(parseInt(b));
+		//alert(b);
+
+		$('#'+c+'p').val(parseInt(b));
+	}
+}
 //alert(parseFloat($('.U1-1-1 input').attr('id'))+parseFloat($('.U1-1-2 input').attr('id')));
 
 	function hi(control){
@@ -152,11 +192,11 @@ nroUnidades= $("#ola tbody tr:nth-child(1) .Uni").length;
 		campoInput= $(control).val();
 
 		$.post('index.php', 'controller=cursosemestre&action=editarNota&CodAlumno=' +idAlumno+'&CodTipEvaluacion='+idTipEvaluacion+'&campo='+campoInput, function(data) {
-			alertify.log("se inserto nota");
+			alertify.success("se inserto nota");	 
         });
 
-       //curso= $('#tablaevaluaciones .pn4 .codcurso').val();
-       //VerRegistro(curso);
+       curso= $('#tablaevaluaciones .pn4 .codcurso').val();
+       VerRegistro(curso);
     
 		/*
         $.post('index.php','controller=cursosemestre&action=getCalificaciones&idsemestre='+codsemestre+'&idcurso='+codcurso+'&idalumno='+idAlumno, function(data) {

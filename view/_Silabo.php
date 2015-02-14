@@ -60,7 +60,7 @@
            <td><?php echo $conta?></td>    
            <td align="left">
              <input type="hidden"  class="codevaluacion" value="<?php echo $value[3]?>"/>
-             <strong><?php echo utf8_encode($value[8])?></strong> <br>
+             <strong><?php echo utf8_encode($value[8])?></strong>   (<?php echo $value[10] ?>%) <br>
 
             <?php foreach ($rows3 as $key => $value2) {
 
