@@ -88,7 +88,7 @@
 													 if (isset($rows3)){ 
 													 foreach ($rows3 as $key => $value) { ?>
 																	<?php if (($value[0]==$alum) && ($value[2]==$ie)){ ?>
-																 		<input type='text' maxlength='2'  pattern='{0-9}+'  class='form-control nota <?php if ((int)$value[1]<10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($value[1]*$ponderado)/100;?>"value="<?php echo (int)$value[1];?>" onblur='hi(this)'/>	
+																 		<input type='text' maxlength='2'  pattern='{0-9}+'  class='form-control nota <?php if ((int)$value[1]<=10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($value[1]*$ponderado)/100;?>"value="<?php echo (int)$value[1];?>" onblur='hi(this)'/>	
 																	<?php }?>
 													<?php } ?>
 														<input type="hidden" id="0"/>
@@ -153,7 +153,7 @@ for (var u = 1; u <= nroUnidades; u++) {
 	}
 	if (nroUnidades!=1){
 		for (var cc = 1; cc <= nroColumnas; cc++) {
-			if (parseInt(b[cc])<10){
+			if (parseInt(b[cc])<=10){
 				$('#'+u+'-'+cc).addClass('colorD');
 			}else{
 				$('#'+u+'-'+cc).addClass('colorA');
@@ -174,7 +174,7 @@ if (nroUnidades!=1){
 			a+=($('#'+u+'-'+c).val()*parseInt($('#'+u+'-'+c).attr('name')))/100;
 
 		}
-		if (parseInt(a)<10){
+		if (parseInt(a)<=10){
 			$('#'+c+'p').addClass('colorD');
 		}else{
 			$('#'+c+'p').addClass('colorA');
@@ -189,7 +189,7 @@ if (nroUnidades!=1){
 		for (var t = 0; t < tam; t++) {
 				b+=parseFloat(n[c][t]);
 		}
-		if (parseInt(b)<10){
+		if (parseInt(b)<=10){
 			$('#1-'+c).addClass('colorD');
 			$('#'+c+'p').addClass('colorD');
 		}else{
