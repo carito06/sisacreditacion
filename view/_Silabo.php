@@ -55,7 +55,7 @@
         <?php $conta=1?>
         <tbody class="pn4" ></tbody>
         <?php foreach ($rows as $key => $value) { ?> 
-        
+        <input type="hidden" class="codcurso"  value="<?php echo $value[4]?>" />
         <tr class="evaluacion<?php echo $conta;?> oa" id="<?php echo $conta+100?>"> 
            <td><?php echo $conta?></td>    
            <td align="left">
