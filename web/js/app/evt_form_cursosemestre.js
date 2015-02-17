@@ -372,7 +372,7 @@ function filtro (id,jar){
     //alert(tamA);
     campoInput =0;
     
-    alert(idAlumno);
+    //alert(idAlumno);
     
     $(jar).attr("disabled","");
     $.post('index.php', 'controller=cursosemestre&action=getEstadoBoton&idevaluacion='+idTipEvaluacion, function(data) {
