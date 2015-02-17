@@ -167,6 +167,10 @@ class cursosemestreController extends Controller {
          $obj = new calificacion();
          $p = $obj-> update($_POST);  
        }
+        public function getEstadoBoton(){
+        $obj = new evaluacion();
+        $p = $obj-> updateBoton($_POST);
+       }
        public function getTema()
        {
         $unidad=$_POST["Codigo"];

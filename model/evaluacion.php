@@ -42,10 +42,6 @@ class evaluacion extends Main{
         $stmt->bindValue(':p4', $_P['descripcionevaluacion'] , PDO::PARAM_STR);
         $stmt->bindValue(':p5', $_P['fecha'] , PDO::PARAM_STR);
         $stmt->bindValue(':p6', $_P['ponderado'] , PDO::PARAM_STR);
-       
-        
-      
-        
         $p1 = $stmt->execute();
         $p2 = $stmt->errorInfo();
         return array($p1 , $p2[2]);
@@ -89,6 +85,13 @@ class evaluacion extends Main{
         $stmt->bindValue(':p2', $edit, PDO::PARAM_STR);
         $p1 = $stmt->execute();
     }
+    function updateBoton($_P) {
+        $eva=(int)$_P["idevaluacion"];
+        $stmt = $this->db->prepare("UPDATE evaluacion SET estadoBoton = 1
+                                    WHERE idevaluacion = :p1");
+        $stmt->bindValue(':p1', $eva, PDO::PARAM_INT);
+        $p1 = $stmt->execute();
+    }    
 }
 ?>
 

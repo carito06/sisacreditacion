@@ -375,11 +375,14 @@ function filtro (id,jar){
     alert(idAlumno);
     
     $(jar).attr("disabled","");
+    $.post('index.php', 'controller=cursosemestre&action=getEstadoBoton&idevaluacion='+idTipEvaluacion, function(data) {
+    });
 
     $.post('index.php', 'controller=cursosemestre&action=enviarNota&tamano='+tamA+'&'+idAlumno+'&CodTipEvaluacion='+idTipEvaluacion+'&campo='+campoInput, function(data) {
     });
 
-       curso= $('#tablaevaluaciones .pn4 .codcurso').val();
+    curso= $('#tablaevaluaciones .codcurso').val();
+    //alert(curso);
     VerRegistro(curso);
     $('.nota').numerico();
 }

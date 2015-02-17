@@ -64,7 +64,7 @@
 
             <?php foreach ($rows3 as $key => $value2) {
 
-                if ($value[9]==$value2[1]) {
+                if ($value[9]==$value2[1]) { 
                           ?> 
               
             <p align="center"> (<?php echo utf8_encode($value2[0]);?>) </p>
@@ -93,19 +93,40 @@
            <td id="act"> 
              <?php date_default_timezone_set();
              $fechaA= date("d-m-Y");
+             //echo $fechaA;
+             $diaA= date("d");
+             $mesA= date("m");
+             $anioA= date("Y");
+             //echo $diaA;
+
             ?>
             <?php foreach ($rows3 as $key => $value2) {
 
-                if ($value[9]==$value2[1]) {
+                if ($value[9]==$value2[1]) {$estadoBtn  = $value2[5];
                           ?>     
-                          <p align="center"><?php $fechaE= date("d-m-Y",strtotime($value2[3]));?></p>
-              <?php if ($fechaE > $fechaA){?>
-              <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value2[4]?>',this)" value="Insertar">Insertar</button>
+              <p align="center"><?php $fechaE= date("d-m-Y",strtotime($value2[3]));  $diaE= (date("d",strtotime($value2[3]))+7);  $mesE=date("m",strtotime($value2[3])); $anioE=date("Y",strtotime($value2[3]))?></p>
+
+
+              <?php                    
+              if ($estadoBtn == 1) {
+                             ?>
+                  <button class="btn btn-primary btn-xs" type="button"  value="Activo" style="background-color: orange;">Activo</button>
+              <?php                    
+              }else{
+              if (($fechaE == $fechaA) || (((int)$diaA <= (int)$diaE)&&((int)$mesA == (int)$mesE)&&((int)$anioA == (int)$anioE))){?>
+                   <button class="btn btn-primary btn-xs" type="button" onclick="filtro('<?php echo $value2[4]?>',this)" value="Insertar">Insertar</button>
               <?php }else {?>
-              <button class="btn btn-primary btn-xs" type="button"  value="Inactivo" style="background-color: red;">Inactivo</button>
-                  <?php }?>
-              <input type="hidden" class="codcurso"  value="<?php echo $value[4]?>" />
-              <input type="hidden" class="codsemestre"   value="<?php echo $value[5]?>" />                          
+                      <button class="btn btn-primary btn-xs" type="button"  value="Inactivo" style="background-color: red;">Inactivo</button>
+              <?php }
+              }
+              ?>
+
+
+
+
+
+                  <input type="hidden" class="codcurso"  value="<?php echo $value[4]?>" />
+                  <input type="hidden" class="codsemestre"   value="<?php echo $value[5]?>" />                          
             <?php }} ?>            
 
             </td>
@@ -130,7 +151,7 @@ $(document).ready(function(){
 
   tdiv= $('.oa').length;
   for (var i = 101; i <= tdiv+100; i++) {
-    if ($('#'+i+' button').html()=="Insertar"){
+    if (($('#'+i+' button').html()=="Insertar") || ($('#'+i+' button').html()=="Activo")){
       $('#'+i).appendTo('.pn4');
     }else{
       $('#'+i).appendTo('.pn3');
