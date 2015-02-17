@@ -846,10 +846,7 @@ public function ListaPdf_ps($idevento) {
 
         $obj->opcion = $p['opcion'];
         $data = array();
-        $data['rows2'] = $obj->getSyllabus_P2();
-
-        $data['rows'] = $obj->getNota();
-
+        $data['rows'] = $obj->getSyllabus_P5();
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
