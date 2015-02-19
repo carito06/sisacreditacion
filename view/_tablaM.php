@@ -7,11 +7,13 @@
  <div class='container-fluid' style="overflow-y: auto; height:270px; width: 650px">
 
  
-        <table class="table table-hover table-bordered" >
+        <table class="table table-hover table-bordered ola" >
             <thead>
                 <tr>
                 <?php foreach ($rows as $key => $value) {?>
-                <th> <?php echo $value[0]; ?> </th>
+                <th> <?php echo $value[0]; ?> 
+                    
+                </th>
                 
                 <?php } ?>
                 <th>NOTA FINAL</th>
@@ -20,11 +22,15 @@
             </thead>
             <tbody>
                 <tr>
-                <?php foreach ($rows as $key => $value2) {?>
-                <td> <?php echo $value2[1]; ?> </td>
+                <?php $i=1; foreach ($rows as $key => $value2) {?>
+                <td> <?php echo (int)$value2[1]; ?> 
+                    <input id="A<?php echo $i; $i++; ?>" type="hidden" name="" value="<?php echo ($value2[1]*$value2[2]*$value2[3])/10000; ?> ">
+                </td>
                 
                 <?php } ?>
-                <td>falta</td>
+                <td id="total" >
+                    
+                </td>
                 </tr>
                 
             </tbody>
@@ -33,3 +39,12 @@
       </div>
       </div>             
 </div>
+
+<script>
+    nroColumnas= $(".ola tbody tr td").length-1;
+    a=0;
+    for (var i = 1; i <= nroColumnas; i++) {
+        a+= parseInt($('#A'+i).val());
+    }
+    $('#total').text(a);
+</script>

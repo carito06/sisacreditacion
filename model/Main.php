@@ -595,7 +595,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
     function getSyllabus_P5() {
 
         $query = "SELECT 
-                        te.descripcion,Cal.nota
+                        te.descripcion,Cal.nota,porcentaje,ponderado
                         from evaluacion as E INNER JOIN
                                                 calificacion as Cal ON  E.idevaluacion = Cal.idevaluacion 
                                                 inner join tipo_evaluacion as te on E.idtipo_evaluacion = te.idtipo_evaluacion
