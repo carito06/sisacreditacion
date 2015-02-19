@@ -1065,6 +1065,7 @@ public function ListaPdf_ps($idevento) {
         $data['rows2'] = $obj->getDatos_grilla_objetivos();
         $data['rows3'] = $obj->getDatos_grilla_docentes();
         $data['rows4'] = $obj->getDatos_grilla_alumnos();
+        $data['rows5'] = $obj->getDatos_grilla_alumnos2();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];

@@ -139,18 +139,32 @@
                       
                         </td>
                     <?php } ?>
-                    
+
+                     
                     <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
                         <td>
-                            <?php if(strtoupper(utf8_encode($value[16]))==1){; ?>
+                            <?php if(strtoupper(utf8_encode($value[16]))==1){ $proy=$value['idproyecto']; ?>
                             <div id="abrir2" style="margin-left: 20px;">
-                                <li style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus">
-                                    <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-check"
-                                          onclick="Unirse('<?= strtoupper(utf8_encode($value['idproyecto'])) ?>')">
-                                    </span>
+                            <?php if($rows5){ foreach ($rows5 as $key => $value5) {
+                                $proyb = $value5[0];
+                                //echo $proyb;
+                                ?>
+                                        
+                            <?php }}else{$proyb=000;}?>
+                            <?php if  ($proy != $proyb){?>
+                                    <li style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus">
+                                            <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-check"
+                                                                                 
+                                                  onclick="Unirse('<?= strtoupper(utf8_encode($value['idproyecto'])) ?>')">
+                                            </span>
 
                                 </li>
-                            </div> 
+                             <?php } ?>
+                                 
+                                        
+                                    
+                        
+                        </div>   
                             <?php }else {?>
                             <div style="margin-left: 20px;">
                                 <a><li id="<?= strtoupper(utf8_encode($value['idproyecto']))?>" style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus" >

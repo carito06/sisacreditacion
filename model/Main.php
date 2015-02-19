@@ -1192,7 +1192,7 @@ function getDatos_grilla_solicitudes_eu() {
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo               
                         
-                        where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=1
+                        where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=1 and facultades.CodigoFacultad= 7
                         GROUP BY proyecto.idproyecto
                             ";
 
@@ -1477,6 +1477,26 @@ function getDatos_grilla_solicitudes_eu() {
 
         $sth->execute();
 
+        return $sth->fetchAll();
+    }
+        function getDatos_grilla_alumnos2() {
+
+        $query = "SELECT
+                   proyecto.idproyecto,
+                   proyecto.nombre_proyecto,
+                   
+                   detalleproyecto_matrixalumno.estado,
+                   CONCAT(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno,' ',alumnos.NombreAlumno) as alumno,
+                   
+                   detalleproyecto_matrixalumno.CodigoAlumno
+                    FROM
+                    proyecto
+                    INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
+                    INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
+                    where alumnos.CodigoAlumno = ". $_SESSION['idusuario']."";
+
+        $sth = $this->db->prepare($query);
+        $sth->execute();
         return $sth->fetchAll();
     }
 
