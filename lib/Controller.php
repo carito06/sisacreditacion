@@ -1107,7 +1107,7 @@ public function ListaPdf_ps($idevento) {
         $data = array();
 
         $data['rows'] = $obj->getDatos_grilla_miproyecto();
-
+        $data['rows1'] = $obj->getNotasPro();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];

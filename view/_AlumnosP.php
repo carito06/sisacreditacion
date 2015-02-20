@@ -1,3 +1,6 @@
+<script type="text/javascript" src="lib/alertify.js"></script>
+<link rel="stylesheet" href="themes/alertify.core.css"  type="text/css"/>
+<link rel="stylesheet" href= "themes/alertify.default.css"  type="text/css"/>
 <style>
     .tnota{
         padding: 0px;
@@ -19,6 +22,8 @@
                             <th>ALUMNOS EN EL PROYECTO</th>
                             <?php  if($_SESSION['perfil'] == 'PROFESOR'){?>
                             <th>CALIFICAR</th>
+                            <?php  }else{?>
+                                <th>NOTAS</th>
                             <?php  }?>
 
                         </tr>
@@ -35,36 +40,53 @@
                                 <td class="tnota">
                                     
                                     <?php if($rows1){
-                                             foreach ($rows1 as $key => $value1) { 
-                                              if ($CodA == $value1[3] ){                         
+                                          foreach ($rows1 as $key => $value1) { 
+                                          if ($CodA == $value1[3] ){                         
                                          ?>
-                                            <input class="form-control notaA" type="text" id="<?php echo $value[0]; ?>" name="<?php echo $value[4]; ?>" value="<?php echo $value1[1]; ?>" placeholder="">    
+                                            <input class="form-control notaA" type="text" id="<?php echo $value[0]; ?>" name="<?php echo $value[4]; ?>" value="<?php echo (int)$value1[1]; ?>" placeholder="">    
     
                                     <?php } ?> 
                                             
 
 
                                     <?php }}else{ ?> 
-                                        <input class="form-control nota" type="text" id="<?php echo $value[0]; ?>" name="<?php echo $value[4]; ?>" value="0" placeholder="">
+                                        <input class="form-control nota" type="hidden" id="<?php echo $value[0]; ?>" name="<?php echo $value[4]; ?>" value="0" placeholder="">
+                                        <input class="form-control notaE" name='idalumno[]' type="hidden"  value="<?php echo $value[4]; ?>" placeholder="">
                                     <?php } ?>                                    
                                 </td>
-                                <?php  }?>
+                                <?php  }else{?>
+                                     <?php if($rows1){
+                                          foreach ($rows1 as $key => $value1) { 
+                                          if ($CodA == $value1[3] ){                         
+                                         ?>
+                                         <td> <?php echo (int)$value1[1]; ?> </td>
+    
+                                    <?php } } } ?> 
+        
+
+                                <?php } ?>    
                             </tr>  
-<?php } ?>
+                            <?php } ?>
                     </tbody>
                 </table>
 
 
 <script>
-    $(".nota").blur(function(){
-        nota= $(this).val();
-        idAlum= $(this).attr('name');
-        idPro= $(this).attr('id');
-        console.log(nota+idAlum+idPro);
-        $.post('index.php', 'controller=notasproyecto&action=guardar&IdAlumno=' +idAlum+'&idproyecto='+idPro+'&nota='+nota, function(data) {
+    if ($(".nota").val()== 0 ){
+        idAlum =$("input[name='idalumno[]']").serialize();
+        tam = idAlum.length;
+        idPro =$(".nota").attr('id');
+
+        //idAlum= $(this).attr('name');
+        //idPro= $(this).attr('id');
+        console.log(idAlum+"&idproyecto="+idPro+"&tam="+tam);
+        $.post('index.php', 'controller=notasproyecto&action=guardar&'+idAlum+"&idproyecto="+idPro+"&tam="+tam, function(data) {
             console.log(data);
         });
-    });
+        location.reload();
+    }
+
+        
     $(".notaA").blur(function(){
         nota= $(this).val();
         idAlum= $(this).attr('name');
@@ -73,6 +95,7 @@
         $.post('index.php', 'controller=notasproyecto&action=actualizar&IdAlumno=' +idAlum+'&idproyecto='+idPro+'&nota='+nota, function(data) {
             console.log(data);
         });
+        alertify.success("nota guardada");
     });
     
 </script>

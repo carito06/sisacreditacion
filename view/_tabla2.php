@@ -70,6 +70,9 @@
                 <th>JEFE DEL PROYECTO</th>
                 <th>ESCUELA</th>
                 <th>ESTADO</th>
+                <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION')) { ?>
+                <th>NOTAS</th>
+                <?php } ?>
                 <th >VER MAS</th>
                 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION'||$_SESSION["idperil"] == 3)) { ?>
                     <th >MODIFICAR ESTADO</th>
@@ -80,7 +83,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($rows as $key => $value) { ?>
+            <?php foreach ($rows as $key => $value) {  ?>
 
                 <tr>  
 
@@ -108,7 +111,24 @@
                     <td>
                         <?php echo strtoupper(utf8_encode($value[5])); ?>
                     </td>
-
+                    <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION')) { ?>        
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#InNota" class="btn btn-default btn-sm notasProy" id="<?php echo $value['idproyecto'] ?>" >NOTAS</button>
+                            <div class="modal fade " id="InNota" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">NOTAS</h4>
+                                  </div>
+                                  <div class="modal-body alumnos">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                        
+                    </td>   
+                    <?php } ?>
                     <td>
 
                         <div id="abrir" style="margin-left: 20px;">
@@ -180,7 +200,16 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(".notasProy").click(function(event) {
+        idproyecto= $(this).attr("id");
+         $.post('index.php', 'controller=misproyectos&action=getListaAlumnoP&idproyecto='+idproyecto,function (data){
+            console.log(data);
+            $(".alumnos").empty().html(data);
+        });
+    });
 
+</script>
 <!--
 <div id="detalleproyecto" style="display:none;">
     <div class="col-md-1"></div>

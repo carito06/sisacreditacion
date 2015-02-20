@@ -122,9 +122,9 @@
                 <th>PERIODO DE EJECUCION</th>
                 <th>JEFE DEL PROYECTO</th>
                 <th>FECHA</th>
-                <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
+               <!-- <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
                 <th >VER MIS NOTAS</th>
-                <?php } ?>
+                <?php } ?> -->
                 <th>NOTAS</th>
                 <th >VER MAS</th>
                
@@ -159,7 +159,7 @@
                     </td>
 
                     
-                    <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
+                   <!-- <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
                     <td>
                         
                         <div id="abrir3" style="margin-left: 20px;">
@@ -170,8 +170,14 @@
                         </div> 
 
                     </td>
-                    <?php } ?>
+                    <?php } ?> -->
                     <td>
+                    <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { 
+                            foreach ($rows1 as $key => $value1) { 
+                            if ($_SESSION['idusuario'] == $value1[3]){ ?>
+                                <?php echo (int)$value1[1] ?>
+                            <?php } ?>
+                     <?php } }else{ ?>
                         <button type="button" data-toggle="modal" data-target="#InNota" class="btn btn-default btn-sm notasProy" id="<?php echo $value[0]; ?>" >NOTAS</button>
                         <div class="modal fade " id="InNota" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
@@ -186,7 +192,7 @@
                             </div>
                           </div>
                         </div>
-
+                    <?php } ?>
                     </td>
                     <td>
 

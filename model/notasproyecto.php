@@ -53,22 +53,23 @@ class notasproyecto extends Main{
     function insert($_P ) {echo "<script>alert('Las notas del alumno se enviaron exitosamente');window.close();</script>";
         
         echo "<pre>"; print_r($_P);
+        $t= $_P['tam'];
+        for ($i=0; $i < $t ; $i++) { 
         $sql2 = $this->Query("sp_det_concep_detproy_iu(0,:p1,:p2,:p3,:p4,:p5)");     
         $stmt2 = $this->db->prepare($sql2);
 
             $stmt2->bindValue(':p1', 3 , PDO::PARAM_INT);
-            $stmt2->bindValue(':p2', $_P["nota"], PDO::PARAM_STR);
+            $stmt2->bindValue(':p2', 0, PDO::PARAM_STR);
             $stmt2->bindValue(':p3', $_P['idproyecto'] , PDO::PARAM_STR);       
-            $stmt2->bindValue(':p4', $_P['IdAlumno'] , PDO::PARAM_STR); 
+            $stmt2->bindValue(':p4', $_P['idalumno'][$i] , PDO::PARAM_STR); 
             $stmt2->bindValue(':p5', "20150", PDO::PARAM_STR); 
             $stmt2->execute();          
-            $this->db->commit();            
-            $p1 = true;
-            $p2[2] = "";     
-        return array($p1 , $p2[2]);
-        
+        }
         
     }        
+
+
+
     function actualiza($_P ) {#echo "<script>alert('Las notas del alumno se enviaron exitosamente');window.close();</script>";
         
         echo "<pre>"; print_r($_P);

@@ -20,22 +20,22 @@
                     <thead >
                         <tr>
                            
-                                
+                            <th>#</th>
                             <th>ALUMNOS EN EL PROYECTO</th>
-                            <?php  if($_SESSION['perfil'] == 'PROFESOR'){?>
+                           <!-- <?php  if($_SESSION['perfil'] == 'PROFESOR'){?>
                             <th>CALIFICAR</th>
-                            <?php  }?>
+                            <?php  }?> -->
 
                         </tr>
                     </thead>
                     <tbody>
-                                <?php foreach ($rows as $key => $value) { ?>
+                                <?php $i=1; foreach ($rows as $key => $value) { ?>
                             <tr>    
-                                
+                                <td><?php echo $i; $i++; ?></td>
                                 <td> 
                                     <?php echo strtoupper(utf8_encode($value[3])); ?>
                                 </td>
-                                <?php  if($_SESSION['perfil'] == 'PROFESOR'){?>
+                               <!-- <?php  if($_SESSION['perfil'] == 'PROFESOR'){?>
                                 <td>
                                     <style>
                                        #alumslecc{ border-color: white; padding: 4px; background-color: #DA2949 ;} 
@@ -46,7 +46,7 @@
                                     
                                     
                                 </td>
-                                <?php  }?>
+                                <?php  }?> -->
                             </tr>  
 <?php } ?>
                     </tbody>
