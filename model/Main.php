@@ -1323,6 +1323,7 @@ function getDatos_grilla_solicitudes_eu() {
     }
 
     function getDatos_grilla_objetivos() {
+
         $query = "SELECT
                     proyecto.idproyecto,
                     proyecto.nombre_proyecto,
@@ -1456,7 +1457,6 @@ function getDatos_grilla_solicitudes_eu() {
     }
 
     function getDatos_grilla_alumnos() {
-
         $query = "SELECT
                    proyecto.idproyecto,
                    proyecto.nombre_proyecto,
@@ -1464,7 +1464,8 @@ function getDatos_grilla_solicitudes_eu() {
                    detalleproyecto_matrixalumno.estado,
                    CONCAT(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno,' ',alumnos.NombreAlumno) as alumno,
                    
-                   detalleproyecto_matrixalumno.CodigoAlumno
+                   detalleproyecto_matrixalumno.CodigoAlumno,
+                   alumnos.CodAlumnoSira
                     FROM
                     proyecto
                     INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
@@ -1479,6 +1480,7 @@ function getDatos_grilla_solicitudes_eu() {
 
         return $sth->fetchAll();
     }
+
         function getDatos_grilla_alumnos2() {
 
         $query = "SELECT
@@ -1677,6 +1679,17 @@ function getDatos_grilla_solicitudes_eu() {
     function getList_ajax_string_dis() {
         $sth = $this->db->prepare("SELECT distinct UBIGEO,DISTRITO FROM {$this->table} where {$this->filtro} = :criterio");
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+    function getNotasPro(){
+        $query = "SELECT
+                          *
+                            from 
+                            detalle_concepto_detproyecto
+                            WHERE CodigoSemestre=20150";
+
+        $sth = $this->db->prepare($query);
         $sth->execute();
         return $sth->fetchAll();
     }

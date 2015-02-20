@@ -74,6 +74,16 @@ class notasproyectoController extends Controller {
             }
         
     }
+    public function guardar(){
+        $obj = new notasproyecto();
+        $obj->insert($_POST);
+        
+    }
+    public function actualizar(){
+        $obj = new notasproyecto();
+        $obj->actualiza($_POST);
+        
+    }
     public function delete(){
         $obj = new notasproyecto();
         $p = $obj->delete($_GET['id']);

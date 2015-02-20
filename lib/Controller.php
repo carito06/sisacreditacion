@@ -1291,7 +1291,18 @@ public function ListaPdf_ps($idevento) {
         $view->setTemplate('../view/_Alumno.php');
         return $view->renderPartial();
     }
-
+    public function ListaAlumno_Pro($p) {
+        $obj = new Main();
+        $obj->criterio = $p['criterio'];
+        $data = array();
+        $data['rows'] = $obj->getDatos_grilla_alumnos();
+        $data['rows1'] = $obj->getNotasPro();
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_AlumnosP.php');
+        return $view->renderPartial();
+    }
     public function ListaAlumno1_P($p) {
         $obj = new Main();
         $obj->criterio = $p['criterio'];

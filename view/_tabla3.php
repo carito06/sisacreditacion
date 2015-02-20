@@ -125,6 +125,7 @@
                 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
                 <th >VER MIS NOTAS</th>
                 <?php } ?>
+                <th>NOTAS</th>
                 <th >VER MAS</th>
                
                 <th >ACTIVIDADES</th>
@@ -170,6 +171,23 @@
 
                     </td>
                     <?php } ?>
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#InNota" class="btn btn-default btn-sm notasProy" id="<?php echo $value[0]; ?>" >NOTAS</button>
+                        <div class="modal fade " id="InNota" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">NOTAS</h4>
+                              </div>
+                              <div class="modal-body alumnos">
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
                     <td>
 
                         <div id="abrir" style="margin-left: 20px;">
@@ -218,53 +236,53 @@
             <li><a href="#alumnos" data-toggle="tab">ALUMNOS</a></li>
         </ul> 
         <div class="tab-content col-md-12" style="height: 300px;background-color: #F7F7F7; margin-bottom: 15px;font-family: Calibri;text-align: left;padding-left: 0; padding-right: 0; border-bottom:1px solid #ddd ; border-left: 1px solid #ddd;border-right:1px solid #ddd; border-radius: 4px;">
-            <!---detalles generales--->
+            <!---detalles generales-->
             <div class="tab-pane active" style="overflow-y: scroll; height: 300px;" id="generales">
 
             </div>
-            <!---detalles generales--->
+            <!---detalles generales-->
 
-            <!---detalles ubigeo empieza----->
+            <!---detalles ubigeo empieza-->
             <div class="tab-pane" id="planteamiento">
 
             </div>
-            <!---detalles ubigeo termina----->
+            <!---detalles ubigeo termina-->
 
 
-            <!---detalles objetivo empieza----->
+            <!---detalles objetivo empieza-->
             <div class="tab-pane" id="objetivos">
 
             </div>
-            <!---detalles objetivo termina----->
-            <!---detalles MARCO empieza----->
+            <!---detalles objetivo termina-->
+            <!---detalles MARCO empieza-->
             <div class="tab-pane" id="marco">
 
             </div>
-            <!---detalles MARCO termina----->
+            <!---detalles MARCO termina-->
 
-            <!---detalles metodologia empieza----->
+            <!---detalles metodologia empieza-->
             <div class="tab-pane" id="metodologia">
 
             </div>
-            <!---detalles metodologia termina----->
+            <!---detalles metodologia termina-->
 
-            <!---detalles aspectos empieza----->
+            <!---detalles aspectos empieza-->
             <div class="tab-pane" id="aspectos">
 
             </div>
-            <!---detalles aspectos termina----->
+            <!---detalles aspectos termina-->
 
-            <!---detalles profesor empieza----->
+            <!---detalles profesor empieza-->
             <div class="tab-pane" id="docentes">
 
             </div>
-            <!---detalles profesor termina----->
+            <!---detalles profesor termina-->
 
-            <!---detalles alumnos empiesa----->
+            <!--detalles alumnos empiesa-->
             <div class="tab-pane" id="alumnos" >
 
             </div>  
-            <!---detalles alumnos fin----->
+            <!---detalles alumnos fin-->
 
         </div>
         
@@ -275,3 +293,14 @@
     </div>
     <div class="col-md-1"></div>
 </div>
+
+<script>
+    $(".notasProy").click(function(event) {
+        idproyecto= $(this).attr("id");
+         $.post('index.php', 'controller=misproyectos&action=getListaAlumnoP&idproyecto='+idproyecto,function (data){
+            console.log(data);
+            $(".alumnos").empty().html(data);
+        });
+    });
+
+</script>
