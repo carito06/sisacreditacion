@@ -178,7 +178,7 @@
                                 <?php echo (int)$value1[1] ?>
                             <?php } ?>
                      <?php } }else{ ?>
-                        <button type="button" data-toggle="modal" data-target="#InNota" class="btn btn-default btn-sm notasProy" id="<?php echo $value[0]; ?>" >NOTAS</button>
+                        <button type="button"class="btn btn-default btn-sm notasProy"data-toggle="modal" data-target="#InNota" id="<?php echo $value[0]; ?>" >NOTAS</button>
                         <div class="modal fade " id="InNota" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">

@@ -73,19 +73,43 @@
 
 <script>
     if ($(".nota").val()== 0 ){
-        idAlum =$("input[name='idalumno[]']").serialize();
-        tam = idAlum.length;
-        idPro =$(".nota").attr('id');
+        alertify.confirm("notas no insertadas, ¿desea insertar?", function (e) {
+            if (e) {
 
-        //idAlum= $(this).attr('name');
-        //idPro= $(this).attr('id');
-        console.log(idAlum+"&idproyecto="+idPro+"&tam="+tam);
-        $.post('index.php', 'controller=notasproyecto&action=guardar&'+idAlum+"&idproyecto="+idPro+"&tam="+tam, function(data) {
-            console.log(data);
+                idAlum =$("input[name='idalumno[]']").serialize();
+                tam = idAlum.length;
+                idPro =$(".nota").attr('id');
+
+                //idAlum= $(this).attr('name');
+                //idPro= $(this).attr('id');
+                console.log(idAlum+"&idproyecto="+idPro+"&tam="+tam);
+                $.post('index.php', 'controller=notasproyecto&action=guardar&'+idAlum+"&idproyecto="+idPro+"&tam="+tam, function(data) {
+                    console.log(data);
+                });
+                alertify.success("notas insertadas");
+                alertify.log("click en notas");                
+                location.reload();
+                $('#InNota').modal({show: true});
+
+            } else {
+                alertify.error("notas no insertadas");
+                $('#InNota').modal('hide');
+
+            }
         });
-        location.reload();
+        
     }
-
+$('.notaA').live('keyup' ,function(){
+  rangoNumeros($(this).val(),$(this));
+});
+function rangoNumeros(nro,input){
+        if(nro>=0 & nro<=20){
+         // alertify.log("esta en el rango")
+        }else{
+          input.val("");
+          alertify.log("por favor ingrese un numero mayor igual a '0' o menor igual a '20'");
+        }
+}
         
     $(".notaA").blur(function(){
         nota= $(this).val();
