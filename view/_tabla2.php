@@ -70,6 +70,9 @@
                 <th>JEFE DEL PROYECTO</th>
                 <th>ESCUELA</th>
                 <th>ESTADO</th>
+                <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION')) { ?>
+                <th>NOTAS</th>
+                <?php } ?>
                 <th >VER MAS</th>
                 <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION'||$_SESSION["idperil"] == 3)) { ?>
                     <th >MODIFICAR ESTADO</th>
@@ -80,7 +83,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($rows as $key => $value) { ?>
+            <?php foreach ($rows as $key => $value) {  ?>
 
                 <tr>  
 
@@ -108,7 +111,24 @@
                     <td>
                         <?php echo strtoupper(utf8_encode($value[5])); ?>
                     </td>
-
+                    <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PRESIDENTE DE PROYECTO DE INVESTIGACION')) { ?>        
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#InNota" class="btn btn-default btn-sm notasProy" id="<?php echo $value['idproyecto'] ?>" >NOTAS</button>
+                            <div class="modal fade " id="InNota" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">NOTAS</h4>
+                                  </div>
+                                  <div class="modal-body alumnos">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>                        
+                    </td>   
+                    <?php } ?>
                     <td>
 
                         <div id="abrir" style="margin-left: 20px;">
@@ -139,18 +159,32 @@
                       
                         </td>
                     <?php } ?>
-                    
+
+                     
                     <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { ?>
                         <td>
-                            <?php if(strtoupper(utf8_encode($value[16]))==1){; ?>
+                            <?php if(strtoupper(utf8_encode($value[16]))==1){ $proy=$value['idproyecto']; ?>
                             <div id="abrir2" style="margin-left: 20px;">
-                                <li style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus">
-                                    <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-check"
-                                          onclick="Unirse('<?= strtoupper(utf8_encode($value['idproyecto'])) ?>')">
-                                    </span>
+                            <?php if($rows5){ foreach ($rows5 as $key => $value5) {
+                                $proyb = $value5[0];
+                                //echo $proyb;
+                                ?>
+                                        
+                            <?php }}else{$proyb=000;}?>
+                            <?php if  ($proy != $proyb){?>
+                                    <li style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus">
+                                            <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-check"
+                                                                                 
+                                                  onclick="Unirse('<?= strtoupper(utf8_encode($value['idproyecto'])) ?>')">
+                                            </span>
 
                                 </li>
-                            </div> 
+                             <?php } ?>
+                                 
+                                        
+                                    
+                        
+                        </div>   
                             <?php }else {?>
                             <div style="margin-left: 20px;">
                                 <a><li id="<?= strtoupper(utf8_encode($value['idproyecto']))?>" style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus" >
@@ -166,7 +200,16 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(".notasProy").click(function(event) {
+        idproyecto= $(this).attr("id");
+         $.post('index.php', 'controller=misproyectos&action=getListaAlumnoP&idproyecto='+idproyecto,function (data){
+            console.log(data);
+            $(".alumnos").empty().html(data);
+        });
+    });
 
+</script>
 <!--
 <div id="detalleproyecto" style="display:none;">
     <div class="col-md-1"></div>

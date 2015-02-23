@@ -50,7 +50,7 @@ WHERE proyecto.idproyecto=:id");
         $stmt2 = $this->db->prepare($sql2);
         $fecha=date("Y-m-d");
         $estado=0;            
-        $semestre="20132";    
+        $semestre="20150";    
               
               $stmt2->bindValue(':p1', $_P["idproyecto"] , PDO::PARAM_STR);
               $stmt2->bindValue(':p2', $fecha, PDO::PARAM_STR);

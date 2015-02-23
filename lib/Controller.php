@@ -846,10 +846,7 @@ public function ListaPdf_ps($idevento) {
 
         $obj->opcion = $p['opcion'];
         $data = array();
-        $data['rows2'] = $obj->getSyllabus_P2();
-
-        $data['rows'] = $obj->getNota();
-
+        $data['rows'] = $obj->getSyllabus_P5();
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
@@ -1068,6 +1065,7 @@ public function ListaPdf_ps($idevento) {
         $data['rows2'] = $obj->getDatos_grilla_objetivos();
         $data['rows3'] = $obj->getDatos_grilla_docentes();
         $data['rows4'] = $obj->getDatos_grilla_alumnos();
+        $data['rows5'] = $obj->getDatos_grilla_alumnos2();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];
@@ -1109,7 +1107,7 @@ public function ListaPdf_ps($idevento) {
         $data = array();
 
         $data['rows'] = $obj->getDatos_grilla_miproyecto();
-
+        $data['rows1'] = $obj->getNotasPro();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];
@@ -1293,7 +1291,18 @@ public function ListaPdf_ps($idevento) {
         $view->setTemplate('../view/_Alumno.php');
         return $view->renderPartial();
     }
-
+    public function ListaAlumno_Pro($p) {
+        $obj = new Main();
+        $obj->criterio = $p['criterio'];
+        $data = array();
+        $data['rows'] = $obj->getDatos_grilla_alumnos();
+        $data['rows1'] = $obj->getNotasPro();
+        $data['disabled'] = $p['disabled'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_AlumnosP.php');
+        return $view->renderPartial();
+    }
     public function ListaAlumno1_P($p) {
         $obj = new Main();
         $obj->criterio = $p['criterio'];

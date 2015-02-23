@@ -113,7 +113,7 @@ $("#regresar").live("click",function(){
 
 function VerSyllabus(idalumno,idcurso){
     
-    var idsemestre=$(".semestre").attr("value");
+    var idsemestre=$("#semestreacademico").val();
     
 $(".silaboo").css("display","none");
     $("#notas").css("display","");

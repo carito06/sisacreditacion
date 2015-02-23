@@ -138,7 +138,11 @@ class misproyectosController extends Controller {
         $envio = $this->ListaAlumno_P(array('criterio' => $codproyecto));
         echo $envio;
     }
-
+    public function getListaAlumnoP() {
+        $codproyecto = $_POST['idproyecto'];
+        $envio = $this->ListaAlumno_Pro(array('criterio' => $codproyecto));
+        echo $envio;
+    }
     public function getListaDocente() {
         $codproyecto = $_POST['idproyecto'];
         $envio = $this->ListaDocente_P(array('criterio' => $codproyecto));

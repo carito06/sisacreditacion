@@ -183,7 +183,7 @@ public function editar_estado() {
             $view->render();
             }
         
-	}
+  }
        
     public function calcular_fecha() {
         $fecha_inicio = $_REQUEST['fecha_inicio'];

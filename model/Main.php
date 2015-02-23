@@ -592,6 +592,31 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
 //        exit();
         return $sth->fetchAll();
     }
+    function getSyllabus_P5() {
+
+        $query = "SELECT 
+                        te.descripcion,Cal.nota,porcentaje,ponderado
+                        from evaluacion as E INNER JOIN
+                                                calificacion as Cal ON  E.idevaluacion = Cal.idevaluacion 
+                                                inner join tipo_evaluacion as te on E.idtipo_evaluacion = te.idtipo_evaluacion
+                        inner join unidad as U on U.idunidad = E.idunidad
+                        inner join silabus as S on S.idsilabus = U.idsilabus
+                        inner join carga_academica as CA on CA.idcargaacademica = S.idcargaacademica
+                        inner join cursos as C on C.CodigoCurso = CA.CodigoCurso
+
+                         WHERE CA.{$this->filtro}= '{$this->criterio}' AND CA.{$this->filtro1}='{$this->criterio1}'AND Cal.{$this->filtro2}='{$this->criterio2}'
+                        ";
+
+
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
+        $sth->bindValue(':criterio2', $this->criterio2, PDO::PARAM_STR);
+        $sth->execute();
+//        var_dump($sth);
+//        exit();
+        return $sth->fetchAll();
+    }    
     function getSyllabus_P2() {
         $query = "SELECT 
                        
@@ -869,53 +894,7 @@ Inner Join evento ON evento.idevento = detalle_asistencia_alumno_tutoria.idevent
         return $sth->fetchAll();
     }
 
-    function getNota() {
-        $query = "select CodigoAlumno, ApellidoPaterno, 
-                            Max(eval1) Eval1, Max(eval2) Eval2, Max(eval3) Eval3, Max(eval4) Eval4, Max(eval5) Eval5, Max(eval6) Eval6, 
-                            Max(eval7) Eval7, Max(eval8) Eval8, Max(eval9) Eval9, Max(eval10) Eval10,
-                            sum(ponderado)/100 Final
-
-                            from (
-
-                            select  alumnos.CodigoAlumno, Alumnos.ApellidoPaterno, 
-
-                            case when evaluacion.idevaluacion mod 11 = 1 then nota end Eval1,
-
-                            case when evaluacion.idevaluacion mod 11 = 2 then nota end Eval2, 
-
-                            case when evaluacion.idevaluacion mod 11 = 3 then nota end Eval3, 
-
-                            case when evaluacion.idevaluacion mod 11 = 4 then nota end Eval4, 
-
-                            case when evaluacion.idevaluacion mod 11 = 5 then nota end Eval5, 
-
-                            case when evaluacion.idevaluacion mod 11 = 6 then nota end Eval6, 
-
-                            case when evaluacion.idevaluacion mod 11 = 7 then nota end Eval7, 
-
-                            case when evaluacion.idevaluacion mod 11 = 8 then nota end Eval8, 
-
-                            case when evaluacion.idevaluacion mod 11 = 9 then nota end Eval9, 
-
-                            case when evaluacion.idevaluacion mod 11 = 10 then nota end Eval10, 
-
-                            nota*evaluacion.ponderado as ponderado 
-                            from calificacion
-                            inner join evaluacion on calificacion.idevaluacion = evaluacion.idevaluacion
-                            inner join alumnos on calificacion.CodigoAlumno = alumnos.CodigoAlumno
-                            )
-                             Detalle
-                            where  {$this->filtro2}='{$this->criterio2}' 
-
-                            group by CodigoAlumno, ApellidoPaterno";
-
-        $sth = $this->db->prepare($query);
-        $sth->execute();
-//        var_dump($sth);
-//        exit();
-        return $sth->fetchAll();
-    }
-
+       
     function getBiblio() {
         $query = " SELECT distinct 
                     
@@ -1213,7 +1192,7 @@ function getDatos_grilla_solicitudes_eu() {
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo               
                         
-                        where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=1
+                        where detalle_profesor_proy_fun.idfuncion=2 and proyecto.situacion=1 and facultades.CodigoFacultad= 7
                         GROUP BY proyecto.idproyecto
                             ";
 
@@ -1344,6 +1323,7 @@ function getDatos_grilla_solicitudes_eu() {
     }
 
     function getDatos_grilla_objetivos() {
+
         $query = "SELECT
                     proyecto.idproyecto,
                     proyecto.nombre_proyecto,
@@ -1477,6 +1457,31 @@ function getDatos_grilla_solicitudes_eu() {
     }
 
     function getDatos_grilla_alumnos() {
+        $query = "SELECT
+                   proyecto.idproyecto,
+                   proyecto.nombre_proyecto,
+                   
+                   detalleproyecto_matrixalumno.estado,
+                   CONCAT(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno,' ',alumnos.NombreAlumno) as alumno,
+                   
+                   detalleproyecto_matrixalumno.CodigoAlumno,
+                   alumnos.CodAlumnoSira
+                    FROM
+                    proyecto
+                    INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
+                    INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
+                    where   detalleproyecto_matrixalumno.idproyecto='{$this->criterio}'AND detalleproyecto_matrixalumno.estado=1
+                    ";
+
+        $sth = $this->db->prepare($query);
+        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
+
+        $sth->execute();
+
+        return $sth->fetchAll();
+    }
+
+        function getDatos_grilla_alumnos2() {
 
         $query = "SELECT
                    proyecto.idproyecto,
@@ -1490,14 +1495,10 @@ function getDatos_grilla_solicitudes_eu() {
                     proyecto
                     INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
                     INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
-                    where   detalleproyecto_matrixalumno.idproyecto='{$this->criterio}'AND detalleproyecto_matrixalumno.estado=1
-                    ";
+                    where alumnos.CodigoAlumno = ". $_SESSION['idusuario']."";
 
         $sth = $this->db->prepare($query);
-        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_INT);
-
         $sth->execute();
-
         return $sth->fetchAll();
     }
 
@@ -1678,6 +1679,17 @@ function getDatos_grilla_solicitudes_eu() {
     function getList_ajax_string_dis() {
         $sth = $this->db->prepare("SELECT distinct UBIGEO,DISTRITO FROM {$this->table} where {$this->filtro} = :criterio");
         $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+    function getNotasPro(){
+        $query = "SELECT
+                          *
+                            from 
+                            detalle_concepto_detproyecto
+                            WHERE CodigoSemestre=20150";
+
+        $sth = $this->db->prepare($query);
         $sth->execute();
         return $sth->fetchAll();
     }

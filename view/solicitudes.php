@@ -20,97 +20,7 @@
         $("#tabs").tabs();
     });
 </script>
-<script>
-    function verMas(nombre, tema, periodo, jefe, escuela, estado, fecha, viabilidad, presupuesto, impactos,
-            sinergias, tipoproy, facultad, lineain, ejetem, grupo, distrito, provincia, departamento, id) {
-        $('#nombre').text(nombre);
-        $('#tema').text(tema);
-        $('#periodo').text(periodo);
-        $('#jefe').text(jefe);
-        $('#escuela').text(escuela);
-        $('#estado').text(estado);
-        $('#fecha').text(fecha);
-        $('#viabilidad').text(viabilidad);
-        $('#presupuesto').text(presupuesto);
-        $('#impactos').text(impactos);
-        $('#sinergias').text(sinergias);
-        $('#tipoproy').text(tipoproy);
-        $('#facultad').text(facultad);
-        $('#lineain').text(lineain);
-        $('#ejetem').text(ejetem);
-        $('#grupo').text(grupo);
-        $('#distrito').text(distrito);
-        $('#provincia').text(provincia);
-        $('#departamento').text(departamento);
-        $('#id').text(id);
 
-        $('#dialogo').dialog('open');
-    }
-    function Unirse(id2,idalumno) {
-        $('#id2').text(id2);
-        $('#idalumno').text(idalumno);
-        $('#dialogo2').dialog('open');
-    }
-    
-    function Unirse2(id3,idalumno3) {
-        $('#id3').text(id3);
-        $('#idalumno3').text(idalumno3);
-        $('#dialogo3').dialog('open');
-    }
-</script>
-
-<script>
-    $(document).ready(function() {
-        $("#dialogo").dialog({autoOpen: false});
-
-        $('#dialogo').dialog({
-            modal: true,
-            show: 'explode',
-            hide: 'explode'
-        });
-        $("#abrir").click(function(event) {
-            $("#dialogo").dialog('open');
-        });
-
-    });
-</script>
-
-<script>
-    $(document).ready(function() {
-        $("#dialogo2").dialog({autoOpen: false});
-
-        $('#dialogo2').dialog({
-            modal: true,
-            show: 'explode',
-            hide: 'explode'
-
-        });
-
-        $("#abrir2").click(function(event) {
-            $("#dialogo2").dialog('open');
-        });
-        $(".cerrar2").click(function(event) {
-            $("#dialogo2").dialog('close');
-        });
-        
-        $("#dialogo3").dialog({autoOpen: false});
-
-        $('#dialogo3').dialog({
-            modal: true,
-            show: 'explode',
-            hide: 'explode'
-
-        });
-
-        $("#abrir3").click(function(event) {
-            $("#dialogo3").dialog('open');
-        });
-        $(".cerrar3").click(function(event) {
-            $("#dialogo3").dialog('close');
-        });
-
-    });
-</script>     
 
 <style>
     #dialogo table{
@@ -152,8 +62,8 @@
             <button type="submit" class="btn btn-success cerrar2">Aceptar</button>
             <button type="button" class="btn btn-danger cerrar2">Cancelar</button>
         </form>
-    </div>
-    <div id="dialogo3" style="" title="ACEPTAR">
+</div>
+<div id="dialogo3" style=""  title="RECHAZAR">
         <form action="index.php" id="frm" method="POST">
             <input type="hidden" name="controller" value="solicitudes" />
             <input type="hidden" name="action" value="save" />
@@ -166,7 +76,7 @@
             <button type="submit" class="btn btn-success cerrar3">Rechazar</button>
             <button type="button" class="btn btn-danger cerrar3">Cancelar</button>
         </form>
-    </div>
+</div>
 
 <div id="solicitudes" style=" margin-left: 20px;">
     <?php if(count($rows)!=0){?>
