@@ -23,8 +23,7 @@
             <tbody>
                 <tr>
                 <?php $i=1; foreach ($rows as $key => $value2) {?>
-                <td> <?php echo (int)$value2[1]; ?> 
-                    <input id="A<?php echo $i; $i++; ?>" type="hidden" name="" value="<?php echo ($value2[1]*$value2[2]*$value2[3])/10000; ?> ">
+                <td> <input class="as" id="A<?php echo $i; $i++; ?>" type="text" name="<?php echo $value2[2]; ?>"   namee="<?php echo $value2[3]; ?>"value="<?php echo (int)$value2[1]; ?> " placeholder="">
                 </td>
                 
                 <?php } ?>
@@ -44,7 +43,22 @@
     nroColumnas= $(".ola tbody tr td").length-1;
     a=0;
     for (var i = 1; i <= nroColumnas; i++) {
-        a+= parseInt($('#A'+i).val());
+        nota = $('#A'+i).val();
+        por= parseFloat($('#A'+i).attr('name'));
+        por2= parseFloat($('#A'+i).attr('namee'));
+        a+= parseInt(( nota * por * por2 )/10000);
     }
     $('#total').text(a);
+
+    $(".as").blur(function(){
+        nroColumnas= $(".ola tbody tr td").length-1;
+    a=0;
+    for (var i = 1; i <= nroColumnas; i++) {
+        nota = $('#A'+i).val();
+        por= parseFloat($('#A'+i).attr('name'));
+        por2= parseFloat($('#A'+i).attr('namee'));
+        a+= parseInt(( nota * por * por2 )/10000);
+    }
+    $('#total').text(a);
+    });
 </script>
