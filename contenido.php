@@ -5,7 +5,7 @@ include 'model/Main.php';
         $obj = new Main();
         $data = array();
 
-        /*$data['rows'] = $obj->getDatos_web_informativo();
+        $data['rows'] = $obj->getDatos_web_informativo();
         $data['rows2'] =  $obj->getDatos_web_evento();
         $data['rows3'] = $obj->getDatos_web_noticias();
         $data['rows4'] = $obj->getDatos_web_contenido();
@@ -13,7 +13,7 @@ include 'model/Main.php';
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];
-        $data['disabled'] = $p['disabled'];*/
+        $data['disabled'] = $p['disabled'];
 
 ?>
 <script>
