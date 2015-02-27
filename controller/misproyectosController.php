@@ -19,6 +19,20 @@ class misproyectosController extends Controller {
         $view->render();
 
          }
+         
+          public function index_proyectos() {
+        $data = array();
+        $data['proyecto'] = $this->Select1(array('id' => 'proyecto', 'name' =>'proyecto','filtro'=>$_SESSION['idusuario']));  
+        $data['tabla3']=  $this->grilla_miproyecto2(); 
+        
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/misproyectos/_Index.php');
+        #$view->setLayout('../template/Layout.php');
+        print json_encode($view->renderPartial());
+
+         }
+         
                public function edit() {
         $obj = new misproyectos();
         $data = array();
@@ -139,7 +153,7 @@ class misproyectosController extends Controller {
         echo $envio;
     }
     public function getListaAlumnoP() {
-        $codproyecto = $_POST['idproyecto'];
+        $codproyecto = $_REQUEST['idproyecto'];
         $envio = $this->ListaAlumno_Pro(array('criterio' => $codproyecto));
         echo $envio;
     }

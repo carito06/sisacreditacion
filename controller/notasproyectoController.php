@@ -76,6 +76,7 @@ class notasproyectoController extends Controller {
     }
     public function guardar(){
         $obj = new notasproyecto();
+        $_POST['semestre']=  $this->mostrar_semestre_ultimo();
         $obj->insert($_POST);
         
     }

@@ -13,10 +13,10 @@ $(function() {
     $("#lista").css("display","none");
   
     
-    $.post('index.php', 'controller=asistenciaalumno&action=nota_de_tutoria', function(data) {
-            console.log(data);
-            $("#nota").empty().append(data);
-        });
+//    $.post('index.php', 'controller=asistenciaalumno&action=nota_de_tutoria', function(data) {
+//            console.log(data);
+//            $("#nota").empty().append(data);
+//        });
 
 });
 

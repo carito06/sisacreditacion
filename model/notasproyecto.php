@@ -54,15 +54,20 @@ class notasproyecto extends Main{
         
         echo "<pre>"; print_r($_P);
         $t= $_P['tam'];
-        for ($i=0; $i < $t ; $i++) { 
+           $stmt = $this->db->prepare("SELECT * from detalleproyecto_matrixalumno WHERE idproyecto=:id");
+        $stmt->bindValue(':id', $_P['idproyecto']  , PDO::PARAM_STR);
+        $stmt->execute();
+        $datos_pys= $stmt->fetchAll();
+        
+        foreach ($datos_pys as $k) { 
         $sql2 = $this->Query("sp_det_concep_detproy_iu(0,:p1,:p2,:p3,:p4,:p5)");     
         $stmt2 = $this->db->prepare($sql2);
 
             $stmt2->bindValue(':p1', 3 , PDO::PARAM_INT);
             $stmt2->bindValue(':p2', 0, PDO::PARAM_STR);
             $stmt2->bindValue(':p3', $_P['idproyecto'] , PDO::PARAM_STR);       
-            $stmt2->bindValue(':p4', $_P['idalumno'][$i] , PDO::PARAM_STR); 
-            $stmt2->bindValue(':p5', "20150", PDO::PARAM_STR); 
+            $stmt2->bindValue(':p4', $k[3] , PDO::PARAM_STR); 
+            $stmt2->bindValue(':p5', $_P['semestre'], PDO::PARAM_STR); 
             $stmt2->execute();          
         }
         

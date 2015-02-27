@@ -112,7 +112,7 @@
 </div>
 
 
-<?php echo $semestreacademico; ?>
+<?php// echo $semestreacademico; ?>
 
 <div id="listaproyecto" style=" margin-left: 20px;">
     

@@ -14,7 +14,7 @@ tipo_evento.descripcion
 FROM
 evento
 INNER JOIN tipo_evento ON evento.idtipo_evento = tipo_evento.idtipo_evento
-WHERE evento.idtipo_evento=1 and evento.CodigoSemestre='".$semestre_ultimo."' and " . $c . " like :query";       
+WHERE evento.idtipo_evento in (1,7) and evento.CodigoSemestre='".$semestre_ultimo."' and " . $c . " like :query";       
         $param = array(array('key'=>':query' , 'value'=>"%$query%" , 'type'=>'STR' ));
         $data['total'] = $this->getTotal( $sql, $param );
         $data['rows'] =  $this->getRow($sql, $param , $p );        

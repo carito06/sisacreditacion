@@ -22,7 +22,16 @@ class Controller {
         $view->setTemplate('../view/_PaginationPOST.php');
         return $view->renderPartial();
     }
-
+ public function PaginationPOST2($p) {
+        $data = array();
+        $data['rows'] = $p['rows'];
+        $data['query'] = $p['query'];
+        $data['url'] = $p['url'];
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_PaginationPOSt2.php');
+        return $view->renderPartial();
+    }
  public function ListaPdf_eu($idevento) {
         $obj = new Main();
         $obj->criterio = $idevento;
@@ -633,8 +642,15 @@ public function ListaPdf_ps($idevento) {
         $data['rows'] = $obj->getListaA();
         $data['rows2'] = $obj->getSyllabus_P();
         $data['rows3'] = $obj->getRetornoN();
+        $data['notas_py']=$obj->getNotaspy();
         $data['rows4'] = $obj->getSyllabus_P3();
-
+        
+        foreach ( $data['rows'] as $key => $value){
+            //foreach al alumno(rows) para recontruir el array de rows_notas_tutoria 
+              $data['rows_notas_tutoria'][$value['CodigoAlumno']] = array('nota_tutoria'=>$this->mostrar_nota_tutoria(array('CodigoAlumno'=>$value['CodigoAlumno'],'CodigoSemestre'=>$obj->criterio1)));
+            
+        }
+        
 //        $data['name'] = $p['name'];
 //        $data['id'] = $p['id'];
         $data['disabled'] = $p['disabled'];
@@ -1105,19 +1121,46 @@ public function ListaPdf_ps($idevento) {
 //        $obj->filtro = $p['filtro'];
 //        $obj->filtro1 = $p['filtro1'];
         $data = array();
-
-        $data['rows'] = $obj->getDatos_grilla_miproyecto();
+        /*if($_REQUEST['semestre']==null){
+            $_REQUEST['semestre']=  $this->mostrar_semestre_ultimo();        
+    }*/
+//    echo $_REQUEST['semestre'];exit;
+        $data['rows'] = $obj->getDatos_grilla_miproyecto($_REQUEST['semestre']);
+       // echo "er";print_r($data['rows']);exit;
         $data['rows1'] = $obj->getNotasPro();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];
         $data['disabled'] = $p['disabled'];
+            $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', 'name' =>'semestreacademico','filtro'=>$_SESSION['idusuario']));
         $view = new View();
         $view->setData($data);
         $view->setTemplate('../view/_tabla3.php');
         return $view->renderPartial();
     }
-
+public function grilla_miproyecto2($p) {
+        $obj = new Main();
+//        $obj->table = $p['table'];
+////        $obj->criterio = $p['criterio1'];
+//        $obj->criterio = $p['criterio'];
+//        $obj->filtro = $p['filtro'];
+//        $obj->filtro1 = $p['filtro1'];
+        $data = array();
+        if($_REQUEST['semestre']==null){
+            $_REQUEST['semestre']=  $this->mostrar_semestre_ultimo();        
+    }
+        $data['rows'] = $obj->getDatos_grilla_miproyecto($_REQUEST['semestre']);
+        $data['rows1'] = $obj->getNotasPro();
+        $data['name'] = $p['name'];
+        $data['id'] = $p['id'];
+        $data['code'] = $p['code'];
+        $data['disabled'] = $p['disabled'];
+            $data['semestreacademico'] = $this->SelectD(array('id' => 'semestreacademico', 'name' =>'semestreacademico','filtro'=>$_SESSION['idusuario']));
+        $view = new View();
+        $view->setData($data);
+        $view->setTemplate('../view/_tabla3_2.php');
+        return $view->renderPartial();
+    }
     public function pdf_proyecto($p) {
         $obj = new Main();
 //        $obj->table = $p['table'];
@@ -1296,7 +1339,7 @@ public function ListaPdf_ps($idevento) {
         $obj->criterio = $p['criterio'];
         $data = array();
         $data['rows'] = $obj->getDatos_grilla_alumnos();
-        $data['rows1'] = $obj->getNotasPro();
+        $data['rows1'] = $obj->getNotasPro($this->mostrar_semestre_ultimo());
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
@@ -1471,6 +1514,45 @@ public function ListaPdf_ps($idevento) {
         $view->setTemplate('../view/_Select.php');
         return $view->renderPartial();
     }
+     public function mostrar_nota_tutoria($p) {
+        $obj = new Main();
+        if (empty($p['CodigoSemestre'])) {
+            $obj->CodigoSemestre = $this->mostrar_semestre_ultimo();
+        } else {
+            $obj->CodigoSemestre = $p['CodigoSemestre'];
+        }
+
+        $obj->CodigoAlumno = $p['CodigoAlumno'];
+        $obj->CodAlumnoSira = $p['CodAlumnoSira'];
+        $data = $obj->mostrar_record_asistencias_tutoria();
+        $data_Eu_Ps = $obj->mostrar_record_asistencias_Eu_Ps();
+//       echo "<pre>"; print_r($data_Eu_Ps);exit;
+        if (empty($data['CodigoAlumno'])) {
+            return "No Se Encontro El Alumno Asignado o el Semestre como Parametros";
+        } else {
+            if (!empty($data_Eu_Ps['CodigoAlumno'])) { // si exite asistencias para eu y ps se saka sus notas, tambien de tutoria
+
+                $cant_total_Eu_ps = $data_Eu_Ps['cant_asistencias'] + $data_Eu_Ps['cant_inasistencias'];
+              
+                $nota_Eu_ps = ($data_Eu_Ps['cant_asistencias'] / $cant_total_Eu_ps) * 20;
+               
+               $cant_total_tutoria = $data['cant_asistencias'] + $data['cant_inasistencias'];
+               $nota_tutoria = ($data['cant_asistencias'] / $cant_total_tutoria) * 20;
+//               echo $nota_Eu_ps;exit;
+//               echo $data_Eu_Ps['cant_asistencias'].','.$data_Eu_Ps['cant_inasistencias'];exit;
+//               echo $data['cant_asistencias'].','.$data['cant_inasistencias'];exit;
+                return round($nota = ($nota_Eu_ps+ $nota_tutoria)/2) ;
+//              return $nota = round((($data_Eu_Ps['cant_asistencias']+ $data['cant_asistencias'])/($cant_total_Eu_ps+$cant_total_tutoria))*20) ;
+                
+            } else { //solo nota tutoria por que no tiene eu y ps
+              
+             $cant_total = $data['cant_asistencias'] + $data['cant_inasistencias'];
+              return round($nota = ($data['cant_asistencias'] / $cant_total) * 20);
+                
+            }
+        }
+    }
+
 
 }
 

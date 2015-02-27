@@ -27,7 +27,7 @@
 						<tr style="background-color:#eaf8fc;" > 
 							<th>#</th>
 							<th>Código</th>
-							<th >NOMBRE</th>
+							<th>NOMBRE</th>
 							
 
 							<?php $cont=0;foreach ($rows2 as $key => $value) { $idU= $value[9]; ?>
@@ -54,10 +54,14 @@
 													
 							<th>
 								<?php 
-									echo $cont+1;
+									$h=$cont+1;
+                                                                        echo "U".$h;
 								?>
 							</th>
+                                                      
 							<?php $cont=$cont+1;}?>
+                                                          <th>Proy. Invest.</th>
+                                                        <th width="20" >Tutoria</th>
 							<th padding="25px 20px" >Promedio</th>
 						</tr>
        
@@ -77,13 +81,16 @@
 
 							<?php $alum= $value[0];
 								if (isset($rows2)){ $j=1;
-									foreach ($rows2 as $key => $value) {   $idU= $value[9]; $por= $value[10]; ?>
+									foreach ($rows2 as $key => $value) {  
+                                                                            
+                                                                            $idU= $value[9]; $por= $value[10]; ?>
 										
 											<?php if (isset($rows4)){$ev=1;
-												foreach ($rows4 as $key => $value5) {$ie= $value5[3]; $ponderado= $value5[2]; 
+												foreach ($rows4 as $key => $value5) {
+                                                                                                    $ie= $value5[3]; $ponderado= $value5[2]; 
 													//echo $value5[9]; 
 													if ($idU== $value5[9]) { ?>
-													<td class="tnota U<?php echo $j;?> U<?php echo $j.'-'.$i.'-'.$ev; $ev++;?>">
+													<td class="tnota U<?php echo $j;?>  U<?php echo $j.'-'.$i.'-'.$ev; $ev++;?>">
 													<?php  #echo $ponderado;
 													 if (isset($rows3)){ 
 													 foreach ($rows3 as $key => $value) { ?>
@@ -93,19 +100,26 @@
 													<?php } ?>
 														<input type="hidden" id="0"/>
 													<?php } } ?>
-
+     
 													</td>
 											<?php }}?>
 										
 										<td bgcolor="#eaf8fc" class="Uni tnota"  >
-											
+									
 											<input type="text" disabled name="<?php echo $por; ?>" class='form-control nota'maxlength='2' id="<?php echo $j.'-'.$i ?>">
 												
 										</td>
+                                                                                <td>
+                                                                                    <?php $temp=0; foreach ($notas_py as $kpy){ if($kpy[3]==$alum){ $nota_i= $kpy[1]; $temp=$temp+1; } } if($temp==0){ $nota_i=0;} ?> 
+                                                                                    <input type='hidden' maxlength='2'  pattern='{0-9}+'  class='input-small form-control nota <?php if ((int)$nota_i<=10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($nota_i*$ponderado)/100;?>"value="<?php echo (int)$nota_i;?>" onblur='hi(this)'/>	
+                                                                                    <?php if( (int)$nota_i<10){ echo "<i style='color:red'>".(int)$nota_i."</i>";}else{echo "<i  style='color:blue'>".(int)$nota_i."</i>";}?>
+                                                                                </td>
 								<?php   $j++; } ?>
 
 							<?php }?>
+                                                                                 <td><?php $nota_tutoria=$rows_notas_tutoria[$alum]['nota_tutoria'];if(is_numeric($nota_tutoria)) {if($nota_tutoria<=10){echo"<span class='colorD'> ".$nota_tutoria."</span>";}else{echo"<span class='colorA'> ".$nota_tutoria."</span>";}} ?></td>
 							<td  class="tnota">
+                                                           
 								<input class='form-control nota' id="<?php echo $i.'p'; ?>"disabled type="text" name="" value="" placeholder="">
 								
 							</td>
@@ -127,9 +141,9 @@
     </div>             
 </div>
 <script>
-nroFilas= $("#ola tbody tr:nth-child(1) td").length-3;
-nroColumnas= $("#ola tbody tr").length;
-nroUnidades= $("#ola tbody tr:nth-child(1) .Uni").length;
+    nroFilas= $("#ola tbody tr:nth-child(1) td").length-3;
+    nroColumnas= $("#ola tbody tr").length;
+    nroUnidades= $("#ola tbody tr:nth-child(1) .Uni").length;
 	var n = [], b= [];
 
 for (var u = 1; u <= nroUnidades; u++) {	

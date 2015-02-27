@@ -98,11 +98,12 @@ class eventoController extends Controller {
 
         $data = array();
         $view = new View();
-        if($_SESSION['perfil2']=='PROFESOR'){$WHERE=" where tipo_evento.idtipo_evento=2";$code='2';$label='Consejeria';} ;
+        if($_SESSION['perfil2']=='PROFESOR'){$WHERE=" where tipo_evento.idtipo_evento=2";$code='2';$label='Consejeria';$label1='Jornada Laboral';} ;
 //        $dep=$this->mostrar_Facultad_idUsusario($_SESSION['idusuario']);
-        if($_SESSION['idperil']==4){$WHERE=" where tipo_evento.idtipo_evento= '2' or tipo_evento.idtipo_evento='1'"; $code='1';$label='Tutoria';} ;
+        if($_SESSION['idperil']==4){$WHERE=" where tipo_evento.idtipo_evento= '2' or tipo_evento.idtipo_evento='1'"; $code='1';$label='Tutoria';$label1='Jornada Laboral';} ;
         if(isset($_GET['modo_sin_cargo'])){$code="2";$label='Consejeria';}
-        $data['tipo_evento']="<input type='hidden' id='idtipo_evento' name='idtipo_evento' value='".$code."'><strong>".$label."</strong>";
+        $data['tipo_evento']="<input type='hidden' id='idpo_evento' name='idtipo_evento' value='".$code."'>
+            <select name='idtipo_evento'><option value='1'>Tutoria</option><option value='7'>Jornada laboral</option></select>";
 //        $data['tipo_evento'] = $this->Select(array('id'=>'idtipo_evento','name'=>'idtipo_evento','table'=>"tipo_evento ".$WHERE,'code'=>$code,'readonly'=>'true'));
         $view->setData($data);
         $view->setTemplate( '../view/evento/_Form.php' );

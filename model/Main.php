@@ -271,6 +271,12 @@ function getDetalle_evento_eu() {
         return $sth->fetchAll();
     }
 
+    public function getNotaspy(){
+     $query="SELECT *from detalle_concepto_detproyecto INNER JOIN concepto on (concepto.idconcepto=detalle_concepto_detproyecto.idconcepto) where CodigoSemestre='{$this->criterio1}'";
+        $sth = $this->db->prepare($query);   
+     $sth->execute();
+     return $sth->fetchAll();
+    }
     function getRetornoN() {
 
         $query = "SELECT 
@@ -1570,7 +1576,7 @@ function getDatos_grilla_solicitudes_eu() {
         return $sth->fetchAll();
     }
 
-    function getDatos_grilla_miproyecto() {
+    function getDatos_grilla_miproyecto($semestre) {
 
         $codigo = $_SESSION['idusuario'];
         if ($_SESSION['perfil'] == 'ALUMNO') {
@@ -1601,7 +1607,7 @@ function getDatos_grilla_solicitudes_eu() {
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                       
+                       INNER JOIN detalle_concepto_detproyecto on(detalle_concepto_detproyecto.idproyecto=proyecto.idproyecto)       
                         
             INNER JOIN detalleproyecto_matrixalumno ON proyecto.idproyecto=detalleproyecto_matrixalumno.idproyecto
                         INNER JOIN detalle_matricula ON detalleproyecto_matrixalumno.CodigoAlumno=detalle_matricula.CodigoAlumno
@@ -1610,8 +1616,9 @@ function getDatos_grilla_solicitudes_eu() {
                         
                         where detalle_profesor_proy_fun.idfuncion=2 and
             detalleproyecto_matrixalumno.CodigoAlumno='" . $codigo . "' AND detalleproyecto_matrixalumno.estado=1
-                        GROUP BY proyecto.idproyecto
-                            ";
+               and  detalle_concepto_detproyecto.CodigoSemestre='$semestre'        
+               GROUP BY proyecto.idproyecto";
+                    //  exit();
 
             $sth = $this->db->prepare($query);
 
@@ -1659,20 +1666,77 @@ function getDatos_grilla_solicitudes_eu() {
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                        
-                                             
-                        
-                        where detalle_profesor_proy_fun.CodigoProfesor='" . $codigo . "' AND proyecto.situacion=1
+                        INNER JOIN detalle_concepto_detproyecto on(detalle_concepto_detproyecto.idproyecto=proyecto.idproyecto)       
+                        inner join detalleproyecto_matrixalumno on detalleproyecto_matrixalumno.idproyecto=proyecto.idproyecto
+                       where detalle_profesor_proy_fun.CodigoProfesor='" . $codigo . "' AND proyecto.situacion=1
+                      
+                           and  detalleproyecto_matrixalumno.CodigoSemestre='$semestre'   
                         GROUP BY proyecto.idproyecto
                             ";
+  //         echo $query;exit;
             $sth = $this->db->prepare($query);
+            
+            
 
 
 //        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
             $sth->execute();
-
-            return $sth->fetchAll();
+            $data=$sth->fetchAll();
+//            echo "<pre>";print_r($data);exit;
+//            echo count($count);exit;
+             if(empty($data)){ 
+//                 echo "entre";exit;
+                   $query2 = "SELECT
+                 
+                                    detalle_profesor_proy_fun.idproyecto as id, 
+                                    proyecto.nombre_proyecto,
+                                    proyecto.periodo_ejecucion,
+                                    (select CONCAT(profesores.NombreProfesor,' ',profesores.ApellidoPaterno,' ',profesores.ApellidoMaterno) AS Responsable 
+                                    from detalle_profesor_proy_fun 
+                                    inner join profesores on profesores.CodigoProfesor = detalle_profesor_proy_fun.CodigoProfesor
+                                    where idfuncion=2 and idproyecto =id)as jefeproyecto,
+                                    (select profesores.CodigoProfesor AS codigo_responsable 
+                                    from detalle_profesor_proy_fun 
+                                    inner join profesores on profesores.CodigoProfesor = detalle_profesor_proy_fun.CodigoProfesor
+                                    where idfuncion=2 and idproyecto =id)as cod_jefeproyecto,
+                                    MAX(DISTINCT(control_proyecto.fecha)) as Fecha_Inicio,
+                                    escuelaprofesional.DescripcionEscuela,
+                                    estado_proyecto.descripcion, 
+                                    proyecto.presupuesto,
+                                    tipo_proyecto.nombre_tipo_proyecto,
+                                    facultades.DescripcionFacultad, 
+                                    linea_investigacion.nombre_linea,
+                                    eje_tematico.nombre_ejetematico, 
+                                    grupo.nombre_grupo
+                                    
+                        FROM
+                        detalle_profesor_proy_fun
+                        INNER JOIN proyecto ON proyecto.idproyecto = detalle_profesor_proy_fun.idproyecto
+                        INNER JOIN profesores ON profesores.CodigoProfesor = detalle_profesor_proy_fun.CodigoProfesor
+                        INNER JOIN control_proyecto ON proyecto.idproyecto = control_proyecto.idproyecto
+            INNER JOIN estado_proyecto ON control_proyecto.idestado_proyecto = estado_proyecto.idestado_proyecto
+                        INNER JOIN escuelaprofesional ON proyecto.CodigoEscuela=escuelaprofesional.CodigoEscuela
+                        INNER JOIN tipo_proyecto ON proyecto.idtipo_proyecto = tipo_proyecto.idtipo_proyecto
+                        INNER JOIN facultades ON escuelaprofesional.CodigoFacultad = facultades.CodigoFacultad
+                        INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
+                        INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
+                        INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo   
+                        
+                        where detalle_profesor_proy_fun.CodigoProfesor='" . $codigo . "' AND proyecto.situacion=1
+                         
+                        GROUP BY proyecto.idproyecto
+                            ";
+//                   echo $query;exit;
+            $sth2 = $this->db->prepare($query2);
+            $sth2->execute();
+            $data=$sth2->fetchAll();
+            //print_r($data);exit;
+             }
+            # print_r($data);exit;
+//        echo ($query);
+//        exit();
+            return $data;
         }
     }
 
@@ -1682,12 +1746,12 @@ function getDatos_grilla_solicitudes_eu() {
         $sth->execute();
         return $sth->fetchAll();
     }
-    function getNotasPro(){
+    function getNotasPro($semestre){
         $query = "SELECT
                           *
                             from 
                             detalle_concepto_detproyecto
-                            WHERE CodigoSemestre=20150";
+                            WHERE CodigoSemestre=20150 and detalle_concepto_detproyecto.idproyecto=$this->criterio";
 
         $sth = $this->db->prepare($query);
         $sth->execute();
@@ -1910,7 +1974,74 @@ function getDatos_grilla_solicitudes_eu() {
         $sth = $this->db->prepare("SELECT idasignatura, descripcion FROM {$this->table} WHERE iddocente = {$this->idp}");
         $sth->execute();
         return $sth->fetchAll();
+    } public function mostrar_record_asistencias_tutoria() {
+        $sql = "SELECT
+        alumnos.CodigoAlumno,
+        alumnos.NombreAlumno,
+        concat(alumnos.ApellidoPaterno,' ',alumnos.ApellidoMaterno) AS Apellidos,
+        concat(alumnos.TipoDocumento,' ',alumnos.NumDocumento) AS Documento,
+        date(alumnos.FechaIngreso) as fecha_ingreso,
+        alumnos.CodAlumnoSira,
+       Sum(case when detalle_asistencia_alumno_tutoria.asistencia_alumno =1 then 1 else 0  end) AS cant_asistencias,
+       Sum(case when detalle_asistencia_alumno_tutoria.asistencia_alumno is NULL then 1 else 0 end) AS cant_inasistencias
+       FROM
+        detalle_asignacion_tutoria
+        Inner Join profesores ON detalle_asignacion_tutoria.CodigoProfesor = profesores.CodigoProfesor
+        Inner Join alumnos ON detalle_asignacion_tutoria.CodigoAlumno = alumnos.CodigoAlumno
+        Left Join detalle_asistencia_alumno_tutoria ON detalle_asistencia_alumno_tutoria.CodigoAlumno = alumnos.CodigoAlumno 
+        Inner Join semestreacademico ON detalle_asignacion_tutoria.CodigoSemestre = semestreacademico.CodigoSemestre
+        where detalle_asignacion_tutoria.CodigoSemestre='{$this->CodigoSemestre}' and (alumnos.CodAlumnoSira='{$this->CodAlumnoSira}' or alumnos.CodigoAlumno='{$this->CodigoAlumno}')";
+//       echo $sql;exit;
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        return $sth->fetch();
     }
+
+    public function mostrar_record_asistencias_Eu_Ps() {
+
+        $data_sub_Eu_Ps = $this->get_data_sub_eventos_Eu_Ps();
+        $fields = array();
+        foreach ($data_sub_Eu_Ps as $key => $value) {
+            array_push($fields, $value['idevento']);
+        }
+        $todos_idsuventos = implode(",", $fields);
+
+        $sql = "SELECT
+        detalle_asistencia_alumno.CodigoAlumno, 
+       alumnos.CodAlumnoSira,
+        detalle_asistencia_alumno.idevento,
+        CONCAT (' ',alumnos.NombreAlumno,alumnos.ApellidoPaterno,alumnos.ApellidoMaterno) as Nombre,
+       Sum(case when detalle_asistencia_alumno.asistencia_alumno =1 then 1 else 0  end) AS cant_asistencias,
+       Sum(case when detalle_asistencia_alumno.asistencia_alumno is NULL then 1 else 0 end) AS cant_inasistencias,
+        evento.tema,
+        evento.idtipo_evento,
+        cargo_asistencia_evento.descripcion as cargo
+        FROM
+        detalle_asistencia_alumno
+        INNER JOIN alumnos ON detalle_asistencia_alumno.CodigoAlumno = alumnos.CodigoAlumno
+        INNER JOIN evento ON detalle_asistencia_alumno.idevento = evento.idevento
+        INNER JOIN tipo_evento ON evento.idtipo_evento = tipo_evento.idtipo_evento
+        INNER JOIN cargo_asistencia_evento ON detalle_asistencia_alumno.id_cargo = cargo_asistencia_evento.id_cargo
+        WHERE evento.idevento in (".$todos_idsuventos.") AND (detalle_asistencia_alumno.CodigoAlumno='{$this->CodigoAlumno}' or alumnos.CodAlumnoSira='{$this->CodAlumnoSira}')";
+//       echo $sql,exit;
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+//        echo "<pre>";print_r($sth->fetch());exit;
+        return $sth->fetch();
+    }
+
+    function get_data_sub_eventos_Eu_Ps($param) {
+        $sql = "SELECT *
+        FROM
+        evento
+        WHERE evento.idevento_padre is not null and (evento.idtipo_evento=3  or evento.idtipo_evento=4)";
+
+        $sth = $this->db->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    
 
 }
 

@@ -35,9 +35,10 @@ class asistenciaalumnoController extends Controller {
         $view->render();
     }
     public function nota_de_tutoria(){
-       $codigo_alumno="201010701016";//solo este es para ingresar
-       $semestre_ultimo = $this->mostrar_semestre_ultimo();
-       $nota = $this->mostrar_nota_tutoria(array('codigo_alumno' => $codigo_alumno,'semestre'=>$semestre_ultimo));
+       $CodAlumnoSira="";//solo este es para ingresar de lennon       
+       $CodigoAlumno = "201110701027";
+       $CodigoSemestre = '20150';
+       $nota = $this->mostrar_nota_tutoria(array('CodAlumnoSira' => $CodAlumnoSira,'CodigoAlumno'=>$CodigoAlumno,'CodigoSemestre'=>$CodigoSemestres));
         echo "Tu Nota Es : ".$nota;
     }
 

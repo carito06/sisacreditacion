@@ -9,7 +9,7 @@ class asignaciontutoriaController extends Controller {
     public function index() {
         $obj = new asignaciontutoria();
         $idfacultad = $obj->mostrar_Facultad_idUsusario($_SESSION['idusuario']);
-        $data['semestreacademico'] = $this->cinco_ultimos_semestres(array('id' => 'CodigoSemestre', 'name' => 'CodigoSemestre', 'table' => 'semestreacademico', 'code' => $obj->CodigoSemestre));
+        $data['semestreacademico'] = $this->cinco_ultimos_semestres(array('id' => 'CodigoSemestre', 'name' => 'CodigoSemestre', 'table' => 'semestreacademico', 'code' => $this->mostrar_semestre_ultimo()));
         $data['idfacultad']=$idfacultad;
         $view = new View();
         $view->setData($data);  
@@ -112,7 +112,7 @@ public function save() {
         $lista=$data['data'] = $obj->alumnos_asignados($_GET['q'], $_GET['p'],$CodigoProfesor,$sem);
         $data['catidadalumnos']=count($lista['rows']);
         $data['query'] = $_GET['q'];
-        $data['pag'] = $this->Pagination2(array('rows' => $data['data']['rowspag'], 'url' => 'index.php?controller=asignaciontutoria&action=mostrar_alumnos_asignados', 'query' => $_GET['q']));
+        $data['pag'] = $this->PaginationPOST2(array('rows' => $data['data']['rowspag'], 'url' => 'index.php?controller=asignaciontutoria&action=mostrar_alumnos_asignados', 'query' => $_GET['q']));
         $cols = array("CODIGO", "Nombre", "Apellidos", "Documentos", "Fecha Ingreso", "CodAlumnoSira");
         $data['grilla'] = $this->grilla("alumno", $cols, $data['data']['rows'], $opt, $data['pag'], false, false, false, false);
 
