@@ -10,7 +10,7 @@ class listaproyectoController extends Controller {
     
    
     public function index() {
-            
+        
         $data['tabla2']=  $this->grilla_proyecto();
           
         $view = new View();

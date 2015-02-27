@@ -1476,7 +1476,7 @@ function getDatos_grilla_solicitudes_eu() {
                     proyecto
                     INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
                     INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
-                    where   detalleproyecto_matrixalumno.idproyecto='{$this->criterio}'AND detalleproyecto_matrixalumno.estado=1
+                    where   detalleproyecto_matrixalumno.idproyecto='{$this->criterio}'AND  detalleproyecto_matrixalumno.estado=1
                     ";
 
         $sth = $this->db->prepare($query);
@@ -1501,7 +1501,7 @@ function getDatos_grilla_solicitudes_eu() {
                     proyecto
                     INNER JOIN detalleproyecto_matrixalumno ON detalleproyecto_matrixalumno.idproyecto = proyecto.idproyecto
                     INNER JOIN alumnos ON alumnos.CodigoAlumno = detalleproyecto_matrixalumno.CodigoAlumno
-                    where alumnos.CodigoAlumno = ". $_SESSION['idusuario']."";
+                    where alumnos.CodigoAlumno = ". $_SESSION['idusuario']." GROUP BY 1";
 
         $sth = $this->db->prepare($query);
         $sth->execute();
@@ -1580,6 +1580,10 @@ function getDatos_grilla_solicitudes_eu() {
 
         $codigo = $_SESSION['idusuario'];
         if ($_SESSION['perfil'] == 'ALUMNO') {
+            if($semestre==null){
+               
+                $semestre=  $this->mostrar_semestre_ultimo();
+            }
             $query = "SELECT
                         proyecto.idproyecto,
                         proyecto.nombre_proyecto,
@@ -1607,8 +1611,7 @@ function getDatos_grilla_solicitudes_eu() {
                         INNER JOIN linea_investigacion ON proyecto.idlinea_investigacion = linea_investigacion.idlinea_investigacion
                         INNER JOIN eje_tematico ON linea_investigacion.idejetematico = eje_tematico.idejetematico
                         INNER JOIN grupo ON eje_tematico.idgrupo = grupo.idgrupo
-                       INNER JOIN detalle_concepto_detproyecto on(detalle_concepto_detproyecto.idproyecto=proyecto.idproyecto)       
-                        
+                       
             INNER JOIN detalleproyecto_matrixalumno ON proyecto.idproyecto=detalleproyecto_matrixalumno.idproyecto
                         INNER JOIN detalle_matricula ON detalleproyecto_matrixalumno.CodigoAlumno=detalle_matricula.CodigoAlumno
                         INNER JOIN matricula ON detalle_matricula.CodigoAlumno=matricula.CodigoAlumno
@@ -1616,17 +1619,13 @@ function getDatos_grilla_solicitudes_eu() {
                         
                         where detalle_profesor_proy_fun.idfuncion=2 and
             detalleproyecto_matrixalumno.CodigoAlumno='" . $codigo . "' AND detalleproyecto_matrixalumno.estado=1
-               and  detalle_concepto_detproyecto.CodigoSemestre='$semestre'        
+               and  detalleproyecto_matrixalumno.CodigoSemestre='$semestre'        
                GROUP BY proyecto.idproyecto";
-                    //  exit();
-
+           
             $sth = $this->db->prepare($query);
-
-
 //        $sth->bindValue(':criterio', $this->criterio, PDO::PARAM_STR);
 //        $sth->bindValue(':criterio1', $this->criterio1, PDO::PARAM_STR);
-
-            $sth->execute();
+             $sth->execute();
 
             return $sth->fetchAll();
         }
@@ -1757,7 +1756,17 @@ function getDatos_grilla_solicitudes_eu() {
         $sth->execute();
         return $sth->fetchAll();
     }
+    function getNotasPro2(){
+        $query = "SELECT
+                          *
+                            from 
+                            detalle_concepto_detproyecto
+                            WHERE CodigoSemestre=20150" ;
 
+        $sth = $this->db->prepare($query);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
     public function ffecha($fecha) {
         $nfecha = explode("/", $fecha);
         return $nfecha[2] . "-" . $nfecha[1] . "-" . $nfecha[0];

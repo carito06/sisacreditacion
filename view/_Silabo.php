@@ -57,7 +57,7 @@
         <?php foreach ($rows as $key => $value) { ?> 
         <input type="hidden" class="codcurso"  value="<?php echo $value[4]?>" />
         <tr class="evaluacion<?php echo $conta;?> oa" id="<?php echo $conta+100?>"> 
-           <td><?php echo $conta?></td>    
+           <td><?php echo "U".$conta?></td>    
            <td align="left">
              <input type="hidden"  class="codevaluacion" value="<?php echo $value[3]?>"/>
              <strong><?php echo utf8_encode($value[8])?></strong>   (<?php echo $value[10] ?>%) <br>

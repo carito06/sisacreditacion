@@ -16,6 +16,7 @@
                 </th>
                 
                 <?php } ?>
+                <th>PI</th>
                 <th>NOTA FINAL</th>
                 </tr>
                 
@@ -27,6 +28,13 @@
                 </td>
                 
                 <?php } ?>
+               
+                <?php  
+                    foreach ($rows1 as $key => $value1) { 
+                            if ($_SESSION['idusuario'] == $value1[3])        { ?>
+                             <td><?php echo (int)$value1[1] ?></td>
+                            <?php } ?>
+                     <?php } ?>
                 <td id="total" >
                     
                 </td>
@@ -40,7 +48,7 @@
 </div>
 
 <script>
-    nroColumnas= $(".ola tbody tr td").length-1;
+    nroColumnas= $(".ola tbody tr td").length-2;
     a=0;
     for (var i = 1; i <= nroColumnas; i++) {
         nota = $('#A'+i).val();
@@ -51,7 +59,7 @@
     $('#total').text(a);
 
     $(".as").blur(function(){
-        nroColumnas= $(".ola tbody tr td").length-1;
+        nroColumnas= $(".ola tbody tr td").length-2;
     a=0;
     for (var i = 1; i <= nroColumnas; i++) {
         nota = $('#A'+i).val();

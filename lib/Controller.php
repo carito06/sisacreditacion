@@ -863,6 +863,7 @@ public function ListaPdf_ps($idevento) {
         $obj->opcion = $p['opcion'];
         $data = array();
         $data['rows'] = $obj->getSyllabus_P5();
+        $data['rows1'] = $obj->getNotasPro2();
         $data['disabled'] = $p['disabled'];
         $view = new View();
         $view->setData($data);
@@ -1076,7 +1077,7 @@ public function ListaPdf_ps($idevento) {
 //        $obj->filtro = $p['filtro'];
 //        $obj->filtro1 = $p['filtro1'];
         $data = array();
-
+        //print_r($p); exit();
         $data['rows'] = $obj->getDatos_grilla_proyecto();
         $data['rows2'] = $obj->getDatos_grilla_objetivos();
         $data['rows3'] = $obj->getDatos_grilla_docentes();
@@ -1126,7 +1127,7 @@ public function ListaPdf_ps($idevento) {
     }*/
 //    echo $_REQUEST['semestre'];exit;
         $data['rows'] = $obj->getDatos_grilla_miproyecto($_REQUEST['semestre']);
-       // echo "er";print_r($data['rows']);exit;
+        //print_r($data['rows']);exit;
         $data['rows1'] = $obj->getNotasPro();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];

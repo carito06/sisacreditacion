@@ -166,12 +166,15 @@
                             <?php if(strtoupper(utf8_encode($value[16]))==1){ $proy=$value['idproyecto']; ?>
                             <div id="abrir2" style="margin-left: 20px;">
                             <?php if($rows5){ foreach ($rows5 as $key => $value5) {
+                                if($value5[0]==$proy) 
                                 $proyb = $value5[0];
-                                //echo $proyb;
+                               
                                 ?>
                                         
-                            <?php }}else{$proyb=000;}?>
-                            <?php if  ($proy != $proyb){?>
+                            <?php }}else{$proyb=0;} ?>
+                            <?php 
+                          // echo "proy".$proy; echo "proyb".$proyb; 
+                            if  ($proy != $proyb){?>
                                     <li style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus">
                                             <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-check"
                                                                                  

@@ -60,7 +60,7 @@
 							</th>
                                                       
 							<?php $cont=$cont+1;}?>
-                                                          <th>Proy. Invest.</th>
+                                                          <th>PI</th>
                                                         <th width="20" >Tutoria</th>
 							<th padding="25px 20px" >Promedio</th>
 						</tr>
@@ -110,8 +110,8 @@
 												
 										</td>
                                                                                 <td>
-                                                                                    <?php $temp=0; foreach ($notas_py as $kpy){ if($kpy[3]==$alum){ $nota_i= $kpy[1]; $temp=$temp+1; } } if($temp==0){ $nota_i=0;} ?> 
-                                                                                    <input type='hidden' maxlength='2'  pattern='{0-9}+'  class='input-small form-control nota <?php if ((int)$nota_i<=10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($nota_i*$ponderado)/100;?>"value="<?php echo (int)$nota_i;?>" onblur='hi(this)'/>	
+                                                                                    <?php $temp=0; foreach ($notas_py as $kpy){ if($kpy[3]==$alum){ $nota_i= $kpy[1]; $temp=$temp+1; } $ponderado_i=$kpy[7]; } if($temp==0){ $nota_i=0;} ?> 
+                                                                                    <input type='hidden' maxlength='2'  pattern='{0-9}+'  class='input-small form-control nota <?php if ((int)$nota_i<=10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($nota_i*$ponderado_i)/100;?>"value="<?php echo (int)$nota_i;?>" onblur='hi(this)'/>	
                                                                                     <?php if( (int)$nota_i<10){ echo "<i style='color:red'>".(int)$nota_i."</i>";}else{echo "<i  style='color:blue'>".(int)$nota_i."</i>";}?>
                                                                                 </td>
 								<?php   $j++; } ?>
@@ -186,8 +186,10 @@ if (nroUnidades!=1){
 		for (var u = 1; u <= nroUnidades; u++) {	
 		
 			a+=($('#'+u+'-'+c).val()*parseInt($('#'+u+'-'+c).attr('name')))/100;
+                       // alert(a);
 
 		}
+                
 		if (parseInt(a)<=10){
 			$('#'+c+'p').addClass('colorD');
 		}else{
@@ -202,6 +204,8 @@ if (nroUnidades!=1){
 		tam= $('#ola tbody tr:nth-child(1) .U1').length;
 		for (var t = 0; t < tam; t++) {
 				b+=parseFloat(n[c][t]);
+                                alert(b);
+                                
 		}
 		if (parseInt(b)<=10){
 			$('#1-'+c).addClass('colorD');

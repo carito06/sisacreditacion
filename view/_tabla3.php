@@ -111,9 +111,9 @@
  </div>
 </div>
 
-
+<?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'PROFESOR')) { ?>
 <?php echo $semestreacademico; ?>
-
+<?php } ?>
 <div id="listaproyecto" style=" margin-left: 20px;">
     
     <div id="data">
