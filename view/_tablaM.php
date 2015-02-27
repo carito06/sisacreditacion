@@ -29,12 +29,13 @@
                 
                 <?php } ?>
                
-                <?php  
+                <?php $a=0;  $p=0;
                     foreach ($rows1 as $key => $value1) { 
                             if ($_SESSION['idusuario'] == $value1[3])        { ?>
-                             <td><?php echo (int)$value1[1] ?></td>
+                             <?php  $a++;  $p += (int)$value1[1]; ?>
                             <?php } ?>
-                     <?php } ?>
+                     <?php }  ?>
+                     <td> <?php echo (int)($p/$a); ?></td>
                 <td id="total" >
                     
                 </td>

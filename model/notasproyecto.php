@@ -54,7 +54,7 @@ class notasproyecto extends Main{
         
         echo "<pre>"; print_r($_P);
         $t= $_P['tam'];
-           $stmt = $this->db->prepare("SELECT * from detalleproyecto_matrixalumno WHERE idproyecto=:id where estado=1");
+           $stmt = $this->db->prepare("SELECT * from detalleproyecto_matrixalumno WHERE idproyecto=:id and estado=1");
         $stmt->bindValue(':id', $_P['idproyecto']  , PDO::PARAM_STR);
         $stmt->execute();
         $datos_pys= $stmt->fetchAll();

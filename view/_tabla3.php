@@ -177,9 +177,11 @@
                     </td>
                     <?php } ?> -->
                     <td>
+                    <?php $pp= $value[0] ?>
                     <?php if (isset($_SESSION["perfil"]) && ($_SESSION["perfil"] == 'ALUMNO')) { 
+
                             foreach ($rows1 as $key => $value1) { 
-                            if ($_SESSION['idusuario'] == $value1[3]){ ?>
+                            if (($_SESSION['idusuario'] == $value1[3]) && ($pp == $value1[2] )){ ?>
                                 <?php echo (int)$value1[1] ?>
                             <?php } ?>
                      <?php } }else{ ?>
@@ -200,7 +202,7 @@
                     <?php } ?>
                     </td>
                     <td>
-
+                    
                         <div id="abrir" style="margin-left: 20px;">
                             <a><li id="" style="margin: 2px;position: relative;padding: 4px 0;cursor: pointer;float: left;list-style: none; font-family: Calibri;" class="ui-state-default ui-corner-all" title=".ui-icon-circle-plus" >
                                     <span style="float: left; margin: 0 4px; background-image: url(css/images/ui-icons_2e83ff_256x240.png);"class="ui-icon ui-icon-circle-plus"

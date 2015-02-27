@@ -1128,7 +1128,7 @@ public function ListaPdf_ps($idevento) {
 //    echo $_REQUEST['semestre'];exit;
         $data['rows'] = $obj->getDatos_grilla_miproyecto($_REQUEST['semestre']);
         //print_r($data['rows']);exit;
-        $data['rows1'] = $obj->getNotasPro();
+        $data['rows1'] = $obj->getNotasPro2();
         $data['name'] = $p['name'];
         $data['id'] = $p['id'];
         $data['code'] = $p['code'];
