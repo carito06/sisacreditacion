@@ -369,7 +369,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b163c7', end
                     </form>
                      <?php }else{ ?>
                         <br><br>
-                        <a class="btn btn-primary" href="/web" >REGRESAR AL SISTEMA</a>
+                        <a class="btn btn-primary" href="web" >REGRESAR AL SISTEMA</a>
                      <?php } ?>
                 </div>
                 

@@ -110,7 +110,21 @@
 												
 										</td>
                                                                                 <td>
-                                                                                    <?php $temp=0; foreach ($notas_py as $kpy){ if($kpy[3]==$alum){ $nota_i= $kpy[1]; $temp=$temp+1; } $ponderado_i=$kpy[7]; } if($temp==0){ $nota_i=0;} ?> 
+                                                                                    <?php 
+                                                                                    $temp=0; 
+                                                                                    $nota_i=0;
+                                                                                    foreach ($notas_py as $kpy){ 
+                                                                                    	if($kpy[3]==$alum){ 
+                                                                                    		$nota_i += $kpy[1];
+                                                                                    		$temp=$temp+1; 
+                                                                                    	} 
+                                                                                    	$ponderado_i=$kpy[7]; 
+                                                                                    } 
+                                                                                    $nota_i = (int)($nota_i/$temp);
+                                                                                    if($temp==0){
+                                                                                     	$nota_i=0;
+                                                                                    } 
+                                                                                    ?> 
                                                                                     <input type='hidden' maxlength='2'  pattern='{0-9}+'  class='input-small form-control nota <?php if ((int)$nota_i<=10){echo "colorD";}else{echo "colorA";}?>' name="<?php echo $alum;?>,<?php echo $ie;?>" id = "<?php echo ($nota_i*$ponderado_i)/100;?>"value="<?php echo (int)$nota_i;?>" onblur='hi(this)'/>	
                                                                                     <?php if( (int)$nota_i<10){ echo "<i style='color:red'>".(int)$nota_i."</i>";}else{echo "<i  style='color:blue'>".(int)$nota_i."</i>";}?>
                                                                                 </td>
@@ -204,7 +218,7 @@ if (nroUnidades!=1){
 		tam= $('#ola tbody tr:nth-child(1) .U1').length;
 		for (var t = 0; t < tam; t++) {
 				b+=parseFloat(n[c][t]);
-                                alert(b);
+                //alert(b);
                                 
 		}
 		if (parseInt(b)<=10){

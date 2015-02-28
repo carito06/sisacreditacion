@@ -100,7 +100,7 @@
 
                 
                     <div class="col-md-3" style="padding-top: px;">
-                        <a href="/">
+                        <a href="/sisacreditacion">
                         <button type="button"  class="btn btn-primary" title="Inicio" 
                             style="width:20%; height:40px; text-align: center;">
                             <span class="glyphicon glyphicon-home" ></span>

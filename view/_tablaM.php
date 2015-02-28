@@ -17,6 +17,7 @@
                 
                 <?php } ?>
                 <th>PI</th>
+                <th>TUTORIA</th>
                 <th>NOTA FINAL</th>
                 </tr>
                 
@@ -35,7 +36,10 @@
                              <?php  $a++;  $p += (int)$value1[1]; ?>
                             <?php } ?>
                      <?php }  ?>
-                     <td> <?php echo (int)($p/$a); ?></td>
+                <td> <?php echo (int)($p/$a); ?></td>
+                <td>
+                    <input type="hidden" value="0">
+                </td>
                 <td id="total" >
                     
                 </td>
@@ -49,7 +53,7 @@
 </div>
 
 <script>
-    nroColumnas= $(".ola tbody tr td").length-2;
+    nroColumnas= $(".ola tbody tr td").length-3;
     a=0;
     for (var i = 1; i <= nroColumnas; i++) {
         nota = $('#A'+i).val();
@@ -60,7 +64,7 @@
     $('#total').text(a);
 
     $(".as").blur(function(){
-        nroColumnas= $(".ola tbody tr td").length-2;
+        nroColumnas= $(".ola tbody tr td").length-3;
     a=0;
     for (var i = 1; i <= nroColumnas; i++) {
         nota = $('#A'+i).val();
